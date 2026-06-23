@@ -129,11 +129,10 @@ Firefox debugging:
 
 ## Release Notes
 
-### v3.7.4
+### v3.7.5
 
-- Added full export and selective export modes for conversation export, with in-dialog preview and checkbox selection.
-- Selective export now warns when nothing is selected and automatically exits selection mode after export.
-- Improved timeline container detection and message adapter logic.
+- Improved prompt button positioning for more stable placement on ChatGPT and other AI platforms.
+- Improved compatibility with scrolling, input resizing, and narrow windows to reduce misalignment and overlap.
 
 ## Contact & Support
 

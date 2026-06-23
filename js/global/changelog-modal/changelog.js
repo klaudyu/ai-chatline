@@ -12,22 +12,21 @@
  */
 
 const CHANGELOG_DATA = {
-    id: '2026060801',
+    id: '2026062301',
     // 'icon' = 提示词按钮左侧显示 Logo + 小红点（温和提示）
     // 'popup' = 自动弹窗展示更新内容（强提醒）
     displayMode: 'icon',
 
-    features: [
-        {
-            zh: '对话导出支持「全量导出」和「选择导出」，可按需勾选指定对话内容导出',
-            en: 'Conversation export now supports full export and selected export, so you can pick only the messages you need'
-        }
-    ],
+    features: [],
 
     improvements: [
         {
-            zh: '选择导出未勾选内容时会给出提示，导出完成后自动退出选择状态',
-            en: 'Selected export now warns when nothing is selected and exits selection mode after export'
+            zh: '优化提示词悬浮按钮定位，提升 ChatGPT 及其他 AI 平台上的显示稳定性',
+            en: 'Improved prompt button positioning for more stable placement on ChatGPT and other AI platforms'
+        },
+        {
+            zh: '适配滚动、输入框高度变化和窄窗口场景，减少按钮错位、漂移与遮挡',
+            en: 'Improved compatibility with scrolling, input resizing, and narrow windows to reduce misalignment and overlap'
         }
     ]
 };
