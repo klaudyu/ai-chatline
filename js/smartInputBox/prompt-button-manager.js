@@ -34,6 +34,7 @@ class PromptButtonManager {
         
         // 事件处理器引用
         this._onResize = null;
+        this._onScroll = null;
         this._rafPending = false;  // RAF 节流标志
         
         // 配置
@@ -355,8 +356,10 @@ class PromptButtonManager {
         };
         
         this._onResize = scheduleUpdate;
+        this._onScroll = scheduleUpdate;
         
         window.addEventListener('resize', this._onResize);
+        document.addEventListener('scroll', this._onScroll, true);
     }
     
     /**
@@ -368,6 +371,10 @@ class PromptButtonManager {
         if (this._onResize) {
             window.removeEventListener('resize', this._onResize);
             this._onResize = null;
+        }
+        if (this._onScroll) {
+            document.removeEventListener('scroll', this._onScroll, true);
+            this._onScroll = null;
         }
     }
     
@@ -393,8 +400,8 @@ class PromptButtonManager {
                         this._hideButton();
                         this._findInputAndShow();
                     } else {
-                        // 输入框存在，更新位置（处理位置变化的情况）
-                        this._updatePosition();
+                        // 输入框存在时也重新筛选，避免继续绑定 SPA 中已隐藏的旧输入框
+                        this._findInputAndShow();
                     }
                 },
                 filter: { hasAddedNodes: true, hasAttributeChanges: true },
@@ -429,12 +436,31 @@ class PromptButtonManager {
         
         try {
             const selector = this.adapter.getInputSelector();
-            const input = document.querySelector(selector);
+            const inputs = Array.from(document.querySelectorAll(selector));
+            const input = inputs.find(element => {
+                const rect = element.getBoundingClientRect();
+                return rect.width > 0 &&
+                    rect.height > 0 &&
+                    rect.bottom > 0 &&
+                    rect.top < window.innerHeight &&
+                    rect.right > 0 &&
+                    rect.left < window.innerWidth;
+            });
             
             if (input) {
+                const inputChanged = input !== this.inputElement;
                 this.inputElement = input;
                 this._updatePosition();
-                this._observeInputResize();
+                if (inputChanged || !this._resizeObserver) {
+                    this._observeInputResize();
+                }
+            } else if (this.inputElement) {
+                this.inputElement = null;
+                if (this._resizeObserver) {
+                    this._resizeObserver.disconnect();
+                    this._resizeObserver = null;
+                }
+                this._hideButton();
             }
         } catch (e) {
             // 忽略
@@ -449,6 +475,9 @@ class PromptButtonManager {
             if (this.isEnabled && !this.isDestroyed) this._updatePosition();
         });
         this._resizeObserver.observe(ref);
+        if (ref !== this.inputElement) {
+            this._resizeObserver.observe(this.inputElement);
+        }
 
         if (!this._transitionHandler) {
             this._transitionHandler = () => {
@@ -474,7 +503,14 @@ class PromptButtonManager {
             const rect = referenceElement.getBoundingClientRect();
             
             // 参考元素不可见
-            if (rect.width === 0 || rect.height === 0) {
+            if (
+                rect.width === 0 ||
+                rect.height === 0 ||
+                rect.bottom <= 0 ||
+                rect.top >= window.innerHeight ||
+                rect.right <= 0 ||
+                rect.left >= window.innerWidth
+            ) {
                 this._hideButton();
                 return;
             }
@@ -492,26 +528,38 @@ class PromptButtonManager {
                 const top = rect.top + offset.top;
                 const left = rect.left - buttonRect.width - this.config.gap + offset.left;
 
-                // 边界检查
-                const safeTop = Math.max(8, Math.min(top, window.innerHeight - buttonRect.height - 8));
-                const safeLeft = Math.max(8, left);
+                // 左侧空间不足时隐藏，避免按钮被钳制后覆盖输入框或页面核心操作
+                if (left < 8) {
+                    this.buttonElement.style.display = 'none';
+                    if (this._updateBtnElement) {
+                        this._updateBtnElement.style.display = 'none';
+                    }
+                } else {
+                    // 边界检查
+                    const safeTop = Math.max(8, Math.min(top, window.innerHeight - buttonRect.height - 8));
+                    const safeLeft = left;
 
-                // 设置位置并显示
-                this.buttonElement.style.top = `${safeTop}px`;
-                this.buttonElement.style.left = `${safeLeft}px`;
-                this.buttonElement.style.visibility = 'visible';
+                    // 设置位置并显示
+                    this.buttonElement.style.top = `${safeTop}px`;
+                    this.buttonElement.style.left = `${safeLeft}px`;
+                    this.buttonElement.style.visibility = 'visible';
 
-                // 更新 Logo 按钮位置（在提示词按钮左侧）
-                if (this._updateBtnElement && this._hasUpdate) {
-                    this._updateBtnElement.style.visibility = 'hidden';
-                    this._updateBtnElement.style.display = 'flex';
-                    const updateRect = this._updateBtnElement.getBoundingClientRect();
-                    const updateLeft = Math.max(8, safeLeft - updateRect.width - this.config.updateBtnGap);
-                    this._updateBtnElement.style.top = `${safeTop}px`;
-                    this._updateBtnElement.style.left = `${updateLeft}px`;
-                    this._updateBtnElement.style.visibility = 'visible';
-                } else if (this._updateBtnElement) {
-                    this._updateBtnElement.style.display = 'none';
+                    // 更新 Logo 按钮位置（在提示词按钮左侧）
+                    if (this._updateBtnElement && this._hasUpdate) {
+                        this._updateBtnElement.style.visibility = 'hidden';
+                        this._updateBtnElement.style.display = 'flex';
+                        const updateRect = this._updateBtnElement.getBoundingClientRect();
+                        const updateLeft = safeLeft - updateRect.width - this.config.updateBtnGap;
+                        if (updateLeft >= 8) {
+                            this._updateBtnElement.style.top = `${safeTop}px`;
+                            this._updateBtnElement.style.left = `${updateLeft}px`;
+                            this._updateBtnElement.style.visibility = 'visible';
+                        } else {
+                            this._updateBtnElement.style.display = 'none';
+                        }
+                    } else if (this._updateBtnElement) {
+                        this._updateBtnElement.style.display = 'none';
+                    }
                 }
             } else {
                 this.buttonElement.style.display = 'none';

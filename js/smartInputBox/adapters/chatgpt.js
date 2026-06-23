@@ -22,11 +22,15 @@ class ChatGPTSmartEnterAdapter extends BaseSmartEnterAdapter {
     
     /**
      * 获取定位参考元素
-     * 使用 .bg-token-bg-primary 祖先元素作为定位参考
+     * 优先使用 ChatGPT 统一输入区容器，避免通用背景类命中页面级祖先
      * @param {HTMLElement} inputElement - 输入框元素
      */
     getPositionReferenceElement(inputElement) {
-        return inputElement?.closest('.bg-token-bg-primary') || inputElement;
+        return inputElement?.closest('form[data-type="unified-composer"]') ||
+            inputElement?.closest('[data-type="unified-composer"]') ||
+            inputElement?.closest('form') ||
+            inputElement?.closest('.bg-token-bg-primary') ||
+            inputElement;
     }
     
     /**
@@ -43,4 +47,3 @@ class ChatGPTSmartEnterAdapter extends BaseSmartEnterAdapter {
         return { top: -3, right: 8 };
     }
 }
-
