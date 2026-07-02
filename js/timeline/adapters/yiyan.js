@@ -57,12 +57,15 @@ class YiyanAdapter extends SiteAdapter {
     _isValidUserMessageElement(element) {
         if (!element || element.nodeType !== Node.ELEMENT_NODE) return false;
         const assistantSelector = [
-            '[class*="answer"]',
-            '[class*="bot"]',
-            '[class*="assistant"]',
             '[data-message-author-role="assistant"]',
             '[data-message-role="assistant"]',
-            '[data-role="assistant"]'
+            '[data-role="assistant"]',
+            '[data-message-id][class*="answer"]',
+            '[data-msgid][class*="answer"]',
+            '[data-message-id][class*="bot"]',
+            '[data-msgid][class*="bot"]',
+            '[data-message-id][class*="assistant"]',
+            '[data-msgid][class*="assistant"]'
         ].join(', ');
         if (element.matches?.(assistantSelector) || element.closest?.(assistantSelector) || element.querySelector?.(assistantSelector)) {
             return false;
@@ -86,7 +89,7 @@ class YiyanAdapter extends SiteAdapter {
 
     extractText(element) {
         // 文本在 span 子元素中
-        const content = element.querySelector('[class*="questionText"], [class*="question-text"], [class*="content"], span') || element;
+        const content = element.querySelector('[data-message-content], [data-testid="message-content"], [class*="questionText"], [class*="question-text"]') || element;
         const text = this._extractCleanText(content);
         return text || '[图片或文件]';
     }
@@ -124,7 +127,7 @@ class YiyanAdapter extends SiteAdapter {
     }
     
     getTimeLabelTarget(element) {
-        return element.querySelector('[class*="questionText"], [class*="question-text"], [class*="content"], span') || element;
+        return element.querySelector('[data-message-content], [data-testid="message-content"], [class*="questionText"], [class*="question-text"]') || element;
     }
 
     getAssistantTimeLabelTarget(element, index, context = {}) {
@@ -132,13 +135,17 @@ class YiyanAdapter extends SiteAdapter {
             element,
             context.userElements?.[index + 1],
             [
-                '[class*="answer"]',
-                '[class*="bot"]',
-                '[class*="assistant"]',
-                '[class*="markdown"]',
                 '[data-message-author-role="assistant"]',
                 '[data-message-role="assistant"]',
-                '[data-role="assistant"]'
+                '[data-role="assistant"]',
+                '[data-message-id][class*="answer"]',
+                '[data-msgid][class*="answer"]',
+                '[data-message-id][class*="bot"]',
+                '[data-msgid][class*="bot"]',
+                '[data-message-id][class*="assistant"]',
+                '[data-msgid][class*="assistant"]',
+                '[data-message-id] [class*="markdown"]',
+                '[data-msgid] [class*="markdown"]'
             ],
             context.root || document
         );

@@ -12,7 +12,7 @@ class NotebookLMAdapter extends SiteAdapter {
      * 检测是否为 NotebookLM 页面
      */
     matches(url) {
-        return url.includes('notebooklm.google.com');
+        return matchesPlatform(url, 'notebooklm');
     }
 
     /**

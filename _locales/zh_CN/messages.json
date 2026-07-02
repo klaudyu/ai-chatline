@@ -101,6 +101,9 @@
   "animTabDesc": {
     "message": "显示在对话框上方，AI 回复时小动物会欢快走动。"
   },
+  "animLightweightHint": {
+    "message": "默认关闭。选择一种宠物后会在 AI 回复时显示，再次关闭即可停用。"
+  },
   "animSnail": {
     "message": "蜗牛爬行"
   },
@@ -398,6 +401,9 @@
   "runnerSettingsHint": {
     "message": "开启后，代码块右上角将显示 Run 按钮，点击可直接运行代码"
   },
+  "runnerAdvancedHint": {
+    "message": "高级功能，仅在主动开启后加载，可能增加页面资源占用。"
+  },
   "fiveStarReview": {
     "message": "觉得好用"
   },
@@ -445,6 +451,26 @@
   },
   "dataSyncTabName": {
     "message": "数据同步"
+  },
+  "settingsGroupCore": { "message": "核心功能" },
+  "settingsGroupAdvanced": { "message": "高级功能" },
+  "settingsGroupExperimental": { "message": "实验功能" },
+  "settingsGroupBackup": { "message": "备份同步" },
+  "settingsGroupAbout": { "message": "关于" },
+  "localBackupTitle": {
+    "message": "本地 JSON 备份（推荐）"
+  },
+  "localBackupHint": {
+    "message": "无需账号与云端权限，通过 JSON 文件备份或恢复数据。"
+  },
+  "gdriveAdvancedTitle": {
+    "message": "高级云端备份（可选）"
+  },
+  "gdriveOptionalHint": {
+    "message": "首次使用时才申请 Google 身份与 Drive API 权限；不用云备份则不会授权或初始化。"
+  },
+  "gdrivePermissionDeclined": {
+    "message": "未授予云端备份权限"
   },
   "exportTitle": {
     "message": "手动同步"

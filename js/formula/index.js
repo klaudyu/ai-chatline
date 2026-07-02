@@ -93,7 +93,7 @@
                 if (changes.formulaLatexEnabled || changes.formulaMathMLEnabled) {
                     try {
                         const result = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled']);
-                        const isEnabled = (result.formulaLatexEnabled !== false || result.formulaMathMLEnabled === true);
+                        const isEnabled = (result.formulaLatexEnabled === true || result.formulaMathMLEnabled === true);
 
                         if (isEnabled) {
                             if (!globalFormulaManager) {
@@ -157,4 +157,3 @@
         checkTemml: checkTemmlAvailable
     };
 })();
-

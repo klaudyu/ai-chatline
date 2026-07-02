@@ -659,7 +659,7 @@
                     return this._renderTable(output.columns, output.values);
                 }
                 if (output.type === 'html-preview') {
-                    return `<div class="runner-panel-html-preview"><iframe srcdoc="${output.html.replace(/"/g, '&quot;')}" sandbox="allow-scripts allow-same-origin" style="width:100%;height:150px;border:1px solid var(--runner-border);border-radius:4px;background:white;"></iframe></div>`;
+                    return `<div class="runner-panel-html-preview"><iframe srcdoc="${output.html.replace(/"/g, '&quot;')}" sandbox="allow-scripts" style="width:100%;height:150px;border:1px solid var(--runner-border);border-radius:4px;background:white;"></iframe></div>`;
                 }
                 if (output.type === 'json-formatted') {
                     return `<pre class="runner-panel-json-output">${this._escapeHtml(output.json)}</pre>`;
@@ -713,4 +713,3 @@
     }
 
 })();
-

@@ -41,52 +41,16 @@ class DataSyncTab extends BaseTab {
         container.className = 'data-sync-tab';
         
         container.innerHTML = `
-            <div class="sync-section gdrive-section">
-                <div class="sync-title">
-                    <svg viewBox="0 0 87.3 78" width="18" height="16" style="margin-right: 6px; flex-shrink: 0;">
-                        <path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066DA"/>
-                        <path d="M43.65 25L29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L6.2 39.8C5.4 41.2 5 42.75 5 44.3h27.5z" fill="#00AC47"/>
-                        <path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 13.95z" fill="#EA4335"/>
-                        <path d="M43.65 25l13.75-23.8C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#00832D"/>
-                        <path d="M59.8 53H27.5L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684FC"/>
-                        <path d="M73.4 26.5l-10.6-18.3c-.8-1.4-1.95-2.5-3.3-3.3L45.75 28.7 59.8 53h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#FFBA00"/>
-                    </svg>
-                    ${chrome.i18n.getMessage('gdriveTitle') || 'Google Drive 云同步'}
-                </div>
-                <div class="sync-hint">${chrome.i18n.getMessage('gdriveHint') || '将数据备份到你的 Google Drive 中，实现多设备同步。'}</div>
-                <div class="gdrive-actions">
-                    <button class="sync-btn" id="gdrive-upload-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                            <polyline points="16,16 12,12 8,16"/>
-                            <line x1="12" y1="12" x2="12" y2="21"/>
-                            <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/>
-                        </svg>
-                        ${chrome.i18n.getMessage('gdriveUploadBtn') || '上传到云端'}
-                    </button>
-                    <button class="sync-btn gdrive-download-btn" id="gdrive-download-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                            <polyline points="8,17 12,21 16,17"/>
-                            <line x1="12" y1="12" x2="12" y2="21"/>
-                            <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/>
-                        </svg>
-                        ${chrome.i18n.getMessage('gdriveDownloadBtn') || '从云端下载'}
-                    </button>
-                </div>
-
-            </div>
-            
-            <div class="sync-divider"></div>
-            
             <div class="sync-section">
                 <div class="sync-title">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#4b5563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; flex-shrink: 0;">
                         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
                         <polyline points="14,2 14,8 20,8"/>
                     </svg>
-                    ${chrome.i18n.getMessage('exportTitle') || '手动同步'}
+                    ${chrome.i18n.getMessage('localBackupTitle') || 'Local JSON Backup (Recommended)'}
                 </div>
-                <div class="sync-hint">${chrome.i18n.getMessage('exportHint') || '通过 JSON 文件手动备份或恢复数据，用于迁移到其他浏览器。'}</div>
-                
+                <div class="sync-hint">${chrome.i18n.getMessage('localBackupHint') || 'Back up or restore with a JSON file without an account or cloud permissions.'}</div>
+
                 <div class="local-sync-group">
                     <div class="local-sync-item">
                         <div class="local-sync-label">${chrome.i18n.getMessage('exportLabel') || '导出'}</div>
@@ -136,6 +100,27 @@ class DataSyncTab extends BaseTab {
                     </div>
                 </div>
                 <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            </div>
+
+            <div class="sync-divider"></div>
+
+            <div class="sync-section gdrive-section">
+                <div class="sync-title">
+                    <svg viewBox="0 0 87.3 78" width="18" height="16" style="margin-right: 6px; flex-shrink: 0;">
+                        <path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066DA"/>
+                        <path d="M43.65 25L29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L6.2 39.8C5.4 41.2 5 42.75 5 44.3h27.5z" fill="#00AC47"/>
+                        <path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 13.95z" fill="#EA4335"/>
+                        <path d="M43.65 25l13.75-23.8C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#00832D"/>
+                        <path d="M59.8 53H27.5L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684FC"/>
+                        <path d="M73.4 26.5l-10.6-18.3c-.8-1.4-1.95-2.5-3.3-3.3L45.75 28.7 59.8 53h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#FFBA00"/>
+                    </svg>
+                    ${chrome.i18n.getMessage('gdriveAdvancedTitle') || 'Advanced Cloud Backup (Optional)'}
+                </div>
+                <div class="sync-hint">${chrome.i18n.getMessage('gdriveOptionalHint') || 'Google identity and Drive API access are requested only when you first use cloud backup.'}</div>
+                <div class="gdrive-actions">
+                    <button class="sync-btn" id="gdrive-upload-btn">${chrome.i18n.getMessage('gdriveUploadBtn') || '上传到云端'}</button>
+                    <button class="sync-btn gdrive-download-btn" id="gdrive-download-btn">${chrome.i18n.getMessage('gdriveDownloadBtn') || '从云端下载'}</button>
+                </div>
             </div>
             
             <div class="sync-status" id="sync-status" style="display: none;"></div>
@@ -192,6 +177,7 @@ class DataSyncTab extends BaseTab {
         }
         
         try {
+            await this.requestGDrivePermissions();
             const data = await this.getAllStorageData();
             const exportData = {
                 _meta: this._buildMeta(),
@@ -235,6 +221,7 @@ class DataSyncTab extends BaseTab {
         }
         
         try {
+            await this.requestGDrivePermissions();
             const resp = await chrome.runtime.sendMessage({ type: 'GDRIVE_DOWNLOAD' });
             if (!resp?.success) {
                 throw new Error(resp?.error || (chrome.i18n.getMessage('gdriveDownloadFailed') || '下载失败'));
@@ -595,6 +582,13 @@ class DataSyncTab extends BaseTab {
         }
     }
     
+    async requestGDrivePermissions() {
+        const response = await chrome.runtime.sendMessage({ type: 'REQUEST_GDRIVE_PERMISSIONS' });
+        if (!response?.success) {
+            throw new Error(response?.error || (chrome.i18n.getMessage('gdrivePermissionDeclined') || 'Cloud backup permission was not granted'));
+        }
+    }
+
     /**
      * Tab 卸载时清理
      */

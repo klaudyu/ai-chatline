@@ -1,0 +1,9 @@
+{
+  "name": "chatline-extension",
+  "version": "3.8.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/platform-contracts.test.js tests/lightweight-security.test.js && node scripts/check-syntax.js",
+    "serve:browser-test": "python3 -m http.server 4173"
+  }
+}

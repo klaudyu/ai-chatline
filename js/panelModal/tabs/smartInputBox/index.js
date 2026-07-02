@@ -18,6 +18,13 @@ class SmartInputBoxTab extends BaseTab {
         this._isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
         this._ctrlLabel = this._isMac ? '⌘' : 'Ctrl';
     }
+
+    shouldShow() {
+        const features = getCurrentPlatform()?.features;
+        return features?.smartInput === true ||
+            features?.quickAsk === true ||
+            features?.scrollToBottom === true;
+    }
     
     /**
      * 获取模式的显示文字（用于 Dropdown trigger 和选项）
@@ -131,9 +138,9 @@ class SmartInputBoxTab extends BaseTab {
         
         try {
             const result = await chrome.storage.local.get('quickAskEnabled');
-            quickAskToggle.checked = result.quickAskEnabled !== false;
+            quickAskToggle.checked = result.quickAskEnabled === true;
         } catch (e) {
-            quickAskToggle.checked = true;
+            quickAskToggle.checked = false;
         }
         
         this.addEventListener(quickAskToggle, 'change', async (e) => {
@@ -164,9 +171,9 @@ class SmartInputBoxTab extends BaseTab {
         
         try {
             const result = await chrome.storage.local.get('scrollToBottomEnabled');
-            scrollToBottomToggle.checked = result.scrollToBottomEnabled !== false;
+            scrollToBottomToggle.checked = result.scrollToBottomEnabled === true;
         } catch (e) {
-            scrollToBottomToggle.checked = true;
+            scrollToBottomToggle.checked = false;
         }
         
         this.addEventListener(scrollToBottomToggle, 'change', async (e) => {

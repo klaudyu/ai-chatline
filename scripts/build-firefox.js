@@ -11,7 +11,7 @@
  *   3. 移除 oauth2（Firefox 不支持，认证走 launchWebAuthFlow）
  *   4. 移除 sandbox（Firefox 不支持，Runner 内部做降级处理）
  *   5. 移除 content_security_policy.sandbox
- *   6. permissions 中移除 identity（Firefox 用 browser.identity 无需声明）
+ *   6. Firefox 不支持 optional identity：构建时提升为必需权限；Google API host 仍按需申请
  *
  * 用法：
  *   node scripts/build-firefox.js
@@ -65,7 +65,12 @@ function generateFirefoxManifest(geckoId) {
     // 4. 移除 sandbox CSP（Firefox 不支持 sandbox，也不允许 extension_pages 中使用 unsafe-eval）
     delete manifest.content_security_policy;
 
-    // 5. 保留 identity 权限（Firefox 需要 identity 权限来使用 launchWebAuthFlow）
+    // 5. Firefox 的 optional API 权限列表不包含 identity；仅 Firefox 构建提升为必需权限
+    manifest.optional_permissions = (manifest.optional_permissions || []).filter(permission => permission !== 'identity');
+    if (manifest.optional_permissions.length === 0) delete manifest.optional_permissions;
+    manifest.permissions = Array.from(new Set([...(manifest.permissions || []), 'identity']));
+
+    // Google API host permission 继续保留为 optional_host_permissions
 
     return manifest;
 }
@@ -95,6 +100,8 @@ function build() {
 
         execSync(`zip -r "${zipName}" . ` +
             `-x ".git/*" ` +
+            `-x ".codegraph/*" ` +
+            `-x ".claude/*" ` +
             `-x ".gitignore" ` +
             `-x "node_modules/*" ` +
             `-x ".DS_Store" ` +
@@ -104,6 +111,12 @@ function build() {
             `-x "*.zip" ` +
             `-x "__MACOSX/*" ` +
             `-x "scripts/*" ` +
+            `-x "tests/*" ` +
+            `-x "package.json" ` +
+            `-x "READMEIMAGE/*" ` +
+            `-x "js/mirrorSite/*" ` +
+            `-x "js/panelModal/tabs/mirrorSite/*" ` +
+            `-x "js/smartInputBox/animations/animal/*" ` +
             `-x "manifest.firefox.json"`,
             { cwd: ROOT, stdio: 'pipe' }
         );

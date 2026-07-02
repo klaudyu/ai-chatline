@@ -58,9 +58,10 @@ class DeepSeekAdapter extends SiteAdapter {
     }
 
     extractText(element) {
-        // 从第一个子 div 提取文本
-        const firstDiv = element.querySelector('.ds-markdown, [class*="content"], div');
-        const text = (firstDiv?.textContent || '').trim();
+        const content = element.querySelector(
+            '.ds-markdown, [data-message-content], [data-testid="message-content"]'
+        );
+        const text = (content?.textContent || element.textContent || '').trim();
         return text || '[图片或文件]';
     }
     

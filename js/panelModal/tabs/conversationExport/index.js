@@ -25,6 +25,10 @@ class ConversationExportTab extends BaseTab {
         </svg>`;
     }
 
+    shouldShow() {
+        return getCurrentPlatform()?.features?.conversationExport === true;
+    }
+
     render() {
         const container = document.createElement('div');
         container.className = 'conversation-export-settings';
@@ -55,9 +59,9 @@ class ConversationExportTab extends BaseTab {
 
         try {
             const result = await chrome.storage.local.get('conversationExportEnabled');
-            checkbox.checked = result.conversationExportEnabled === true;
+            checkbox.checked = result.conversationExportEnabled !== false;
         } catch {
-            checkbox.checked = false;
+            checkbox.checked = true;
         }
 
         this.addEventListener(checkbox, 'change', async (event) => {

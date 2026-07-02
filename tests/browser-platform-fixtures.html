@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Platform fixture regression</title>
+</head>
+<body>
+    <pre id="result">RUNNING</pre>
+    <script>
+        window.chrome = {
+            runtime: { getURL: value => value },
+            i18n: { getMessage: () => '' }
+        };
+        window.ContainerFinder = { findConversationContainer: element => element?.parentElement || null };
+    </script>
+    <script src="../js/global/constants.js"></script>
+    <script src="../js/timeline/adapters/base.js"></script>
+    <script src="../js/timeline/adapters/chatgpt.js"></script>
+    <script src="../js/timeline/adapters/gemini.js"></script>
+    <script src="../js/timeline/adapters/doubao.js"></script>
+    <script src="../js/timeline/adapters/deepseek.js"></script>
+    <script src="../js/timeline/adapters/yiyan.js"></script>
+    <script src="../js/timeline/adapters/tongyi.js"></script>
+    <script src="../js/timeline/adapters/qwen.js"></script>
+    <script src="../js/timeline/adapters/kimi.js"></script>
+    <script src="../js/timeline/adapters/yuanbao.js"></script>
+    <script src="../js/timeline/adapters/grok.js"></script>
+    <script src="../js/timeline/adapters/perplexity.js"></script>
+    <script src="../js/timeline/adapters/claude.js"></script>
+    <script src="../js/timeline/adapters/notebooklm.js"></script>
+    <script src="../js/smartInputBox/adapters/base.js"></script>
+    <script src="../js/smartInputBox/adapters/chatgpt.js"></script>
+    <script src="../js/smartInputBox/adapters/gemini.js"></script>
+    <script src="../js/smartInputBox/adapters/doubao.js"></script>
+    <script src="../js/smartInputBox/adapters/deepseek.js"></script>
+    <script src="../js/smartInputBox/adapters/yiyan.js"></script>
+    <script src="../js/smartInputBox/adapters/tongyi.js"></script>
+    <script src="../js/smartInputBox/adapters/qwen.js"></script>
+    <script src="../js/smartInputBox/adapters/kimi.js"></script>
+    <script src="../js/smartInputBox/adapters/yuanbao.js"></script>
+    <script src="../js/smartInputBox/adapters/grok.js"></script>
+    <script src="../js/smartInputBox/adapters/perplexity.js"></script>
+    <script src="../js/smartInputBox/adapters/claude.js"></script>
+    <script src="../js/smartInputBox/adapters/notebooklm.js"></script>
+    <script src="fixtures/platforms.js"></script>
+    <script src="browser-platform-fixtures.js"></script>
+</body>
+</html>

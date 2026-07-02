@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./icons/icon128.png" alt="ChatLine Logo" width="80" height="80">
   <h1>ChatLine</h1>
-  <p><strong>Browser-based enhancement tool for AI chats</strong><br>ChatLine adds timeline navigation, content organization, prompt reuse, code execution, and conversation archiving to mainstream AI chat platforms, helping users browse, manage, and review AI conversations more efficiently.</p>
+  <p><strong>Browser-based enhancement tool for AI chats</strong><br>ChatLine adds timeline navigation, prompt reuse, bookmarks, conversation export, and highlights to mainstream AI chat platforms.</p>
 
   <p>
     <a href="https://github.com/miguchn/ai-chatline/stargazers"><img src="https://img.shields.io/github/stars/miguchn/ai-chatline?style=social" alt="GitHub Stars"></a>
@@ -76,12 +76,12 @@ Practical enhancements continue to grow around reading, organization, export, an
 - **Chat Timeline**: Automatically detects conversation nodes for fast positioning, review, and jumping.
 - **Folder Management**: Organize saved content, common materials, and conversation references by category.
 - **Prompt Management**: Save reusable prompts and insert them quickly when chatting.
-- **Code Runner**: Improves code-block viewing and execution inside AI conversations for common coding scenarios.
+- **Code Runner (Advanced)**: Off by default and loaded only after the user enables it.
 - **Conversation Export**: Export AI chat content for archiving, sharing, and review.
 - **Highlights & Notes**: Mark key AI responses with highlights, colors, and notes.
-- **Quick Follow-up**: Select response text and quote it into a follow-up question with less manual copying.
-- **Formula & Diagram Enhancements**: Copy formula source and render Mermaid diagrams when matching content is detected.
-- **Page Enhancements**: Includes chat width, display optimization, scroll-to-bottom, digital pet, and related experience settings.
+- **Quick Follow-up (Optional)**: Off by default; quote selected text into the input box after enabling it.
+- **Formula & Diagram Enhancements (Optional)**: LaTeX copying and Mermaid rendering are off by default and loaded on demand.
+- **Page Enhancements**: Includes chat width, display optimization, and scroll-to-bottom; digital pets are off by default and limited to four styles.
 - **Backup & Restore**: Supports JSON import/export and optional Google Drive sync for extension data.
 
 ## Supported Platforms
@@ -102,13 +102,13 @@ Practical enhancements continue to grow around reading, organization, export, an
 | Yiyan | ✅ | ✅ | - | ✅ | ✅ | ✅ | - | - |
 | NotebookLM | - | ✅ | ✅ | ✅ | ✅ | - | - | - |
 
-> Formula Copy and Code Runner activate automatically when matching content is detected, regardless of the AI platform.
+> The lightweight defaults are Timeline, Prompts, Bookmarks, Conversation Export, and Highlights. Code Runner, Mermaid, formula enhancements, digital pets, and AI completion notifications are off by default. Unsupported settings are hidden for the current platform.
 
 ## Data & Privacy
 
 - ChatLine stores core extension data in the user's browser by default, including bookmarks, folders, prompts, extension settings, time labels, notes, and related local data.
 - The extension does not proactively collect, upload, or share chat content or personal information, and the project code does not include remote user-data collection logic.
-- Google Drive sync is optional and is enabled only after the user grants authorization. It is used for backing up and restoring extension data.
+- Google Drive sync is optional. Chromium requests Google identity and API access only when cloud backup is first used. Firefox must declare `identity` at install time because it is not an optional API permission there, while the Google API host remains optional. Local JSON backup always works without cloud access.
 - This project is open source, so its data-handling logic can be reviewed directly in the repository.
 
 ## Local Development
@@ -123,16 +123,20 @@ Chrome / Edge debugging:
 4. Select the root directory of this repository.
 5. After changing code, reload the extension from the extension management page and refresh the target AI platform page.
 
+Run `npm test` after code changes to check platform contracts, security boundaries, the manifest, and JavaScript syntax.
+
 Firefox debugging:
 
-- Open `about:debugging` and use "Load Temporary Add-on" to load the `manifest.json` file from this repository.
+- Run `node scripts/build-firefox.js`, then load the generated ZIP as a temporary add-on from `about:debugging`.
 
 ## Release Notes
 
-### v3.7.5
+### v3.8.0
 
-- Improved prompt button positioning for more stable placement on ChatGPT and other AI platforms.
-- Improved compatibility with scrolling, input resizing, and narrow windows to reduce misalignment and overlap.
+- Improved timeline bottom spacing for a more balanced layout across window sizes.
+- Made the default experience lighter while keeping advanced features off and loaded on demand.
+- Improved platform capability display, message detection, and conversation export stability.
+- Strengthened safety boundaries for Markdown, Mermaid, HTML previews, and code execution.
 
 ## Contact & Support
 

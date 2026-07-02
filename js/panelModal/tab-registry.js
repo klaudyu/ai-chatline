@@ -21,7 +21,6 @@ function getTabClass(name) {
         case 'AboutTab': return typeof AboutTab !== 'undefined' ? AboutTab : null;
         case 'HighlightTab': return typeof HighlightTab !== 'undefined' ? HighlightTab : null;
         case 'ChatWidthTab': return typeof ChatWidthTab !== 'undefined' ? ChatWidthTab : null;
-        case 'MirrorSiteTab': return typeof MirrorSiteTab !== 'undefined' ? MirrorSiteTab : null;
         default: return null;
     }
 }
@@ -36,19 +35,18 @@ function isExtensionContextInvalidatedError(error) {
  * - className: 对应的类名（字符串）
  */
 const TAB_CONFIG = [
-    { id: 'about', className: 'AboutTab' },
-    { id: 'timeline', className: 'TimelineSettingsTab' },
-    { id: 'starred', className: 'StarredTab' },
-    { id: 'prompt', className: 'PromptTab' },
-    { id: 'smart-input-box', className: 'SmartInputBoxTab' },
-    { id: 'formula', className: 'FormulaTab' },
-    { id: 'runner', className: 'RunnerTab' },
-    { id: 'highlight', className: 'HighlightTab' },
-    { id: 'chat-width', className: 'ChatWidthTab' },
-    { id: 'animation', className: 'AnimationTab' },
-    { id: 'conversation-export', className: 'ConversationExportTab' },
-    { id: 'data-sync', className: 'DataSyncTab' },
-    { id: 'mirror-site', className: 'MirrorSiteTab' }
+    { id: 'timeline', className: 'TimelineSettingsTab', group: 'core' },
+    { id: 'starred', className: 'StarredTab', group: 'core' },
+    { id: 'prompt', className: 'PromptTab', group: 'core' },
+    { id: 'conversation-export', className: 'ConversationExportTab', group: 'core' },
+    { id: 'highlight', className: 'HighlightTab', group: 'core' },
+    { id: 'smart-input-box', className: 'SmartInputBoxTab', group: 'advanced' },
+    { id: 'chat-width', className: 'ChatWidthTab', group: 'advanced' },
+    { id: 'formula', className: 'FormulaTab', group: 'advanced' },
+    { id: 'runner', className: 'RunnerTab', group: 'advanced' },
+    { id: 'animation', className: 'AnimationTab', group: 'experimental' },
+    { id: 'data-sync', className: 'DataSyncTab', group: 'backup' },
+    { id: 'about', className: 'AboutTab', group: 'about' }
 ];
 
 /**
@@ -80,6 +78,7 @@ function registerAllTabs() {
             if (typeof tabInstance.shouldShow === 'function' && !tabInstance.shouldShow()) {
                 continue;
             }
+            tabInstance.group = config.group;
             pm.registerTab(tabInstance);
         } catch (error) {
             if (!isExtensionContextInvalidatedError(error)) {

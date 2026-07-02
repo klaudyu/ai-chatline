@@ -33,6 +33,7 @@ class PanelModal {
         this.tabs = new Map(); // tabId -> tab instance
         this.currentTabId = null;
         this.isVisible = false;
+        this._lastTabGroup = null;
         
         // URL 变化监听器
         this._currentUrl = location.href;
@@ -221,6 +222,21 @@ class PanelModal {
             return; // 已注册，静默跳过
         }
         
+        if (tab.group && tab.group !== this._lastTabGroup) {
+            const groupLabels = {
+                core: chrome.i18n.getMessage('settingsGroupCore') || 'Core Features',
+                advanced: chrome.i18n.getMessage('settingsGroupAdvanced') || 'Advanced Features',
+                experimental: chrome.i18n.getMessage('settingsGroupExperimental') || 'Experimental',
+                backup: chrome.i18n.getMessage('settingsGroupBackup') || 'Backup & Sync',
+                about: chrome.i18n.getMessage('settingsGroupAbout') || 'About'
+            };
+            const groupTitle = document.createElement('div');
+            groupTitle.className = 'panel-tab-group-title';
+            groupTitle.textContent = groupLabels[tab.group] || tab.group;
+            this.tabsContainer.appendChild(groupTitle);
+            this._lastTabGroup = tab.group;
+        }
+
         // 保存 tab
         this.tabs.set(tab.id, tab);
         

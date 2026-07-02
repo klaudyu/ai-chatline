@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Timeline layout regression</title>
+    <link rel="stylesheet" href="../styles/variables.css">
+    <link rel="stylesheet" href="../js/timeline/timeline.css">
+    <link rel="stylesheet" href="../js/timeline/notepad/notepad.css">
+</head>
+<body>
+    <output id="result" data-status="running">RUNNING</output>
+    <div class="ait-chat-timeline-wrapper" style="top:120px;right:22px">
+        <div class="ait-timeline-top-actions"><button style="width:28px;height:28px"></button></div>
+        <div class="ait-chat-timeline-bar" style="height:max(96px,min(calc(100vh - 120px - 120px),calc(100vh - 120px - 24px)))">
+            <div class="ait-timeline-track">
+                <div class="ait-timeline-track-content">
+                    <button class="ait-timeline-dot" style="--n:0"></button>
+                    <button class="ait-timeline-dot active" style="--n:1"></button>
+                </div>
+            </div>
+        </div>
+        <button class="ait-question-list-btn"></button>
+        <button class="timeline-starred-btn"></button>
+        <button class="ait-notepad-btn"></button>
+        <button class="timeline-settings-btn"></button>
+    </div>
+    <script src="browser-timeline-layout.js"></script>
+</body>
+</html>

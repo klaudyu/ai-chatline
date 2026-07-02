@@ -2,10 +2,11 @@
     'use strict';
     
     var startTime = 0;
+    var messageToken = decodeURIComponent(window.location.hash.slice(1));
     
     function send(type, data) {
         try {
-            window.parent.postMessage({ type: type, data: data }, '*');
+            window.parent.postMessage({ type: type, data: data, token: messageToken }, '*');
         } catch (e) {
             console.error('[Sandbox] Failed to send:', type, e);
         }
@@ -138,13 +139,13 @@
     }
     
     window.addEventListener('message', function(event) {
+        if (event.source !== window.parent) return;
         if (!event.data || typeof event.data !== 'object') return;
-        
-        if (event.data.type === 'EXECUTE_CODE') {
+        if (event.data.token !== messageToken) return;
+        if (event.data.type === 'EXECUTE_CODE' && typeof event.data.code === 'string' && event.data.code.length <= 1000000) {
             executeCode(event.data.code);
         }
     });
     
     send('SANDBOX_READY', { ready: true });
 })();
-

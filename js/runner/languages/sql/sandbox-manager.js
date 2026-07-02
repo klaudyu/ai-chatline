@@ -14,6 +14,7 @@ class SQLSandboxManager {
         this.pendingResolve = null;
         this.pendingReject = null;
         this.pendingOnMessage = null;
+        this.messageToken = null;
     }
 
     /**
@@ -36,6 +37,10 @@ class SQLSandboxManager {
     execute(code, onMessage, timeout = 30000) {
         return new Promise((resolve, reject) => {
             this.destroy();
+            if (typeof code !== 'string' || code.length > 1000000) {
+                reject(new Error('代码必须是小于 1 MB 的文本'));
+                return;
+            }
             
             const sandboxUrl = this.getSandboxUrl();
             if (!sandboxUrl) {
@@ -48,12 +53,16 @@ class SQLSandboxManager {
             this.pendingReject = reject;
             this.pendingOnMessage = onMessage;
             this.isReady = false;
+            this.messageToken = crypto.randomUUID();
             
             const iframe = document.createElement('iframe');
             iframe.style.cssText = 'display:none;position:absolute;width:0;height:0;border:none;';
+            iframe.setAttribute('sandbox', 'allow-scripts');
             
             this.messageHandler = (event) => {
+                if (event.source !== this.currentSandbox?.contentWindow) return;
                 if (!event.data || typeof event.data !== 'object') return;
+                if (event.data.token !== this.messageToken) return;
                 
                 const { type, data } = event.data;
                 const validTypes = [
@@ -65,6 +74,7 @@ class SQLSandboxManager {
                     'SQL_COMPLETE'
                 ];
                 if (!validTypes.includes(type)) return;
+                if (!this._isValidPayload(type, data)) return;
                 
                 switch (type) {
                     case 'SQL_SANDBOX_READY':
@@ -72,7 +82,8 @@ class SQLSandboxManager {
                         if (this.currentSandbox && this.pendingCode) {
                             this.currentSandbox.contentWindow.postMessage({
                                 type: 'EXECUTE_SQL',
-                                code: this.pendingCode
+                                code: this.pendingCode,
+                                token: this.messageToken
                             }, '*');
                         }
                         break;
@@ -136,8 +147,17 @@ class SQLSandboxManager {
             
             document.body.appendChild(iframe);
             this.currentSandbox = iframe;
-            iframe.src = sandboxUrl;
+            iframe.src = `${sandboxUrl}#${encodeURIComponent(this.messageToken)}`;
         });
+    }
+
+    _isValidPayload(type, data) {
+        if (!data || typeof data !== 'object') return false;
+        if (type === 'SQL_SANDBOX_READY') return true;
+        if (type === 'SQL_LOADING' || type === 'SQL_ERROR') return typeof data.message === 'string';
+        if (type === 'SQL_OUTPUT') return typeof data.level === 'string' && Array.isArray(data.data);
+        if (type === 'SQL_TABLE') return Array.isArray(data.columns) && Array.isArray(data.values);
+        return type === 'SQL_COMPLETE' && typeof data.success === 'boolean';
     }
 
     /**
@@ -164,10 +184,10 @@ class SQLSandboxManager {
         this.pendingResolve = null;
         this.pendingReject = null;
         this.pendingOnMessage = null;
+        this.messageToken = null;
     }
 }
 
 if (typeof window !== 'undefined') {
     window.SQLSandboxManager = SQLSandboxManager;
 }
-

@@ -3,7 +3,7 @@
  * 
  * 职责：
  * 1. Google Drive 云同步（OAuth2 认证 + 文件读写）
- * 2. 处理需要绕过 CORS 限制的请求（图片获取等）
+ * 2. 按需注入高级功能运行时
  */
 
 // ============================================
@@ -20,11 +20,159 @@ const browserAPI = IS_FIREFOX ? browser : chrome;
 const OAUTH_CLIENT_ID = '945798922226-jve664u0ibs7lsji89kr8s7f9lsnilla.apps.googleusercontent.com';
 const OAUTH_SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
+const OPTIONAL_FEATURES = {
+    runner: {
+        css: [
+            'js/runner/codemirror/codemirror.min.css',
+            'js/runner/styles.css',
+            'js/runner/components/runner-panel.css',
+            'js/runner/components/floating-runner.css',
+            'js/mermaid/styles.css'
+        ],
+        js: [
+            'js/runner/codemirror/codemirror.min.js',
+            'js/runner/codemirror/javascript.min.js',
+            'js/runner/codemirror/xml.min.js',
+            'js/runner/codemirror/css.min.js',
+            'js/runner/codemirror/sql.min.js',
+            'js/runner/codemirror/htmlmixed.min.js',
+            'js/runner/codemirror/markdown.min.js',
+            'js/runner/highlight/highlight.core.min.js',
+            'js/runner/highlight/javascript.min.js',
+            'js/runner/highlight/typescript.min.js',
+            'js/runner/highlight/sql.min.js',
+            'js/runner/highlight/xml.min.js',
+            'js/runner/highlight/css.min.js',
+            'js/runner/highlight/json.min.js',
+            'js/runner/highlight/markdown.min.js',
+            'js/runner/libs/marked.min.js',
+            'js/runner/highlight/language-detector.js',
+            'js/runner/core/base-runner.js',
+            'js/runner/languages/javascript/sandbox-manager.js',
+            'js/runner/languages/javascript/index.js',
+            'js/runner/languages/typescript/sandbox-manager.js',
+            'js/runner/languages/typescript/index.js',
+            'js/runner/languages/sql/sandbox-manager.js',
+            'js/runner/languages/sql/index.js',
+            'js/runner/languages/html/index.js',
+            'js/runner/languages/json/index.js',
+            'js/runner/languages/markdown/index.js',
+            'js/runner/languages/mermaid/index.js',
+            'js/runner/languages/registry.js',
+            'js/runner/runner-manager.js',
+            'js/runner/components/runner-panel.js',
+            'js/runner/components/floating-runner.js',
+            'js/runner/index.js',
+            'js/mermaid/lib/mermaid.min.js',
+            'js/mermaid/index.js'
+        ]
+    },
+    formula: {
+        css: ['js/formula/formula.css'],
+        js: [
+            'js/formula/libs/temml.min.js',
+            'js/formula/latex-extractor.js',
+            'js/formula/formula-manager.js',
+            'js/formula/index.js'
+        ]
+    },
+    quickAsk: {
+        css: ['js/quickAsk/styles.css'],
+        js: [
+            'js/quickAsk/selection-copy.js',
+            'js/quickAsk/quick-ask-manager.js',
+            'js/quickAsk/index.js'
+        ]
+    },
+    scrollToBottom: {
+        css: ['js/scrollToBottom/styles.css'],
+        js: ['js/scrollToBottom/scroll-to-bottom-manager.js']
+    },
+    animation: {
+        css: [
+            'js/smartInputBox/animations/snail/styles.css',
+            'js/smartInputBox/animations/zombie/styles.css',
+            'js/smartInputBox/animations/ant/styles.css',
+            'js/smartInputBox/animations/wizard/styles.css'
+        ],
+        js: [
+            'js/smartInputBox/animations/snail/index.js',
+            'js/smartInputBox/animations/zombie/index.js',
+            'js/smartInputBox/animations/ant/index.js',
+            'js/smartInputBox/animations/wizard/index.js',
+            'js/smartInputBox/animations/index.js'
+        ]
+    }
+};
+
+const GDRIVE_PERMISSIONS = IS_FIREFOX
+    ? { origins: ['https://www.googleapis.com/*'] }
+    : { permissions: ['identity'], origins: ['https://www.googleapis.com/*'] };
+
+async function hasGDrivePermissions() {
+    if (!browserAPI.permissions?.contains) return false;
+    return await browserAPI.permissions.contains(GDRIVE_PERMISSIONS);
+}
+
+async function requestGDrivePermissions() {
+    if (!browserAPI.permissions?.request) {
+        throw new Error('This browser cannot request cloud backup permissions');
+    }
+    // Keep request() as the first async boundary so the browser can associate it
+    // with the user's cloud-backup button click.
+    return browserAPI.permissions.request(GDRIVE_PERMISSIONS);
+}
+
+async function injectOptionalFeature(tabId, frameId, feature) {
+    const config = OPTIONAL_FEATURES[feature];
+    if (!config) throw new Error('Unknown optional feature');
+    if (!browserAPI.scripting) throw new Error('Dynamic script loading is not supported');
+
+    const target = { tabId, frameIds: [frameId] };
+    const markerResult = await browserAPI.scripting.executeScript({
+        target,
+        func: featureName => {
+            window.__aitOptionalFeatures ||= {};
+            if (window.__aitOptionalFeatures[featureName]) return true;
+            window.__aitOptionalFeatures[featureName] = 'loading';
+            return false;
+        },
+        args: [feature]
+    });
+    if (markerResult?.[0]?.result === true) return;
+
+    try {
+        if (config.css.length > 0) {
+            await browserAPI.scripting.insertCSS({ target, files: config.css });
+        }
+        await browserAPI.scripting.executeScript({ target, files: config.js });
+        await browserAPI.scripting.executeScript({
+            target,
+            func: featureName => {
+                window.__aitOptionalFeatures[featureName] = 'loaded';
+            },
+            args: [feature]
+        });
+    } catch (error) {
+        await browserAPI.scripting.executeScript({
+            target,
+            func: featureName => {
+                if (window.__aitOptionalFeatures) delete window.__aitOptionalFeatures[featureName];
+            },
+            args: [feature]
+        }).catch(() => {});
+        throw error;
+    }
+}
+
 /**
  * 获取 OAuth2 Access Token
  * 统一使用 identity.launchWebAuthFlow 方式
  */
 async function getAuthToken(interactive = true) {
+    if (!await hasGDrivePermissions()) {
+        throw new Error('Cloud backup permission has not been granted');
+    }
     const stored = await browserAPI.storage.local.get('gdriveToken');
     if (stored.gdriveToken?.access_token) {
         const isValid = await validateToken(stored.gdriveToken.access_token);
@@ -203,24 +351,8 @@ function isSupportedSite(url) {
     } catch { return false; }
 }
 
-async function isMirrorSiteBg(url) {
-    try {
-        const result = await chrome.storage.local.get('mirrorSiteDomains');
-        const domains = result.mirrorSiteDomains || [];
-        if (domains.length === 0) return false;
-        const hostname = new URL(url).hostname;
-        return domains.some(d => hostname === d || hostname.endsWith('.' + d));
-    } catch { return false; }
-}
-
 chrome.action.onClicked.addListener(async (tab) => {
     if (tab.url && isSupportedSite(tab.url)) {
-        try {
-            await chrome.tabs.sendMessage(tab.id, { type: 'OPEN_PANEL_MODAL' });
-        } catch {
-            chrome.tabs.create({ url: chrome.runtime.getURL('popup/guide.html') });
-        }
-    } else if (tab.url && await isMirrorSiteBg(tab.url)) {
         try {
             await chrome.tabs.sendMessage(tab.id, { type: 'OPEN_PANEL_MODAL' });
         } catch {
@@ -236,8 +368,28 @@ chrome.action.onClicked.addListener(async (tab) => {
 // ============================================
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type === 'LOAD_OPTIONAL_FEATURE') {
+        if (!sender.tab?.id) {
+            sendResponse({ success: false, error: 'Missing sender tab' });
+            return false;
+        }
+        injectOptionalFeature(sender.tab.id, sender.frameId || 0, request.feature)
+            .then(() => sendResponse({ success: true }))
+            .catch(error => sendResponse({ success: false, error: error.message }));
+        return true;
+    }
     
     // --- Google Drive 同步 ---
+
+    if (request.type === 'REQUEST_GDRIVE_PERMISSIONS') {
+        requestGDrivePermissions()
+            .then(granted => sendResponse({
+                success: granted === true,
+                error: granted ? null : 'Cloud backup permission was declined'
+            }))
+            .catch(error => sendResponse({ success: false, error: error.message }));
+        return true;
+    }
     
     // 上传到 Google Drive（未登录时自动触发登录）
     if (request.type === 'GDRIVE_UPLOAD') {
@@ -267,42 +419,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return true;
     }
     
-    // --- 旧功能：图片获取（CORS 绕过）---
-    
-    if (request.type === 'FETCH_IMAGE') {
-        fetchImageAsBase64(request.url)
-            .then(result => sendResponse(result))
-            .catch(error => sendResponse({ success: false, error: error.message }));
-        return true;
-    }
 });
-
-/**
- * 获取图片并转换为 base64
- */
-async function fetchImageAsBase64(url) {
-    try {
-        const response = await fetch(url, { credentials: 'include' });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const blob = await response.blob();
-        
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                resolve({
-                    success: true,
-                    data: reader.result,
-                    type: blob.type
-                });
-            };
-            reader.onerror = () => reject(new Error('Failed to read blob'));
-            reader.readAsDataURL(blob);
-        });
-    } catch (error) {
-        console.error('[AI Chat Timeline Background] Fetch failed:', error);
-        return { success: false, error: error.message };
-    }
-}

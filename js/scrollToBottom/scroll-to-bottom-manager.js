@@ -21,7 +21,7 @@ class ScrollToBottomManager {
         this.isEnabled = false;
         this.isDestroyed = false;
         this.isVisible = false;
-        this.globalEnabled = true;  // 全局开关状态（默认开启）
+        this.globalEnabled = false;  // 全局开关状态（轻量版默认关闭）
         this.platformSettings = {};
         this.storageListener = null;
         this._unsubscribeObserver = null;
@@ -101,11 +101,10 @@ class ScrollToBottomManager {
         try {
             const result = await chrome.storage.local.get(['scrollToBottomPlatformSettings', 'scrollToBottomEnabled']);
             this.platformSettings = result.scrollToBottomPlatformSettings || {};
-            // 全局开关，默认开启
-            this.globalEnabled = result.scrollToBottomEnabled !== false;
+            this.globalEnabled = result.scrollToBottomEnabled === true;
         } catch (e) {
             this.platformSettings = {};
-            this.globalEnabled = true;
+            this.globalEnabled = false;
         }
     }
     
@@ -138,7 +137,7 @@ class ScrollToBottomManager {
                 
                 // 监听全局开关变化
                 if (changes.scrollToBottomEnabled) {
-                    this.globalEnabled = changes.scrollToBottomEnabled.newValue !== false;
+                    this.globalEnabled = changes.scrollToBottomEnabled.newValue === true;
                     needsUpdate = true;
                 }
                 

@@ -6,6 +6,7 @@
 
 (function() {
     'use strict';
+    const messageToken = decodeURIComponent(window.location.hash.slice(1));
 
     let db = null;
     let sqlJsLoaded = false;
@@ -15,7 +16,7 @@
      */
     function postMessage(type, data) {
         if (window.parent && window.parent !== window) {
-            window.parent.postMessage({ type, data }, '*');
+            window.parent.postMessage({ type, data, token: messageToken }, '*');
         }
     }
 
@@ -186,11 +187,13 @@
      * 监听来自父窗口的消息
      */
     window.addEventListener('message', (event) => {
+        if (event.source !== window.parent) return;
         if (!event.data || typeof event.data !== 'object') return;
+        if (event.data.token !== messageToken) return;
         
         const { type, code } = event.data;
         
-        if (type === 'EXECUTE_SQL' && code) {
+        if (type === 'EXECUTE_SQL' && typeof code === 'string' && code.length <= 1000000) {
             executeSQL(code);
         }
     });
@@ -199,4 +202,3 @@
     postMessage('SQL_SANDBOX_READY', {});
 
 })();
-

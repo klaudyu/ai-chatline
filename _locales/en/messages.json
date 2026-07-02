@@ -101,6 +101,9 @@
   "animTabDesc": {
     "message": "Displayed above the chat box. Cute animals walk around when AI replies."
   },
+  "animLightweightHint": {
+    "message": "Off by default. Choose one pet to show it while AI replies; turn it off again to stop it."
+  },
   "animSnail": {
     "message": "Snail Parade"
   },
@@ -386,6 +389,9 @@
   "runnerSettingsHint": {
     "message": "When enabled, a Run button will appear on code blocks to execute code directly"
   },
+  "runnerAdvancedHint": {
+    "message": "Advanced feature. Loaded only after you enable it and may use additional page resources."
+  },
   "fiveStarReview": {
     "message": "Like it"
   },
@@ -433,6 +439,26 @@
   },
   "dataSyncTabName": {
     "message": "Data Sync"
+  },
+  "settingsGroupCore": { "message": "Core Features" },
+  "settingsGroupAdvanced": { "message": "Advanced Features" },
+  "settingsGroupExperimental": { "message": "Experimental" },
+  "settingsGroupBackup": { "message": "Backup & Sync" },
+  "settingsGroupAbout": { "message": "About" },
+  "localBackupTitle": {
+    "message": "Local JSON Backup (Recommended)"
+  },
+  "localBackupHint": {
+    "message": "Back up or restore with a JSON file without an account or cloud permissions."
+  },
+  "gdriveAdvancedTitle": {
+    "message": "Advanced Cloud Backup (Optional)"
+  },
+  "gdriveOptionalHint": {
+    "message": "Google identity and Drive API access are requested only when you first use cloud backup."
+  },
+  "gdrivePermissionDeclined": {
+    "message": "Cloud backup permission was not granted"
   },
   "exportTitle": {
     "message": "Manual Sync"

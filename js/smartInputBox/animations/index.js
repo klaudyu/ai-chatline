@@ -60,26 +60,29 @@ class InputBoxAnimationManager {
         }
         this._petData = await StorageAdapter.get(this._petDataKey) || {};
         const savedId = await StorageAdapter.get(this._storageKey);
-        // 默认动画为巫师
-        const activeId = savedId !== undefined ? savedId : 'wizard';
+        // 默认关闭，只有用户主动选择后才启动运行时监听和恢复定时器
+        const activeId = savedId || '';
         if (activeId && this._animations.has(activeId)) {
             this._activate(activeId);
+            this._startAIStateListener();
+            this._startRecoveryHooks();
         }
         this._startStorageListener();
-        this._startAIStateListener();
-        this._startRecoveryHooks();
         this._initialized = true;
-        this.pauseActive();
+        if (this._active) this.pauseActive();
     }
 
     async toggle(id) {
         this._cancelPreview();
         if (this._active?.id === id) {
             this._deactivate();
+            this._stopRuntimeHooks();
             await StorageAdapter.set(this._storageKey, '');
         } else {
             this._deactivate();
             this._activate(id);
+            this._startAIStateListener();
+            this._startRecoveryHooks();
             await StorageAdapter.set(this._storageKey, id);
             this._startPreview();
         }
@@ -171,24 +174,11 @@ class InputBoxAnimationManager {
     }
 
     destroy() {
-        this._cancelPreview();
-        this._clearPauseTimer();
+        this._stopRuntimeHooks();
         this._deactivate();
         if (this._storageListener) {
             StorageAdapter.removeChangeListener(this._storageListener);
             this._storageListener = null;
-        }
-        if (this._aiStateHandler) {
-            window.removeEventListener('ai:stateChange', this._aiStateHandler);
-            this._aiStateHandler = null;
-        }
-        if (this._healthTimer) {
-            clearInterval(this._healthTimer);
-            this._healthTimer = null;
-        }
-        if (this._visibilityHandler) {
-            document.removeEventListener('visibilitychange', this._visibilityHandler);
-            this._visibilityHandler = null;
         }
         this._initialized = false;
         this._isPositioned = false;
@@ -247,6 +237,10 @@ class InputBoxAnimationManager {
                 this._deactivate();
                 if (newId && this._animations.has(newId)) {
                     this._activate(newId);
+                    this._startAIStateListener();
+                    this._startRecoveryHooks();
+                } else {
+                    this._stopRuntimeHooks();
                 }
             }
         };
@@ -283,6 +277,23 @@ class InputBoxAnimationManager {
                 }
             };
             document.addEventListener('visibilitychange', this._visibilityHandler);
+        }
+    }
+
+    _stopRuntimeHooks() {
+        this._cancelPreview();
+        this._clearPauseTimer();
+        if (this._aiStateHandler) {
+            window.removeEventListener('ai:stateChange', this._aiStateHandler);
+            this._aiStateHandler = null;
+        }
+        if (this._healthTimer) {
+            clearInterval(this._healthTimer);
+            this._healthTimer = null;
+        }
+        if (this._visibilityHandler) {
+            document.removeEventListener('visibilitychange', this._visibilityHandler);
+            this._visibilityHandler = null;
         }
     }
 
@@ -370,14 +381,5 @@ if (typeof window.inputBoxAnimationManager === 'undefined') {
     }
     if (typeof WizardAnimation !== 'undefined') {
         window.inputBoxAnimationManager.register(new WizardAnimation());
-    }
-    if (typeof CatAnimation !== 'undefined') {
-        window.inputBoxAnimationManager.register(new CatAnimation());
-    }
-    if (typeof DogAnimation !== 'undefined') {
-        window.inputBoxAnimationManager.register(new DogAnimation());
-    }
-    if (typeof RedPandaAnimation !== 'undefined') {
-        window.inputBoxAnimationManager.register(new RedPandaAnimation());
     }
 }

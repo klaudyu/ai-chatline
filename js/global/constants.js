@@ -377,7 +377,7 @@ function getSiteNameMap() {
 
 /**
  * 根据 URL 获取网站信息
- * 使用 includes 匹配，支持 www 等前缀
+ * 使用精确域名或子域名匹配，避免相似域名误识别
  * 
  * @param {string} url - 网站 URL
  * @returns {Object} { id, name, logo }
@@ -387,10 +387,10 @@ function getSiteInfoByUrl(url) {
         const urlObj = new URL(url);
         const hostname = urlObj.hostname;
         
-        // 遍历所有平台，使用 includes 匹配
+        // 遍历所有平台，匹配根域名或其子域名
         for (const platform of SITE_INFO) {
             for (const site of platform.sites) {
-                if (hostname.includes(site)) {
+                if (hostnameMatchesSite(hostname, site)) {
                     return {
                         id: platform.id,
                         name: platform.name,
@@ -407,6 +407,13 @@ function getSiteInfoByUrl(url) {
     }
 }
 
+function hostnameMatchesSite(hostname, site) {
+    const normalizedHostname = String(hostname || '').toLowerCase();
+    const normalizedSite = String(site || '').toLowerCase();
+    return normalizedHostname === normalizedSite ||
+        normalizedHostname.endsWith(`.${normalizedSite}`);
+}
+
 /**
  * 检查 URL 是否匹配某个平台
  * @param {string} url - URL 字符串
@@ -416,8 +423,13 @@ function getSiteInfoByUrl(url) {
 function matchesPlatform(url, platformId) {
     const platform = SITE_INFO.find(p => p.id === platformId);
     if (!platform) return false;
-    
-    return platform.sites.some(site => url.includes(site));
+
+    try {
+        const hostname = new URL(url).hostname;
+        return platform.sites.some(site => hostnameMatchesSite(hostname, site));
+    } catch {
+        return false;
+    }
 }
 
 /**
@@ -435,12 +447,17 @@ function matchesCurrentPlatform(platformId) {
  * @returns {Object|null} 平台信息 { id, sites, name, logoPath, features }
  */
 function getPlatformByUrl(url) {
-    for (const platform of SITE_INFO) {
-        for (const site of platform.sites) {
-            if (url.includes(site)) {
-                return platform;
+    try {
+        const hostname = new URL(url).hostname;
+        for (const platform of SITE_INFO) {
+            for (const site of platform.sites) {
+                if (hostnameMatchesSite(hostname, site)) {
+                    return platform;
+                }
             }
         }
+    } catch {
+        return null;
     }
     return null;
 }
