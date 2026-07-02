@@ -12,7 +12,7 @@
  */
 
 const CHANGELOG_DATA = {
-    id: '2026062301',
+    id: '2026070201',
     // 'icon' = 提示词按钮左侧显示 Logo + 小红点（温和提示）
     // 'popup' = 自动弹窗展示更新内容（强提醒）
     displayMode: 'icon',
@@ -21,12 +21,20 @@ const CHANGELOG_DATA = {
 
     improvements: [
         {
-            zh: '优化提示词悬浮按钮定位，提升 ChatGPT 及其他 AI 平台上的显示稳定性',
-            en: 'Improved prompt button positioning for more stable placement on ChatGPT and other AI platforms'
+            zh: '优化右侧时间轴底部间距，在不同窗口尺寸下显示更协调',
+            en: 'Improved the timeline bottom spacing for a more balanced layout across window sizes'
         },
         {
-            zh: '适配滚动、输入框高度变化和窄窗口场景，减少按钮错位、漂移与遮挡',
-            en: 'Improved compatibility with scrolling, input resizing, and narrow windows to reduce misalignment and overlap'
+            zh: '默认体验更轻量，代码运行、图表、公式和动画等高级功能按需启用',
+            en: 'Made the default experience lighter, with code, diagrams, formulas, and animations enabled only when needed'
+        },
+        {
+            zh: '优化多平台能力展示、消息识别与对话导出稳定性',
+            en: 'Improved platform capability display, message detection, and conversation export stability'
+        },
+        {
+            zh: '加强 Markdown、Mermaid、HTML 预览与代码运行的安全边界',
+            en: 'Strengthened safety boundaries for Markdown, Mermaid, HTML previews, and code execution'
         }
     ]
 };

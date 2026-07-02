@@ -44,7 +44,7 @@
         constructor() {
             // 公式相关配置（异步从 storage 加载）
             this._config = {
-                latexOn: true,    // formulaLatexEnabled，默认 true
+                latexOn: false,   // formulaLatexEnabled，默认 false
                 mathmlOn: false,  // formulaMathMLEnabled，默认 false
                 template: '%s'    // formulaFormat 对应的模板
             };
@@ -99,7 +99,7 @@
         }
 
         _applyConfig(raw) {
-            this._config.latexOn = raw.formulaLatexEnabled !== false;
+            this._config.latexOn = raw.formulaLatexEnabled === true;
             this._config.mathmlOn = raw.formulaMathMLEnabled === true;
             this._config.formatId = raw.formulaFormat || 'none';
 

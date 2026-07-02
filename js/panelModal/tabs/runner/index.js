@@ -3,7 +3,7 @@
  * 
  * 功能：
  * - 管理各语言代码块运行功能的开关
- * - 默认开启
+ * - 默认关闭，仅在用户主动开启后加载运行时
  */
 
 class RunnerTab extends BaseTab {
@@ -42,7 +42,7 @@ class RunnerTab extends BaseTab {
         container.innerHTML = `
             <div class="platform-list">
                 <div class="platform-list-title">${chrome.i18n.getMessage('runnerSettingsTitle') || '代码运行功能'}</div>
-                <div class="platform-list-hint">${chrome.i18n.getMessage('runnerSettingsHint') || '控制是否在代码块上显示运行按钮'}</div>
+                <div class="platform-list-hint">${chrome.i18n.getMessage('runnerAdvancedHint') || '高级功能：仅在开启后加载，可能增加页面资源占用。'}</div>
                 <div class="platform-list-container">
                     ${languageItems}
                 </div>
@@ -63,14 +63,13 @@ class RunnerTab extends BaseTab {
             const toggle = document.getElementById(`runner-${lang.id}-toggle`);
             if (!toggle) continue;
             
-            // 读取当前状态（默认开启）
+            // 读取当前状态（默认关闭）
             try {
                 const result = await chrome.storage.local.get(lang.storageKey);
-                // 默认值为 true（开启）
-                toggle.checked = result[lang.storageKey] !== false;
+                toggle.checked = result[lang.storageKey] === true;
             } catch (e) {
                 console.error(`[RunnerTab] Failed to load ${lang.id} state:`, e);
-                toggle.checked = true;
+                toggle.checked = false;
             }
             
             // 监听开关变化

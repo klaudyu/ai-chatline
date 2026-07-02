@@ -63,10 +63,10 @@ class TimelineManager {
         this.onKeyDown = null;
         // ✅ 键盘导航功能启用状态（内存缓存，默认开启）
         this.arrowKeysNavigationEnabled = true;
-        // ✅ AI 回复完成提醒启用状态（内存缓存，默认开启）
-        this.aiCompleteToastEnabled = true;
-        // ✅ 对话导出启用状态（内存缓存，默认关闭）
-        this.conversationExportEnabled = false;
+        // ✅ AI 回复完成提醒启用状态（内存缓存，默认关闭）
+        this.aiCompleteToastEnabled = false;
+        // ✅ 对话导出启用状态（内存缓存，默认开启）
+        this.conversationExportEnabled = true;
         // ✅ 长对话性能优化模块（默认关闭，按平台配置启用）
         this.longConversationOptimizer = null;
         // ✅ 平台设置（内存缓存）
@@ -2025,7 +2025,7 @@ class TimelineManager {
 
                 // ✅ 监听 AI 回复完成提醒状态变化
                 if (changes.timelineAICompleteToastEnabled) {
-                    this.aiCompleteToastEnabled = changes.timelineAICompleteToastEnabled.newValue !== false;
+                    this.aiCompleteToastEnabled = changes.timelineAICompleteToastEnabled.newValue === true;
                 }
                 
                 // ✅ 监听平台设置变化
@@ -2035,7 +2035,7 @@ class TimelineManager {
 
                 // ✅ 监听对话导出开关变化
                 if (changes.conversationExportEnabled) {
-                    this.conversationExportEnabled = changes.conversationExportEnabled.newValue === true;
+                    this.conversationExportEnabled = changes.conversationExportEnabled.newValue !== false;
                     this.updateConversationExportButtonVisibility();
                     if (!this.conversationExportEnabled && typeof ConversationExportPanel !== 'undefined') {
                         ConversationExportPanel.hide?.();
@@ -3784,14 +3784,13 @@ class TimelineManager {
     async loadAICompleteToastState() {
         try {
             const enabled = await StorageAdapter.get('timelineAICompleteToastEnabled');
-            // 默认开启（!== false）
-            this.aiCompleteToastEnabled = enabled !== false;
+            this.aiCompleteToastEnabled = enabled === true;
         } catch (e) {
             if (!TimelineUtils.isExtensionContextInvalidated(e)) {
                 console.error('[Timeline] Failed to load AI complete toast state:', e);
             }
             // 读取失败，默认开启
-            this.aiCompleteToastEnabled = true;
+            this.aiCompleteToastEnabled = false;
         }
     }
 
@@ -3815,12 +3814,12 @@ class TimelineManager {
     async loadConversationExportState() {
         try {
             const enabled = await StorageAdapter.get('conversationExportEnabled');
-            this.conversationExportEnabled = enabled === true;
+            this.conversationExportEnabled = enabled !== false;
         } catch (e) {
             if (!TimelineUtils.isExtensionContextInvalidated(e)) {
                 console.error('[Timeline] Failed to load conversation export state:', e);
             }
-            this.conversationExportEnabled = false;
+            this.conversationExportEnabled = true;
         }
     }
 

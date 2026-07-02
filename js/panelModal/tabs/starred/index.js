@@ -37,6 +37,10 @@ class StarredTab extends BaseTab {
         });
     }
 
+    shouldShow() {
+        return getCurrentPlatform()?.features?.timeline === true;
+    }
+
     getInitialState() {
         return {
             transient: { searchQuery: '' },

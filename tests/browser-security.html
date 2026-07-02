@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ChatLine Browser Security Test</title>
+</head>
+<body data-xss="0">
+    <main>
+        <h1>Markdown security</h1>
+        <output id="result" data-status="running">RUNNING</output>
+        <div id="preview"></div>
+    </main>
+    <script src="/js/runner/libs/marked.min.js"></script>
+    <script src="/js/runner/core/base-runner.js"></script>
+    <script src="/js/runner/languages/markdown/index.js"></script>
+    <script src="/tests/browser-security.js"></script>
+</body>
+</html>

@@ -133,8 +133,8 @@ class DoubaoConversationExtractor extends BasePlatformConversationExtractor {
 
     _contentOf(candidate, role) {
         const selectors = role === 'user'
-            ? ['[data-plugin-identifier]', '[class*="bubble"]', '[class*="content"]']
-            : ['[data-plugin-identifier]', '.markdown', '[class*="markdown"]', '[class*="answer"]', '[class*="content"]'];
+            ? ['[data-plugin-identifier]', '[class*="bubble"]']
+            : ['[data-plugin-identifier]', '.markdown', '[class*="markdown"]'];
         return this.base._extractBestText(candidate, selectors);
     }
 }
@@ -188,7 +188,6 @@ class DeepSeekConversationExtractor extends BasePlatformConversationExtractor {
             '.ds-markdown',
             '.markdown',
             '[class*="markdown"]',
-            '[class*="content"]',
             'div'
         ]);
     }
@@ -328,7 +327,6 @@ class TongyiConversationExtractor extends BasePlatformConversationExtractor {
             '.markdown',
             '.markdown-body',
             '[class*="markdown"]',
-            '[class*="content"]',
             'article'
         ]);
     }
@@ -349,10 +347,14 @@ class YiyanConversationExtractor extends BasePlatformConversationExtractor {
             '[data-message-author-role="user"]',
             '[data-message-role="user"]',
             '[data-role="user"]',
-            '[class*="answer"]',
-            '[class*="bot"]',
-            '[class*="assistant"]',
-            '[class*="markdown"]',
+            '[data-message-id][class*="answer"]',
+            '[data-msgid][class*="answer"]',
+            '[data-message-id][class*="bot"]',
+            '[data-msgid][class*="bot"]',
+            '[data-message-id][class*="assistant"]',
+            '[data-msgid][class*="assistant"]',
+            '[data-message-id] [class*="markdown"]',
+            '[data-msgid] [class*="markdown"]',
             '[data-message-author-role="assistant"]',
             '[data-message-role="assistant"]',
             '[data-role="assistant"]'
@@ -404,8 +406,8 @@ class YiyanConversationExtractor extends BasePlatformConversationExtractor {
 
     _contentOf(candidate, role) {
         const selectors = role === 'user'
-            ? ['[class*="questionText"]', '[class*="question-text"]', '[class*="content"]', 'span']
-            : ['[class*="markdown"]', '[class*="answer"]', '[class*="bot"]', '[class*="assistant"]', '[class*="content"]', 'p'];
+            ? ['[data-message-content]', '[data-testid="message-content"]', '[class*="questionText"]', '[class*="question-text"]']
+            : ['[data-message-content]', '[data-testid="message-content"]', '[class*="markdown"]', 'p'];
         return this.base._extractBestText(candidate, selectors, {
             removeSelectors: [
                 'button',

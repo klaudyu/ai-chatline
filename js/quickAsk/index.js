@@ -53,13 +53,13 @@
         }
     }
     
-    // 检查功能是否启用（默认开启）
+    // 检查功能是否启用（轻量版默认关闭）
     async function isQuickAskEnabled() {
         try {
             const result = await chrome.storage.local.get('quickAskEnabled');
-            return result.quickAskEnabled !== false;
+            return result.quickAskEnabled === true;
         } catch (e) {
-            return true;
+            return false;
         }
     }
     

@@ -6,13 +6,14 @@
 
 (function() {
     'use strict';
+    const messageToken = decodeURIComponent(window.location.hash.slice(1));
 
     /**
      * 发送消息到父窗口
      */
     function postMessage(type, data) {
         if (window.parent && window.parent !== window) {
-            window.parent.postMessage({ type, data }, '*');
+            window.parent.postMessage({ type, data, token: messageToken }, '*');
         }
     }
 
@@ -159,11 +160,13 @@
      * 监听来自父窗口的消息
      */
     window.addEventListener('message', (event) => {
+        if (event.source !== window.parent) return;
         if (!event.data || typeof event.data !== 'object') return;
+        if (event.data.token !== messageToken) return;
         
         const { type, code } = event.data;
         
-        if (type === 'EXECUTE_TS' && code) {
+        if (type === 'EXECUTE_TS' && typeof code === 'string' && code.length <= 1000000) {
             executeTypeScript(code);
         }
     });
@@ -172,4 +175,3 @@
     postMessage('TS_SANDBOX_READY', {});
 
 })();
-

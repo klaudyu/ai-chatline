@@ -37,6 +37,10 @@ class TimelineSettingsTab extends BaseTab {
         </svg>`;
     }
 
+    shouldShow() {
+        return getCurrentPlatform()?.features?.timeline === true;
+    }
+
     _handleExtensionError(scope, error) {
         if (!isTimelineTabExtensionContextInvalidated(error)) {
             console.error(`[TimelineSettingsTab] ${scope}:`, error);
@@ -355,10 +359,10 @@ class TimelineSettingsTab extends BaseTab {
         if (aiCompleteToastCheckbox) {
             try {
                 const result = await chrome.storage.local.get('timelineAICompleteToastEnabled');
-                aiCompleteToastCheckbox.checked = result.timelineAICompleteToastEnabled !== false;
+                aiCompleteToastCheckbox.checked = result.timelineAICompleteToastEnabled === true;
             } catch (e) {
                 this._handleExtensionError('Failed to load AI complete toast state', e);
-                aiCompleteToastCheckbox.checked = true;
+                aiCompleteToastCheckbox.checked = false;
             }
 
             this.addEventListener(aiCompleteToastCheckbox, 'change', async (e) => {

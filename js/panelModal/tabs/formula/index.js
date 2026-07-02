@@ -89,7 +89,7 @@ class FormulaTab extends BaseTab {
         try {
             const result = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled', 'formulaFormat']);
             
-            const latexEnabled = result.formulaLatexEnabled !== false;
+            const latexEnabled = result.formulaLatexEnabled === true;
             const mathmlEnabled = result.formulaMathMLEnabled === true;
             
             latexToggle.checked = latexEnabled;
@@ -105,8 +105,8 @@ class FormulaTab extends BaseTab {
             });
         } catch (e) {
             console.error('[FormulaTab] Failed to load state:', e);
-            latexToggle.checked = true;
-            mathmlToggle.checked = true;
+            latexToggle.checked = false;
+            mathmlToggle.checked = false;
         }
         
         this.addEventListener(latexToggle, 'change', async (e) => {

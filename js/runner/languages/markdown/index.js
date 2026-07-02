@@ -31,7 +31,7 @@ class MarkdownRunner extends BaseRunner {
             }
             
             // 渲染 Markdown
-            const html = marked.parse(code);
+            const html = this._sanitizeHtml(marked.parse(code));
             
             // 发送渲染结果
             onOutput({
@@ -64,6 +64,30 @@ class MarkdownRunner extends BaseRunner {
      */
     cleanup() {
         // 无需清理
+    }
+
+    _sanitizeHtml(html) {
+        const template = document.createElement('template');
+        template.innerHTML = html;
+
+        template.content.querySelectorAll('script, style, iframe, object, embed, link, meta, base, form').forEach(el => el.remove());
+        template.content.querySelectorAll('*').forEach(el => {
+            for (const attr of Array.from(el.attributes)) {
+                const name = attr.name.toLowerCase();
+                const value = attr.value.trim().replace(/[\u0000-\u001f\u007f\s]+/g, '').toLowerCase();
+                const isExecutableAttribute = name.startsWith('on') || name === 'srcdoc' || name === 'style';
+                const isUrlAttribute = ['href', 'src', 'xlink:href', 'formaction'].includes(name);
+                const isUnsafeUrl = value.startsWith('javascript:') ||
+                    value.startsWith('vbscript:') ||
+                    (value.startsWith('data:') && !/^data:image\/(png|gif|jpe?g|webp);/i.test(value));
+
+                if (isExecutableAttribute || (isUrlAttribute && isUnsafeUrl)) {
+                    el.removeAttribute(attr.name);
+                }
+            }
+        });
+
+        return template.innerHTML;
     }
 
     /**
@@ -127,4 +151,3 @@ console.log("Hello World!");
 if (typeof window !== 'undefined') {
     window.MarkdownRunner = MarkdownRunner;
 }
-

@@ -78,7 +78,7 @@ class FormulaManager {
         // 读取开关状态
         try {
             const r = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled']);
-            this._latexEnabled = r.formulaLatexEnabled !== false;
+            this._latexEnabled = r.formulaLatexEnabled === true;
             this._mathmlEnabled = r.formulaMathMLEnabled === true;
         } catch (e) {}
 
@@ -102,7 +102,7 @@ class FormulaManager {
     async checkIfEnabled() {
         try {
             const result = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled']);
-            const latexOn = result.formulaLatexEnabled !== false;
+            const latexOn = result.formulaLatexEnabled === true;
             const mathmlOn = result.formulaMathMLEnabled === true;
             return latexOn || mathmlOn;
         } catch (e) {
@@ -120,7 +120,7 @@ class FormulaManager {
         this.storageListener = (changes, areaName) => {
             if (areaName !== 'local') return;
             if (changes.formulaLatexEnabled) {
-                this._latexEnabled = changes.formulaLatexEnabled.newValue !== false;
+                this._latexEnabled = changes.formulaLatexEnabled.newValue === true;
             }
             if (changes.formulaMathMLEnabled) {
                 this._mathmlEnabled = changes.formulaMathMLEnabled.newValue === true;
@@ -783,4 +783,3 @@ class FormulaManager {
         });
     }
 }
-

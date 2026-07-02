@@ -17,15 +17,18 @@
 /* ✅ 时间轴包装容器（包含时间轴和收藏按钮） */
 .ait-chat-timeline-wrapper {
     --ait-timeline-vertical-offset: clamp(-24px, -3vh, -16px);
+    --ait-timeline-bottom-safe-area: clamp(20px, 3vh, 32px);
     position: fixed;
-    /* Position values (top, right) are set by JavaScript based on site adapter */
+    /* Top/right are platform-specific; bottom keeps the complete control stack in view. */
     top: 60px; /* Default fallback */
     right: 17px; /* Default fallback */
+    bottom: max(var(--ait-timeline-bottom-safe-area), env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
     z-index: 30; /* ensure above site chrome */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 10px; /* 时间轴和收藏按钮之间的间距 */
+    gap: clamp(6px, 1.4vh, 10px); /* 矮窗口下为时间轴保留更多可用高度 */
     transform: translateY(var(--ait-timeline-vertical-offset));
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
@@ -109,6 +112,8 @@ html[data-timeline-theme="dark"] .timeline-toggle-btn:active {
     position: relative; /* 相对于包装容器定位 */
     width: 28px;
     height: calc(100vh - 100px); /* Default fallback */
+    min-height: 96px;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;

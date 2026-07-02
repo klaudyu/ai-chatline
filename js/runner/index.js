@@ -431,7 +431,7 @@
             <div class="runner-html-preview">
                 <iframe 
                     srcdoc="${escapedHtml}" 
-                    sandbox="allow-scripts allow-same-origin"
+                    sandbox="allow-scripts"
                     style="width: 100%; height: 200px; border: 1px solid var(--runner-border); border-radius: 4px; background: white;"
                 ></iframe>
             </div>
@@ -587,8 +587,7 @@
     async function isJavaScriptRunnerEnabled() {
         try {
             const result = await chrome.storage.local.get('runnerJsEnabled');
-            // 默认值为 true（开启）
-            return result.runnerJsEnabled !== false;
+            return result.runnerJsEnabled === true;
         } catch (e) {
             // 上下文失效时静默返回 false
             return false;
@@ -602,8 +601,7 @@
     async function isTypeScriptRunnerEnabled() {
         try {
             const result = await chrome.storage.local.get('runnerTypeScriptEnabled');
-            // 默认值为 true（开启）
-            return result.runnerTypeScriptEnabled !== false;
+            return result.runnerTypeScriptEnabled === true;
         } catch (e) {
             // 上下文失效时静默返回 false
             return false;
@@ -617,8 +615,7 @@
     async function isSQLRunnerEnabled() {
         try {
             const result = await chrome.storage.local.get('runnerSQLEnabled');
-            // 默认值为 true（开启）
-            return result.runnerSQLEnabled !== false;
+            return result.runnerSQLEnabled === true;
         } catch (e) {
             // 上下文失效时静默返回 false
             return false;
@@ -632,7 +629,7 @@
     async function isHtmlRunnerEnabled() {
         try {
             const result = await chrome.storage.local.get('runnerHtmlEnabled');
-            return result.runnerHtmlEnabled !== false;
+            return result.runnerHtmlEnabled === true;
         } catch (e) {
             return false;
         }
@@ -645,7 +642,7 @@
     async function isJsonRunnerEnabled() {
         try {
             const result = await chrome.storage.local.get('runnerJsonEnabled');
-            return result.runnerJsonEnabled !== false;
+            return result.runnerJsonEnabled === true;
         } catch (e) {
             return false;
         }
@@ -658,7 +655,7 @@
     async function isMarkdownRunnerEnabled() {
         try {
             const result = await chrome.storage.local.get('runnerMarkdownEnabled');
-            return result.runnerMarkdownEnabled !== false;
+            return result.runnerMarkdownEnabled === true;
         } catch (e) {
             return false;
         }
@@ -672,7 +669,7 @@
         try {
             const key = window.MermaidRenderer?.STORAGE_KEY || 'mermaidRendererEnabled';
             const result = await chrome.storage.local.get(key);
-            return result[key] !== false;
+            return result[key] === true;
         } catch {
             return false;
         }
@@ -749,7 +746,7 @@
         try {
             const hostname = location.hostname;
             return SITE_INFO.some(platform =>
-                platform.sites.some(site => hostname.includes(site))
+                platform.sites.some(site => hostnameMatchesSite(hostname, site))
             );
         } catch {
             return false;
