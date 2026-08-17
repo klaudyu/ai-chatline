@@ -132,7 +132,7 @@ const SITE_INFO = [
     },
     {
         id: 'yiyan',
-        sites: ['yiyan.baidu.com'],
+        sites: ['yiyan.baidu.com', 'wenxin.baidu.com'],
         name: '文心一言',
         logoPath: 'images/logo/wenxin.webp',
         features: {

@@ -50,6 +50,7 @@ test('13 platform fixtures match the declared capability table', () => {
     for (const fixture of fixtures) {
         assert.equal(getPlatformByUrl(fixture.url)?.id, fixture.id);
     }
+    assert.equal(getPlatformByUrl('https://wenxin.baidu.com/?enter_type=yiyan_site')?.id, 'yiyan');
     assert.equal(getPlatformByUrl('https://evilchatgpt.com/c/demo'), null);
 });
 
@@ -100,4 +101,26 @@ test('capability differences are explicit for known partial platforms', () => {
     assert.equal(byId.notebooklm.conversationExport, true);
     assert.equal(byId.yiyan.smartInput, false);
     assert.equal(byId.gemini.scrollToBottom, true);
+});
+
+test('yiyan adapter follows the current Wenxin conversation-flow markers', () => {
+    const fixture = fixtures.find(item => item.id === 'yiyan');
+    const adapter = createTimelineAdapter(fixture);
+    assert.equal(adapter.isConversationRoute('/search/demo'), true);
+    assert.equal(adapter.isConversationRoute('/chat/demo'), true);
+    assert.equal(adapter.isConversationRoute('/chat/demo/legacy'), true);
+    assert.equal(adapter.isConversationRoute('/search'), false);
+    assert.equal(adapter.extractConversationId('/search/lid1'), 'lid1');
+    assert.match(adapter.getUserMessageSelector(), /conversation-flow-question-container/);
+    assert.match(adapter.getUserMessageSelector(), /chat-question/);
+
+    const parent = {
+        getAttribute: name => name === 'data-lid' ? 'lid1' : null,
+        id: ''
+    };
+    const element = {
+        getAttribute: () => null,
+        closest: () => parent
+    };
+    assert.equal(adapter.generateTurnId(element, 0), 'yiyan-lid1');
 });
