@@ -96,6 +96,47 @@ test('advanced features are opt-in and animation choices are limited to four', (
     assert.match(read('js/panelModal/tabs/highlight/index.js'), /result\.highlightEnabled !== false/);
 });
 
+test('timeline route teardown releases delegated feature handlers', () => {
+    const timelineManager = read('js/timeline/timeline-manager.js');
+    assert.match(timelineManager, /this\._eventDelegateUnsubs = \[\]/);
+    for (const selector of [
+        '.ait-question-list-btn',
+        '.timeline-starred-btn',
+        '.timeline-settings-btn',
+        '.ait-conversation-export-btn',
+        '.ait-notepad-btn'
+    ]) {
+        assert.equal(
+            timelineManager.includes(`this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '${selector}'`),
+            true,
+            `Missing delegated handler cleanup: ${selector}`
+        );
+    }
+    assert.match(timelineManager, /this\._eventDelegateUnsubs\.splice\(0\)/);
+
+    const listeners = [];
+    const delegateContext = {
+        window: {},
+        document: {
+            addEventListener: (type, listener) => listeners.push({ type, listener }),
+            removeEventListener: (type, listener) => {
+                const index = listeners.findIndex(item => item.type === type && item.listener === listener);
+                if (index >= 0) listeners.splice(index, 1);
+            }
+        },
+        console
+    };
+    vm.createContext(delegateContext);
+    vm.runInContext(read('js/global/event-delegate-manager/index.js'), delegateContext);
+    const firstUnsubscribe = delegateContext.window.eventDelegateManager.on('click', '.fixture', () => {});
+    const unsubscribe = delegateContext.window.eventDelegateManager.on('click', '.fixture', () => {});
+    assert.equal(listeners.length, 1);
+    firstUnsubscribe();
+    assert.equal(listeners.length, 1);
+    unsubscribe();
+    assert.equal(listeners.length, 0);
+});
+
 test('digital pet stays idle when no animation was selected', async () => {
     let intervalCount = 0;
     const animationWindow = { addEventListener: () => {}, removeEventListener: () => {} };
@@ -199,6 +240,13 @@ test('manifest permissions and platform matches stay bounded', () => {
     assert.ok(manifest.optional_host_permissions.includes('https://www.googleapis.com/*'));
     assert.equal(manifest.content_scripts.some(item => item.matches.includes('<all_urls>')), false);
     assert.equal(manifest.web_accessible_resources.some(item => item.matches.includes('<all_urls>')), false);
+    assert.ok(manifest.host_permissions.includes('https://wenxin.baidu.com/*'));
+    const yiyanMatches = manifest.content_scripts.filter(item => item.matches.includes('https://yiyan.baidu.com/*'));
+    assert.ok(yiyanMatches.length > 0);
+    for (const item of yiyanMatches) {
+        assert.ok(item.matches.includes('https://wenxin.baidu.com/*'));
+    }
+    assert.match(read('js/background.js'), /'wenxin\.baidu\.com'/);
 });
 
 test('Firefox build keeps identity required but Google API host optional', () => {

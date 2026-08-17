@@ -1,7 +1,7 @@
 /**
  * Yiyan (文心一言) Adapter
  * 
- * Supports: yiyan.baidu.com
+ * Supports: yiyan.baidu.com and wenxin.baidu.com
  * Features: 使用 class 前缀识别用户消息
  */
 
@@ -15,8 +15,10 @@ class YiyanAdapter extends SiteAdapter {
     }
 
     getUserMessageSelector() {
-        // 基于多信号识别用户消息，保留 questionText 作为主路径
+        // 文心当前对话流使用 conversation-flow-question-container，保留旧版路径
         return [
+            '[class*="conversation-flow-question-container"]',
+            'chat-question',
             '[class*="questionText"]',
             '[class*="question-text"]',
             '[class*="question"][data-msgid]',
@@ -44,6 +46,8 @@ class YiyanAdapter extends SiteAdapter {
     _normalizeUserMessageElement(element) {
         if (!element?.closest) return element;
         return element.closest([
+            '[class*="conversation-flow-question-container"]',
+            'chat-question',
             '[class*="questionText"]',
             '[class*="question-text"]',
             '[class*="question"][data-msgid]',
@@ -76,13 +80,17 @@ class YiyanAdapter extends SiteAdapter {
     }
 
     generateTurnId(element, index) {
-        const idSource = element.closest?.('[data-message-id], [data-msgid], [data-id], [id]');
+        const idSource = element.closest?.('[data-message-id], [data-msgid], [data-id], [data-lid], [data-qa-pair-id], [id]');
         const id = element.getAttribute?.('data-message-id') ||
             element.getAttribute?.('data-msgid') ||
             element.getAttribute?.('data-id') ||
+            element.getAttribute?.('data-lid') ||
+            element.getAttribute?.('data-qa-pair-id') ||
             idSource?.getAttribute?.('data-message-id') ||
             idSource?.getAttribute?.('data-msgid') ||
             idSource?.getAttribute?.('data-id') ||
+            idSource?.getAttribute?.('data-lid') ||
+            idSource?.getAttribute?.('data-qa-pair-id') ||
             idSource?.id;
         return id ? `yiyan-${id}` : `yiyan-${index}`;
     }
@@ -138,6 +146,9 @@ class YiyanAdapter extends SiteAdapter {
                 '[data-message-author-role="assistant"]',
                 '[data-message-role="assistant"]',
                 '[data-role="assistant"]',
+                '[class*="conversation-flow-answer-container"]',
+                '.answer-box',
+                '.answer-container',
                 '[data-message-id][class*="answer"]',
                 '[data-msgid][class*="answer"]',
                 '[data-message-id][class*="bot"]',
@@ -153,14 +164,14 @@ class YiyanAdapter extends SiteAdapter {
     }
 
     isConversationRoute(pathname) {
-        // 文心一言对话 URL: /chat/{id}
-        return pathname.includes('/chat/');
+        // 文心当前对话 URL: /search/{id}；兼容旧版 /chat/{id}
+        return /^\/search\/[^/]+$/.test(pathname) || pathname.includes('/chat/');
     }
 
     extractConversationId(pathname) {
         try {
-            // 从 /chat/MjM2MDc0MjI2Mjo1MDU4NDg3MjI 提取对话 ID
-            const match = pathname.match(/\/chat\/([^\/]+)/);
+            // 从 /search/{id} 或旧版 /chat/{id} 提取对话 ID
+            const match = pathname.match(/\/(?:search|chat)\/([^/]+)/);
             return match ? match[1] : null;
         } catch {
             return null;

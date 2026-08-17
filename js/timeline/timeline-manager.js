@@ -55,6 +55,7 @@ class TimelineManager {
         this.onStorage = null;
         this.onVisualViewportResize = null;
         this.onAIStateChange = null;
+        this._eventDelegateUnsubs = [];
         // ✅ 长按相关事件处理器
         this.startLongPress = null;
         this.checkLongPressMove = null;
@@ -2062,32 +2063,32 @@ class TimelineManager {
         try { StorageAdapter.addChangeListener(this.onStorage); } catch {}
         
         // ✅ 提问列表按钮点击事件
-        window.eventDelegateManager.on('click', '.ait-question-list-btn', () => {
+        this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.ait-question-list-btn', () => {
             if (window.questionListPopup) {
                 window.questionListPopup.toggle();
             }
-        });
+        }));
 
         // ✅ 收藏按钮点击事件（打开 Panel Modal 并显示收藏 tab）
         // 使用事件委托（解决长时间停留后事件失效问题）
-        window.eventDelegateManager.on('click', '.timeline-starred-btn', () => {
+        this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.timeline-starred-btn', () => {
             if (window.panelModal) {
                 window.panelModal.show('starred');
             }
-        });
+        }));
 
         // ✅ 固定设置入口：与提问列表里的设置按钮保持同一目标页面
-        window.eventDelegateManager.on('click', '.timeline-settings-btn', () => {
+        this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.timeline-settings-btn', () => {
             if (window.questionListPopup && window.questionListPopup.visible) {
                 window.questionListPopup.hide();
             }
             if (window.panelModal) {
                 window.panelModal.show('timeline');
             }
-        });
+        }));
 
         // ✅ 对话导出按钮点击事件
-        window.eventDelegateManager.on('click', '.ait-conversation-export-btn', () => {
+        this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.ait-conversation-export-btn', () => {
             if (!this.conversationExportEnabled) return;
             if (window.questionListPopup && window.questionListPopup.visible) {
                 window.questionListPopup.hide();
@@ -2097,14 +2098,14 @@ class TimelineManager {
             } else if (window.globalToastManager) {
                 window.globalToastManager.error('导出模块未加载');
             }
-        });
+        }));
         
         // ✅ 闪记按钮点击事件
-        window.eventDelegateManager.on('click', '.ait-notepad-btn', () => {
+        this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.ait-notepad-btn', () => {
             if (window.notepadManager) {
                 window.notepadManager.toggle();
             }
-        });
+        }));
         
         // ✅ 优化：监听主题变化，清空缓存
         this.setupThemeChangeListener();
@@ -3595,6 +3596,10 @@ class TimelineManager {
         this.longConversationOptimizer = null;
 
         this.visibleUserTurns.clear();
+
+        for (const unsubscribe of this._eventDelegateUnsubs.splice(0)) {
+            try { unsubscribe?.(); } catch {}
+        }
         
         // ✅ 优化：清理媒体查询监听器
         if (this.mediaQuery && this.mediaQueryHandler) {
