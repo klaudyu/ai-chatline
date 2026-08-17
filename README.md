@@ -1,148 +1,203 @@
 <div align="center">
-  <img src="./icons/icon128.png" alt="ChatLine Logo" width="80" height="80">
+  <img src="./icons/icon128.png" alt="ChatLine Logo" width="88" height="88">
   <h1>ChatLine</h1>
-  <p><strong>浏览器端 AI 对话增强工具</strong><br>ChatLine 为主流 AI 对话平台提供时间轴导航、提示词复用、收藏整理、对话导出与高亮标注，帮助用户更高效地浏览、管理和复盘 AI 对话。</p>
+  <p><strong>让每一次 AI 对话都能快速定位、整理和带走</strong></p>
+  <p>一款开源浏览器扩展，为 ChatGPT、Gemini、Claude、DeepSeek 等 AI 对话页面加入时间轴、收藏、高亮、提示词和导出能力。</p>
 
   <p>
-    <a href="https://github.com/miguchn/ai-chatline/stargazers"><img src="https://img.shields.io/github/stars/miguchn/ai-chatline?style=social" alt="GitHub Stars"></a>
-    <a href="https://github.com/miguchn/ai-chatline/forks"><img src="https://img.shields.io/github/forks/miguchn/ai-chatline?style=social" alt="GitHub Forks"></a>
-    <img src="https://img.shields.io/github/v/release/miguchn/ai-chatline?style=flat-square&label=latest" alt="Latest Release">
-    <img src="https://img.shields.io/github/license/miguchn/ai-chatline?style=flat-square" alt="License">
-    <img src="https://img.shields.io/chrome-web-store/users/oiifmbmllkahpcagifgoedoiinohnfen?style=flat-square&label=users" alt="Chrome Web Store Users">
-    <img src="https://img.shields.io/chrome-web-store/rating/oiifmbmllkahpcagifgoedoiinohnfen?style=flat-square" alt="Chrome Web Store Rating">
+    <a href="https://github.com/miguchn/ai-chatline"><img src="https://img.shields.io/github/stars/miguchn/ai-chatline?style=social" alt="Star ChatLine on GitHub"></a>
+    <a href="https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen"><img src="https://img.shields.io/chrome-web-store/v/oiifmbmllkahpcagifgoedoiinohnfen?style=flat-square&label=Chrome" alt="Chrome Web Store Version"></a>
+    <a href="https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen"><img src="https://img.shields.io/chrome-web-store/users/oiifmbmllkahpcagifgoedoiinohnfen?style=flat-square&label=users" alt="Chrome Web Store Users"></a>
+    <a href="https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen"><img src="https://img.shields.io/chrome-web-store/rating/oiifmbmllkahpcagifgoedoiinohnfen?style=flat-square" alt="Chrome Web Store Rating"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/github/license/miguchn/ai-chatline?style=flat-square" alt="GPL-3.0 License"></a>
   </p>
 
   <p>
-    <a href="https://chromewebstore.google.com/detail/oiifmbmllkahpcagifgoedoiinohnfen?utm_source=item-share-cb"><img src="https://img.shields.io/badge/安装-Chrome%20Web%20Store-blue?style=for-the-badge&logo=googlechrome&logoColor=white" alt="从 Chrome Web Store 安装"></a>
+    <a href="https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen"><img src="https://img.shields.io/badge/安装-Chrome%20Web%20Store-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="从 Chrome Web Store 安装"></a>
+    <a href="https://github.com/miguchn/ai-chatline/issues"><img src="https://img.shields.io/badge/反馈-Issue-24292F?style=for-the-badge&logo=github&logoColor=white" alt="提交 Issue"></a>
   </p>
 
-  <h4><strong>简体中文</strong> | <a href="./README.en.md">English</a></h4>
+  <p><strong>简体中文</strong> · <a href="./README.en.md">English</a></p>
 </div>
+
+![ChatLine 对话时间轴预览](./READMEIMAGE/screenshot-01-timeline.png)
+
+ChatLine 直接运行在你已经使用的 AI 网站中，不需要改变对话习惯，也不需要单独注册 ChatLine 账号。安装后打开支持的平台即可使用；核心数据默认保存在浏览器本地。
 
 ## 目录
 
-- [安装方式](#安装方式)
-- [功能预览](#功能预览)
-- [核心功能](#核心功能)
-- [支持平台](#支持平台)
-- [数据与隐私](#数据与隐私)
-- [本地开发](#本地开发)
-- [版本说明](#版本说明)
-- [联系与反馈](#联系与反馈)
-- [致谢](#致谢)
+- [为什么选择 ChatLine](#why-chatline)
+- [核心能力](#core-features)
+- [支持平台](#supported-platforms)
+- [功能截图](#screenshots)
+- [快速开始](#quick-start)
+- [数据与隐私](#privacy)
+- [开源、贡献与路线图](#open-source)
+- [本地开发](#development)
+- [当前版本](#version)
+- [反馈与联系](#feedback)
 
-## 安装方式
+<a id="why-chatline"></a>
 
-[![从 Chrome Web Store 安装](https://img.shields.io/badge/安装-Chrome%20Web%20Store-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/oiifmbmllkahpcagifgoedoiinohnfen?utm_source=item-share-cb)
+## 为什么选择 ChatLine
 
-推荐通过上方的 Chrome Web Store 安装按钮安装 ChatLine。进入商店页面后，点击「添加至 Chrome」即可完成安装。
+| 常见问题 | ChatLine 的解决方式 |
+|---|---|
+| 长对话只能反复滚动查找 | 自动生成对话时间轴，点击节点快速跳转 |
+| 重要答案散落在不同平台 | 用收藏、文件夹、高亮和笔记统一整理 |
+| 常用提示词需要重复输入 | 建立提示词库，在对话页快速插入和追问 |
+| 对话难以归档或继续加工 | 导出为 Markdown / JSON，并支持本地备份 |
+| 不同 AI 网站操作体验割裂 | 在多个主流 AI 平台提供一致的增强工具 |
 
-安装后打开支持的 AI 对话页面即可使用，无需额外配置。
+它的差异不在于“再做一个 AI 聊天页面”，而是在原有 AI 产品之上补齐导航、整理、复用和归档能力。默认体验保持轻量，高级功能按需开启；代码公开，数据处理逻辑可审查。
 
-## 功能预览
+<a id="core-features"></a>
 
-### 对话时间轴
+## 核心能力
 
-![对话时间轴](./READMEIMAGE/screenshot-01-timeline.png)
+- **对话时间轴**：自动识别提问节点，支持跳转、重点标记和长对话回看。
+- **收藏与整理**：将单条内容或对话保存到多级文件夹，并通过侧边栏快速访问。
+- **高亮与笔记**：像使用荧光笔一样标注 AI 回复，添加颜色和备注，保留关键上下文。
+- **提示词与快捷追问**：保存常用提示词、快速插入，并将选中内容带入下一轮提问。
+- **导出、备份与恢复**：导出对话为 Markdown / JSON；扩展数据支持本地 JSON 备份，可选 Google Drive 同步。
+- **可选增强工具**：智能输入、对话时间、页面宽度、LaTeX 复制、Mermaid 渲染和代码运行等功能按需启用。
 
-自动生成对话节点，长对话中也能快速定位、回看和跳转。
+> 默认开启时间轴、提示词、收藏、对话导出和高亮；代码运行、Mermaid、公式增强、电子宠物和 AI 完成提醒默认关闭。
 
-### 提示词管理
-
-![提示词管理](./READMEIMAGE/screenshot-02-prompts.png)
-
-保存常用提示词，并从对话页面快速插入，减少重复输入。
-
-### 高亮标注与笔记
-
-![高亮标注与笔记](./READMEIMAGE/screenshot-03-highlight.png)
-
-对 AI 回复中的关键信息进行高亮、标注和备注，保留重要上下文。
-
-### 对话导出
-
-![对话导出](./READMEIMAGE/screenshot-04-export.png)
-
-将当前 AI 对话导出保存，便于归档、分享和二次整理。
-
-### 更多增强能力
-
-![更多增强能力](./READMEIMAGE/screenshot-05-more.png)
-
-围绕阅读、整理、导出和页面显示持续补充实用能力。
-
-## 核心功能
-
-- **对话时间轴**：自动识别对话节点，支持快速定位、回看和跳转。
-- **文件夹管理**：对收藏内容、常用资料和对话线索进行分类整理。
-- **提示词管理**：保存常用提示词，并支持快速插入使用。
-- **代码运行（高级功能）**：默认关闭，仅在用户主动开启后加载，适合需要本地预览代码的场景。
-- **对话导出**：支持将 AI 对话内容导出保存，便于归档、分享和复盘。
-- **高亮标注与笔记**：支持对 AI 回复内容进行重点标注、颜色区分和备注记录。
-- **快捷追问（可选）**：默认关闭，开启后可将选中内容快速引用到输入框。
-- **公式与图表增强（可选）**：LaTeX 复制和 Mermaid 渲染默认关闭，开启后才加载对应运行时。
-- **页面增强能力**：包括对话宽度、显示优化、回到底部等设置；电子宠物默认关闭并仅保留四种样式。
-- **数据备份与恢复**：支持 JSON 导入导出，也可选择使用 Google Drive 同步扩展数据。
+<a id="supported-platforms"></a>
 
 ## 支持平台
 
-| 平台 | 时间轴 | 文本高亮 | 智能输入 | 输入动画 | 快捷追问 | 提问时间 | 侧边栏收藏 | 回到底部 |
-|------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| ChatGPT | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| Gemini | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DeepSeek | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| Claude | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| Kimi | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| 豆包 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| 千问 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| Qwen 国际版 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - |
-| Grok | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - | - |
-| Perplexity | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - | - |
-| 元宝 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - | - |
-| 文心一言 | ✅ | ✅ | - | ✅ | ✅ | ✅ | - | - |
-| NotebookLM | - | ✅ | ✅ | ✅ | ✅ | - | - | - |
+ChatLine 当前覆盖 13 个 AI 对话入口。文本高亮适用于下表全部平台，其他能力会根据平台页面结构显示。
 
-> 轻量版默认仅开启时间轴、提示词、收藏、对话导出和高亮。代码运行、Mermaid、公式增强、电子宠物和 AI 完成提醒均默认关闭；设置面板会按当前平台能力隐藏不支持的入口。
+| AI 平台 | 时间轴 | 智能输入 | 对话导出 | 侧边栏文件夹 |
+|---|:---:|:---:|:---:|:---:|
+| ChatGPT | ✅ | ✅ | ✅ | ✅ |
+| Gemini | ✅ | ✅ | ✅ | ✅ |
+| DeepSeek | ✅ | ✅ | ✅ | ✅ |
+| Claude | ✅ | ✅ | ✅ | ✅ |
+| Kimi | ✅ | ✅ | ✅ | ✅ |
+| 豆包 Doubao | ✅ | ✅ | ✅ | ✅ |
+| 千问 / Qwen 国际版 | ✅ | ✅ | ✅ | ✅ |
+| Grok | ✅ | ✅ | ✅ | — |
+| Perplexity | ✅ | ✅ | ✅ | — |
+| 元宝 Yuanbao | ✅ | ✅ | ✅ | — |
+| 文心一言 | ✅ | — | ✅ | — |
+| NotebookLM | — | ✅ | ✅ | — |
+
+| 浏览器 | 安装方式 | 状态 |
+|---|---|---|
+| Chrome | [Chrome Web Store](https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen) | 推荐 |
+| Edge、Brave、Arc 等 Chromium 浏览器 | Chrome Web Store | 支持 |
+| Firefox 109+ | 从源码构建并临时载入 | 测试支持，尚无官方商店版本 |
+
+<a id="screenshots"></a>
+
+## 功能截图
+
+<details>
+<summary><strong>查看提示词、高亮、导出与更多功能截图</strong></summary>
+<br>
+<table>
+  <tr>
+    <td width="50%"><img src="./READMEIMAGE/screenshot-02-prompts.png" alt="ChatLine 提示词管理"><br><sub>提示词管理：保存并快速插入常用指令</sub></td>
+    <td width="50%"><img src="./READMEIMAGE/screenshot-03-highlight.png" alt="ChatLine 高亮与笔记"><br><sub>高亮与笔记：在原始上下文中保留重点</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="./READMEIMAGE/screenshot-04-export.png" alt="ChatLine 对话导出"><br><sub>对话导出：归档、分享或继续编辑</sub></td>
+    <td width="50%"><img src="./READMEIMAGE/screenshot-05-more.png" alt="ChatLine 更多增强能力"><br><sub>更多增强：按需开启，不打扰默认体验</sub></td>
+  </tr>
+</table>
+</details>
+
+<a id="quick-start"></a>
+
+## 快速开始
+
+1. 从 [Chrome Web Store](https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen) 安装 ChatLine。Edge、Brave、Arc 等 Chromium 浏览器也可使用同一入口。
+2. 打开任一支持的 AI 平台；如果页面在安装前已经打开，请刷新一次。
+3. 发起一轮对话。大多数平台会在右侧显示时间轴，闪电按钮可进入 ChatLine 功能面板。
+4. 根据需要开启快捷追问、公式、Mermaid、代码运行或云备份等可选功能。
+
+<a id="firefox-local"></a>
+<details>
+<summary><strong>Firefox 109+ 本地测试</strong></summary>
+
+Firefox 目前提供源码兼容构建，适合开发和本地测试；尚未发布到 Firefox Add-ons。
+
+```bash
+git clone https://github.com/miguchn/ai-chatline.git
+cd ai-chatline
+node scripts/build-firefox.js
+```
+
+构建后在 `about:debugging` 中选择“临时载入附加组件”，载入生成的 `ChatLine-v3.8.0-firefox.zip`。
+</details>
+
+<a id="privacy"></a>
 
 ## 数据与隐私
 
-- ChatLine 的核心数据默认保存在用户浏览器本地，主要包括收藏、文件夹、提示词、插件设置、时间标签、笔记等扩展数据。
-- 插件不会主动收集、上传或分享用户的对话内容和个人信息；项目代码中也不包含远程采集用户数据的逻辑。
-- Google Drive 同步是可选高级功能。Chromium 安装时不申请 Google 身份与 API 权限，只有用户首次点击云备份时才请求；Firefox 因 `identity` 不能作为可选 API 权限，安装包仍需声明该权限，但 Google API host 继续按需申请。本地 JSON 备份始终可直接使用。
-- 本项目已开源，相关数据处理逻辑可直接在仓库中审查。
+- 收藏、文件夹、提示词、设置、时间标签和笔记等核心数据默认保存在浏览器本地。
+- ChatLine 不主动收集、上传或分享用户的对话内容和个人信息，仓库中不包含远程采集用户数据的逻辑。
+- Google Drive 同步是可选功能，只有用户主动使用云备份时才申请相应权限；本地 JSON 备份始终可用。
+- 项目以 GPL-3.0 开源，任何人都可以检查数据处理和权限使用方式。
+
+<a id="open-source"></a>
+
+## 开源、贡献与路线图
+
+ChatLine 的平台适配、功能实现和测试均在本仓库公开维护。欢迎通过 [Issue](https://github.com/miguchn/ai-chatline/issues) 报告问题、提出想法，或直接提交 [Pull Request](https://github.com/miguchn/ai-chatline/pulls)。
+
+当前路线重点：
+
+- 跟进 AI 平台页面变化，持续提升时间轴、导出和收藏的稳定性。
+- 完善 Firefox 分发与跨浏览器体验。
+- 改进导出、备份和数据迁移能力。
+- 补充文档、测试与更多平台适配。
+
+路线优先级会根据实际问题和社区反馈调整。提交 PR 前建议先创建或关联 Issue，并运行 `npm test`。
+
+<a id="development"></a>
 
 ## 本地开发
 
-本仓库是浏览器扩展项目，没有复杂的前端构建步骤；如需本地开发或调试，可以直接加载源码目录。
+ChatLine 没有复杂的前端构建步骤，可直接加载源码目录：
 
-Chrome / Edge 调试流程：
+1. 克隆本仓库。
+2. 打开 `chrome://extensions/` 或 `edge://extensions/`。
+3. 启用“开发者模式”，选择“加载已解压的扩展程序”。
+4. 选择仓库根目录；修改代码后重新加载扩展并刷新目标 AI 页面。
+5. 运行 `npm test`，检查平台契约、安全边界、manifest 和 JavaScript 语法。
 
-1. 打开浏览器扩展管理页面，例如 `chrome://extensions/` 或 `edge://extensions/`。
-2. 启用开发者模式。
-3. 选择"加载已解压的扩展程序"。
-4. 选择本仓库根目录。
-5. 修改代码后，在扩展管理页面点击重新加载，并刷新目标 AI 平台页面。
+贡献时请尽量保持改动聚焦，并说明涉及的平台、浏览器和验证方式。
 
-代码修改后可运行 `npm test`，执行平台契约、安全边界、manifest 与 JavaScript 语法检查。
+<a id="version"></a>
 
-Firefox 调试：
-
-- 运行 `node scripts/build-firefox.js` 生成 Firefox 包，再通过 `about:debugging` 临时载入生成的 ZIP。
-
-## 版本说明
+## 当前版本
 
 ### v3.8.0
 
-- 优化右侧时间轴底部间距，在不同窗口尺寸下显示更协调。
-- 默认体验进一步轻量化，高级功能保持默认关闭并按需加载。
-- 优化多平台能力展示、消息识别与对话导出稳定性。
+源码与 Chrome Web Store 版本一致。
+
+- 优化多平台消息识别、能力展示和对话导出稳定性。
+- 让高级功能保持默认关闭并按需加载，降低默认运行负担。
+- 改进不同窗口尺寸下的时间轴布局。
 - 加强 Markdown、Mermaid、HTML 预览和代码运行的安全边界。
 
-## 联系与反馈
+<a id="feedback"></a>
 
-- **作者**：MiguCHN
-- **问题反馈**：欢迎发送邮件到 miguchn@gmail.com
+## 反馈与联系
 
-## 致谢
+- Bug 或兼容性问题：[提交 Issue](https://github.com/miguchn/ai-chatline/issues/new)
+- 功能建议：[查看或创建 Issue](https://github.com/miguchn/ai-chatline/issues)
+- 代码贡献：[Pull Requests](https://github.com/miguchn/ai-chatline/pulls)
+- 其他联系：[miguchn@gmail.com](mailto:miguchn@gmail.com)
 
-ChatLine 在项目演进过程中参考并受益于 Timeline 开源项目。感谢原作者和社区贡献者的开放分享，也感谢所有持续推动本项目体验优化的反馈与建议。
+反馈兼容性问题时，请附上 AI 平台、浏览器版本、ChatLine 版本、复现步骤和必要截图，便于快速定位。
+
+## 致谢与许可
+
+ChatLine 在演进过程中参考并受益于 [Timeline](https://github.com/houyanchao/chatgpt-gemini-timeline) 开源项目。感谢原作者、社区贡献者和每一位提供反馈的用户。
+
+本项目基于 [GNU GPL v3.0](./LICENSE) 发布。如果 ChatLine 对你有帮助，欢迎给仓库一个 Star，并把它分享给同样需要整理 AI 对话的人。

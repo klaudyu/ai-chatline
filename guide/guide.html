@@ -79,7 +79,7 @@
           <!-- 安装 -->
           <section id="install" class="guide-section">
             <h1 class="guide-title">安装</h1>
-            <p class="guide-desc">本插件支持 Chrome、Edge、Firefox 浏览器，请选择你使用的浏览器：</p>
+            <p class="guide-desc">推荐通过 Chrome Web Store 安装；Edge 等 Chromium 浏览器可使用同一入口。Firefox 目前提供源码兼容构建用于本地测试。</p>
 
             <div class="guide-section">
               <div class="guide-browser-header">
@@ -91,7 +91,7 @@
                 <li>点击页面上的「添加到 Chrome」按钮</li>
                 <li>在弹出的确认框中点击「添加扩展程序」</li>
               </ol>
-              <button class="guide-install-btn chrome" onclick="window.open('#','_blank')">
+              <button class="guide-install-btn chrome" onclick="window.open('https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen','_blank')">
                 前往 Chrome 商店安装
               </button>
             </div>
@@ -102,12 +102,12 @@
                 <h2>Edge 浏览器</h2>
               </div>
               <ol class="guide-steps">
-                <li>点击下方按钮访问 Microsoft Edge 外接程序商店</li>
-                <li>点击页面上的「获取」按钮</li>
+                <li>点击下方按钮访问 Chrome Web Store</li>
+                <li>允许 Edge 安装其他应用商店的扩展，然后点击「添加至 Chrome」</li>
                 <li>在弹出的确认框中点击「添加扩展」</li>
               </ol>
-              <button class="guide-install-btn edge" onclick="window.open('#','_blank')">
-                前往 Edge 商店安装
+              <button class="guide-install-btn edge" onclick="window.open('https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen','_blank')">
+                在 Edge 中打开 Chrome 商店
               </button>
             </div>
 
@@ -116,8 +116,9 @@
                 <img class="guide-browser-icon" src="assets/firefox-Bf9C0htO.png" alt="Firefox" width="28" height="28" />
                 <h2>Firefox 浏览器</h2>
               </div>
-              <button class="guide-install-btn firefox" onclick="window.open('#','_blank')">
-                前往 Firefox 商店安装
+              <p class="guide-desc">支持 Firefox 109+ 的源码构建和临时载入；官方 Firefox Add-ons 版本仍在路线图中。</p>
+              <button class="guide-install-btn firefox" onclick="window.open('https://github.com/miguchn/ai-chatline#firefox-local','_blank')">
+                查看 Firefox 本地测试说明
               </button>
             </div>
           </section>
