@@ -145,7 +145,7 @@
     transition: opacity 0.15s;
 }
 
-/* 默认隐藏，hover item 或激活态时显示 */
+/* Default隐藏，hover item 或激活态时显示 */
 .ait-ql-item-pin,
 .ait-ql-item-star { opacity: 0; }
 

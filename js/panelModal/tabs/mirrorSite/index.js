@@ -1,8 +1,8 @@
 /**
- * Mirror Site Tab - 镜像站点设置
+ * Mirror Site Tab - 镜像站点Settings
  *
- * 允许用户添加自定义镜像站域名，
- * 在这些站点上可以使用浮窗快捷调用提示词（复制模式）
+ * 允许用户Add自定义镜像站域名，
+ * 在这些站点上可以使用浮窗快捷调用Prompt（Copy模式）
  */
 
 class MirrorSiteTab extends BaseTab {
@@ -36,7 +36,7 @@ class MirrorSiteTab extends BaseTab {
 
         container.innerHTML = `
             <div class="mirror-site-hint">
-                ${chrome.i18n.getMessage('mirrorSiteHint') || '添加 AI 镜像站域名后，在这些网站上会出现浮窗按钮，可使用本插件的部分功能。'}
+                ${chrome.i18n.getMessage('mirrorSiteHint') || 'Add AI 镜像站域名后，在这些网站上会出现浮窗按钮，可使用本插件的部分功能。'}
             </div>
             <div class="mirror-site-add-row">
                 <input type="text" class="mirror-site-input" id="mirror-site-domain-input"
@@ -47,11 +47,11 @@ class MirrorSiteTab extends BaseTab {
                         <line x1="12" y1="5" x2="12" y2="19"/>
                         <line x1="5" y1="12" x2="19" y2="12"/>
                     </svg>
-                    <span>${chrome.i18n.getMessage('mirrorSiteAddDomain') || '添加'}</span>
+                    <span>${chrome.i18n.getMessage('mirrorSiteAddDomain') || 'Add'}</span>
                 </button>
             </div>
             <div class="mirror-site-list-section">
-                <div class="mirror-site-list-title">${chrome.i18n.getMessage('mirrorSiteDomainListTitle') || '已添加的域名'}</div>
+                <div class="mirror-site-list-title">${chrome.i18n.getMessage('mirrorSiteDomainListTitle') || '已Add的域名'}</div>
                 <div class="mirror-site-list" id="mirror-site-list"></div>
             </div>
         `;
@@ -126,7 +126,7 @@ class MirrorSiteTab extends BaseTab {
             for (const platform of SITE_INFO) {
                 if (platform.sites.some(s => domain === s || domain.endsWith('.' + s) || s.endsWith('.' + domain))) {
                     if (window.globalToastManager) {
-                        window.globalToastManager.show('info', chrome.i18n.getMessage('mirrorSiteDomainIsOfficial') || '该域名已是适配平台，无需添加');
+                        window.globalToastManager.show('info', chrome.i18n.getMessage('mirrorSiteDomainIsOfficial') || '该域名已是适配平台，无需Add');
                     }
                     return;
                 }
@@ -151,7 +151,7 @@ class MirrorSiteTab extends BaseTab {
         input.focus();
 
         if (window.globalToastManager) {
-            window.globalToastManager.show('success', chrome.i18n.getMessage('mirrorSiteDomainAdded') || '域名已添加');
+            window.globalToastManager.show('success', chrome.i18n.getMessage('mirrorSiteDomainAdded') || '域名已Add');
         }
     }
 
@@ -181,7 +181,7 @@ class MirrorSiteTab extends BaseTab {
                         <line x1="2" y1="12" x2="22" y2="12"/>
                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                     </svg>
-                    <span>${chrome.i18n.getMessage('mirrorSiteNoDomains') || '暂未添加任何域名'}</span>
+                    <span>${chrome.i18n.getMessage('mirrorSiteNoDomains') || '暂未Add任何域名'}</span>
                 </div>
             `;
             return;

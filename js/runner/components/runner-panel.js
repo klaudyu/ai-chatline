@@ -1,7 +1,7 @@
 /**
- * RunnerPanel - 代码运行器核心组件
+ * RunnerPanel - 代码Run器核心组件
  * 
- * 职责：代码编辑 + 执行 + 输出显示
+ * 职责：代码Edit + 执行 + 输出显示
  * 特点：宽高 100%，填满父容器，不关心外层布局
  * 
  * 使用方式：
@@ -26,7 +26,7 @@
     const CONFIG = {
         headerHeight: 36,
         resizerHeight: 4,
-        outputContentHeight: 150,      // output 内容区默认高度
+        outputContentHeight: 150,      // output 内容区Default高度
         outputContentMinHeight: 50,    // output 内容区最小高度
         codeMinHeight: 100             // 代码区最小高度
     };
@@ -40,14 +40,14 @@
         /**
          * @param {HTMLElement} container - 父容器元素
          * @param {Object} options - 配置选项
-         * @param {string} options.language - 初始语言，默认 'javascript'
+         * @param {string} options.language - 初始语言，Default 'javascript'
          * @param {string} options.code - 初始代码
-         * @param {boolean} options.showSettings - 是否显示设置按钮，默认 true
-         * @param {boolean} options.showCopy - 是否显示复制按钮，默认 true
-         * @param {boolean} options.showClose - 是否显示关闭按钮，默认 true
-         * @param {boolean} options.showPopout - 是否显示弹出按钮，默认 false
-         * @param {boolean} options.showLanguageSelector - 是否显示语言选择器，默认 true
-         * @param {Function} options.onClose - 关闭回调
+         * @param {boolean} options.showSettings - 是否显示Settings按钮，Default true
+         * @param {boolean} options.showCopy - 是否显示Copy按钮，Default true
+         * @param {boolean} options.showClose - 是否显示Close按钮，Default true
+         * @param {boolean} options.showPopout - 是否显示弹出按钮，Default false
+         * @param {boolean} options.showLanguageSelector - 是否显示语言选择器，Default true
+         * @param {Function} options.onClose - Close回调
          * @param {Function} options.onPopout - 弹出回调
          * @param {Function} options.onLanguageChange - 语言变更回调
          */
@@ -77,13 +77,13 @@
         }
         
         /**
-         * 获取默认主题
+         * 获取Default主题
          * 复用全局 detectDarkMode 函数（定义在 constants.js）
          */
         _detectTheme() {
-            // 检测页面是否为深色模式
+            // 检测页面是否为Dark模式
             const isDarkPage = typeof detectDarkMode === 'function' ? detectDarkMode() : false;
-            // 深色页面默认用浅色主题，浅色页面默认用深色主题
+            // Dark页面Default用Light主题，Light页面Default用Dark主题
             return isDarkPage ? 'light' : 'dark';
         }
 
@@ -97,7 +97,7 @@
             // 创建面板元素
             this.element = document.createElement('div');
             this.element.className = 'runner-panel';
-            // 根据初始主题添加类名
+            // 根据初始主题Add类名
             if (this.theme === 'light') {
                 this.element.classList.add('runner-panel-light');
             } else {
@@ -111,7 +111,7 @@
             this._initCodeMirror();
             this._bindEvents();
 
-            // 设置初始代码
+            // Settings初始代码
             if (this.options.code) {
                 this.setCode(this.options.code);
             }
@@ -134,7 +134,7 @@
             let actionsHTML = '';
             if (showSettings) {
                 actionsHTML += `
-                    <button class="runner-panel-btn" data-action="settings" title="${safeI18n('vkmzpx', '设置')}">
+                    <button class="runner-panel-btn" data-action="settings" title="${safeI18n('vkmzpx', 'Settings')}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="3"></circle>
                             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -143,7 +143,7 @@
             }
             if (showCopy) {
                 actionsHTML += `
-                    <button class="runner-panel-btn" data-action="copy" title="${safeI18n('mvkxpz', '复制')}">
+                    <button class="runner-panel-btn" data-action="copy" title="${safeI18n('mvkxpz', 'Copy')}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -152,7 +152,7 @@
             }
             if (showPopout) {
                 actionsHTML += `
-                    <button class="runner-panel-btn" data-action="popout" title="${safeI18n('popoutRunner', '弹出到悬浮面板')}">
+                    <button class="runner-panel-btn" data-action="popout" title="${safeI18n('popoutRunner', 'Pop out to floating panel')}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                             <polyline points="15 3 21 3 21 9"></polyline>
@@ -162,7 +162,7 @@
             }
             if (showClose) {
                 actionsHTML += `
-                    <button class="runner-panel-btn runner-panel-close" data-action="close" title="${safeI18n('pxvkmz', '关闭')}">
+                    <button class="runner-panel-btn runner-panel-close" data-action="close" title="${safeI18n('pxvkmz', 'Close')}">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -181,7 +181,7 @@
                 : `<span class="runner-panel-lang-name">${langConfig?.name || this.language}</span>`;
             
             // 主题选择器
-            const themeLabel = this.theme === 'dark' ? safeI18n('themeDark', '深色') : safeI18n('themeLight', '浅色');
+            const themeLabel = this.theme === 'dark' ? safeI18n('themeDark', 'Dark') : safeI18n('themeLight', 'Light');
             const themeSelectorHTML = `<button class="runner-panel-theme-selector" data-theme="${this.theme}">
                 <span class="theme-name">${themeLabel}</span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -215,13 +215,13 @@
                             <span>Output</span>
                         </span>
                         <div class="runner-panel-actions">
-                            <button class="runner-panel-btn" data-action="clear" title="${safeI18n('clearOutput', '清空')}">
+                            <button class="runner-panel-btn" data-action="clear" title="${safeI18n('clearOutput', 'Clear')}">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="3 6 5 6 21 6"></polyline>
                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                 </svg>
                             </button>
-                            <button class="runner-panel-btn" data-action="copy-output" title="${safeI18n('mvkxpz', '复制')}">
+                            <button class="runner-panel-btn" data-action="copy-output" title="${safeI18n('mvkxpz', 'Copy')}">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -231,12 +231,12 @@
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M8 5v14l11-7z"/>
                                 </svg>
-                                <span>${safeI18n('runBtn', '运行')}</span>
+                                <span>${safeI18n('runBtn', 'Run')}</span>
                             </button>
                         </div>
                     </div>
                     <div class="runner-panel-output-content">
-                        <div class="runner-panel-output-empty">（无输出）</div>
+                        <div class="runner-panel-output-empty">(No output)</div>
                     </div>
                 </div>
             `;
@@ -259,11 +259,11 @@
                     tabSize: 2,
                     indentWithTabs: false,
                     matchBrackets: true,
-                    placeholder: '// 在此输入代码...'
+                    placeholder: '// Enter code here...'
                 });
                 this.cmEditor.setSize('100%', '100%');
 
-                // 快捷键运行
+                // 快捷键Run
                 this.cmEditor.setOption('extraKeys', {
                     'Cmd-Enter': () => this.run(),
                     'Ctrl-Enter': () => this.run()
@@ -275,7 +275,7 @@
 
             this.resultContent = this.element.querySelector('.runner-panel-output-content');
 
-            // 初始状态：Mermaid 时隐藏 output 复制按钮
+            // 初始状态：Mermaid 时隐藏 output Copy按钮
             this._updateCopyOutputVisibility();
         }
 
@@ -367,7 +367,7 @@
             document.addEventListener('mousemove', onMouseMove);
             document.addEventListener('mouseup', onMouseUp);
 
-            // 保存清理函数
+            // Save清理函数
             this._cleanupResizer = () => {
                 document.removeEventListener('mousemove', onMouseMove);
                 document.removeEventListener('mouseup', onMouseUp);
@@ -389,7 +389,7 @@
                     const code = this.getCode();
                     navigator.clipboard.writeText(code).then(() => {
                         if (window.globalToastManager) {
-                            window.globalToastManager.success(safeI18n('xpzmvk', '复制成功'), btn);
+                            window.globalToastManager.success(safeI18n('xpzmvk', 'Copied successfully'), btn);
                         }
                     });
                     break;
@@ -417,7 +417,7 @@
                     const output = this.resultContent?.innerText || '';
                     navigator.clipboard.writeText(output).then(() => {
                         if (window.globalToastManager) {
-                            window.globalToastManager.success(safeI18n('xpzmvk', '复制成功'), btn);
+                            window.globalToastManager.success(safeI18n('xpzmvk', 'Copied successfully'), btn);
                         }
                     });
                     break;
@@ -459,8 +459,8 @@
             if (!window.globalDropdownManager) return;
 
             const themes = [
-                { id: 'dark', label: safeI18n('themeDark', '深色') },
-                { id: 'light', label: safeI18n('themeLight', '浅色') }
+                { id: 'dark', label: safeI18n('themeDark', 'Dark') },
+                { id: 'light', label: safeI18n('themeLight', 'Light') }
             ];
             const items = themes.map(t => ({
                 id: t.id,
@@ -478,7 +478,7 @@
         }
         
         /**
-         * 设置主题
+         * Timeline theme
          */
         setTheme(themeId) {
             if (themeId !== 'dark' && themeId !== 'light') return;
@@ -488,11 +488,11 @@
             // 更新 UI
             const selector = this.element.querySelector('.runner-panel-theme-selector');
             if (selector) {
-                selector.querySelector('.theme-name').textContent = themeId === 'dark' ? safeI18n('themeDark', '深色') : safeI18n('themeLight', '浅色');
+                selector.querySelector('.theme-name').textContent = themeId === 'dark' ? safeI18n('themeDark', 'Dark') : safeI18n('themeLight', 'Light');
                 selector.dataset.theme = themeId;
             }
             
-            // 应用主题：切换主题类
+            // 应用主题：Toggle theme类
             if (themeId === 'light') {
                 this.element.classList.remove('runner-panel-dark');
                 this.element.classList.add('runner-panel-light');
@@ -512,7 +512,7 @@
         // ===== 公共 API =====
 
         /**
-         * 设置代码
+         * Settings代码
          */
         setCode(code) {
             if (this.cmEditor) {
@@ -528,7 +528,7 @@
         }
 
         /**
-         * 设置语言
+         * Settings语言
          */
         setLanguage(langId) {
             const languages = getLanguages();
@@ -549,7 +549,7 @@
                 this.cmEditor.setOption('mode', langConfig.mode);
             }
 
-            // Mermaid 输出是 SVG 图表，隐藏无意义的纯文本复制按钮
+            // Mermaid 输出是 SVG 图表，隐藏无意义的纯文本Copy按钮
             this._updateCopyOutputVisibility();
 
             // 回调
@@ -566,16 +566,16 @@
         }
 
         /**
-         * 运行代码
+         * Run代码
          */
         async run() {
             const code = this.getCode();
             if (!code.trim()) {
-                this.resultContent.innerHTML = '<div class="runner-panel-output-empty">（无代码）</div>';
+                this.resultContent.innerHTML = '<div class="runner-panel-output-empty">(No code)</div>';
                 return;
             }
 
-            this.resultContent.innerHTML = '<div class="runner-panel-output-loading">执行中...</div>';
+            this.resultContent.innerHTML = '<div class="runner-panel-output-loading">Running...</div>';
 
             try {
                 const manager = window.Runner?.getManager();
@@ -615,16 +615,16 @@
         }
 
         /**
-         * 清空输出
+         * Clear输出
          */
         clearOutput() {
             if (this.resultContent) {
-                this.resultContent.innerHTML = '<div class="runner-panel-output-empty">（无输出）</div>';
+                this.resultContent.innerHTML = '<div class="runner-panel-output-empty">(No output)</div>';
             }
         }
 
         /**
-         * 刷新编辑器
+         * 刷新Edit器
          */
         refresh() {
             if (this.cmEditor) {
@@ -650,7 +650,7 @@
 
         _renderOutput(outputs) {
             if (!outputs || outputs.length === 0) {
-                this.resultContent.innerHTML = '<div class="runner-panel-output-empty">（无输出）</div>';
+                this.resultContent.innerHTML = '<div class="runner-panel-output-empty">(No output)</div>';
                 return;
             }
 
@@ -676,7 +676,7 @@
 
         _renderTable(columns, values) {
             if (!columns || columns.length === 0) {
-                return '<div class="runner-panel-output-info">查询成功，无返回数据</div>';
+                return '<div class="runner-panel-output-info">Query succeeded with no returned data</div>';
             }
             const headerCells = columns.map(col => `<th>${this._escapeHtml(col)}</th>`).join('');
             const rows = (values || []).map(row => {
@@ -690,12 +690,12 @@
         }
 
         /**
-         * 根据语言类型切换 output 复制按钮的显示
+         * 根据语言类型切换 output Copy按钮的显示
          */
         _updateCopyOutputVisibility() {
             const btn = this.element?.querySelector('[data-action="copy-output"]');
             if (btn) {
-                // 用 !important 覆盖 .runner-panel-btn 的 display: flex !important
+                // 用 !important Overwrite .runner-panel-btn 的 display: flex !important
                 btn.style.setProperty('display', this.language === 'mermaid' ? 'none' : 'flex', 'important');
             }
         }

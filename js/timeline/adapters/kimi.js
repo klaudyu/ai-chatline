@@ -104,7 +104,7 @@ class KimiAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // Kimi 使用页面标题作为默认主题，并过滤尾部的 " - Kimi"
+        // Kimi 使用页面标题作为Default主题，并过滤尾部的 " - Kimi"
         const title = document.title || '';
         return title.replace(/\s*-\s*Kimi\s*$/i, '').trim();
     }

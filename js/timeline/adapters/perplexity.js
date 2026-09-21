@@ -74,7 +74,7 @@ class PerplexityAdapter extends SiteAdapter {
     }
 
     getTimelinePosition() {
-        // Perplexity 时间轴位置配置
+        // Perplexity Timeline位置配置
         return {
             top: '120px',
             right: '22px',
@@ -88,7 +88,7 @@ class PerplexityAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // Perplexity 使用页面标题作为默认主题，去掉后缀
+        // Perplexity 使用页面标题作为Default主题，去掉后缀
         const title = document.title || '';
         return title.replace(/\s*-\s*Perplexity\s*$/i, '').trim();
     }

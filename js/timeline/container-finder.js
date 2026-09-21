@@ -9,7 +9,7 @@
  * 3. 兜底机制：如果只有一个消息或查找失败，向上查找固定深度
  * 
  * 优势：
- * - 精确定位：避免找到过于外层的容器
+ * - 精Confirm位：避免找到过于外层的容器
  * - 稳定计算：基于此容器的 offsetTop 计算节点位置更稳定
  * - 通用性强：适用于各种 DOM 结构的 AI 平台
  */
@@ -120,7 +120,7 @@ const ContainerFinder = {
      * 
      * @param {HTMLElement} container - 待验证的容器
      * @param {string} messageSelector - 消息元素的选择器
-     * @param {number} minMessages - 容器中应该至少包含的消息数量，默认 1
+     * @param {number} minMessages - 容器中应该至少包含的消息数量，Default 1
      * @returns {boolean} 容器是否有效
      */
     validateContainer(container, messageSelector, minMessages = 1) {

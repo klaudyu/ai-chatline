@@ -70,7 +70,7 @@ class BaseSidebarStarredAdapter {
     /** 异步更新已注入菜单项的收藏状态（文字 + 图标） */
     updateStarMenuItemState(menuItem, isStarred) {}
 
-    /** 关闭原生菜单 */
+    /** Close原生菜单 */
     closeNativeMenu() {
         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     }
@@ -86,7 +86,7 @@ class BaseSidebarStarredAdapter {
     /** 在对话项上注入收藏 icon */
     injectStarIcon(convEl) {}
 
-    /** 从对话项上移除收藏 icon */
+    /** 从对话项Move up除收藏 icon */
     removeStarIcon(convEl) {}
 
     // ==================== 原生菜单注入（基类通用逻辑） ====================

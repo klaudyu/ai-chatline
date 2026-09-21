@@ -1,9 +1,9 @@
 /**
  * Formula Tab Styles
- * 复制 LaTeX 公式设置样式
+ * Copy LaTeX Formula settings样式
  */
 
-/* 设置容器 */
+/* Settings容器 */
 .formula-settings {
     padding: 0;
     overflow-y: auto;
@@ -11,7 +11,7 @@
     box-sizing: border-box;
 }
 
-/* 设置区块 */
+/* Settings区块 */
 .formula-settings .setting-section {
     margin-bottom: 12px;
     background: #f9fafb;
@@ -23,7 +23,7 @@
     margin-bottom: 0;
 }
 
-/* 设置项 */
+/* Settings项 */
 .setting-item {
     display: flex;
     align-items: flex-start;
@@ -37,7 +37,7 @@
     background: #f3f4f6;
 }
 
-/* 设置信息 */
+/* Settings信息 */
 .setting-info {
     flex: 1;
 }

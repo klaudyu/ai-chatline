@@ -1,7 +1,7 @@
 /**
  * Changelog Modal - 版本更新弹窗
  * 
- * 负责渲染更新内容弹窗，关闭时标记已读。
+ * 负责渲染更新内容弹窗，Close时标记已读。
  * 由 PromptButtonManager 的 Logo 按钮触发调用。
  * 
  * 使用 chrome.storage.local 存储已读版本，跨所有 AI 站点共享状态。
@@ -90,7 +90,7 @@ class ChangelogModal {
     }
 
     /**
-     * 渲染一个分组区域（标题 + 列表）
+     * 渲染一个分组区域（Title + 列表）
      */
     _renderSection(container, titleText, emoji, items, lang) {
         if (!items?.length) return;
@@ -178,8 +178,8 @@ class ChangelogModal {
         const body = document.createElement('div');
         body.className = 'changelog-modal-body';
 
-        const featTitle = chrome.i18n.getMessage('changelogFeatures') || '新功能';
-        const improveTitle = chrome.i18n.getMessage('changelogImprovements') || '功能优化';
+        const featTitle = chrome.i18n.getMessage('changelogFeatures') || 'New features';
+        const improveTitle = chrome.i18n.getMessage('changelogImprovements') || 'Improvements';
 
         this._renderSection(body, featTitle, '✨', features, lang);
         this._renderSection(body, improveTitle, '🔧', improvements, lang);
@@ -201,7 +201,7 @@ class ChangelogModal {
 
         const confirmBtn = document.createElement('button');
         confirmBtn.className = 'changelog-modal-btn';
-        confirmBtn.textContent = lang === 'zh' ? '我知道了' : 'Got it';
+        confirmBtn.textContent = lang === 'zh' ? 'Got it' : 'Got it';
         confirmBtn.addEventListener('click', () => this._close());
 
         footer.appendChild(footerLinks);
@@ -223,7 +223,7 @@ class ChangelogModal {
     }
 
     /**
-     * 关闭弹窗并标记已读
+     * Close弹窗并标记已读
      */
     _close() {
         if (!this.overlay) return;

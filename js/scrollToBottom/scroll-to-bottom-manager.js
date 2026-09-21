@@ -4,7 +4,7 @@
  * 回到底部按钮管理器
  * 在输入框上方居中显示一个 fixed 定位的"回到底部"按钮
  * 
- * 显示逻辑：监听时间轴的 activeChange 事件
+ * 显示逻辑：监听Timeline的 activeChange 事件
  * - 当激活节点不是最后一个时显示按钮
  * - 当激活节点是最后一个时隐藏按钮
  */
@@ -21,7 +21,7 @@ class ScrollToBottomManager {
         this.isEnabled = false;
         this.isDestroyed = false;
         this.isVisible = false;
-        this.globalEnabled = false;  // 全局开关状态（轻量版默认关闭）
+        this.globalEnabled = false;  // 全局Toggle状态（轻量版DefaultClose）
         this.platformSettings = {};
         this.storageListener = null;
         this._unsubscribeObserver = null;
@@ -42,7 +42,7 @@ class ScrollToBottomManager {
      * 初始化
      */
     async init() {
-        // 1. 加载平台设置
+        // 1. 加载平台Settings
         await this._loadPlatformSettings();
         
         // 2. 监听 Storage 变化
@@ -64,7 +64,7 @@ class ScrollToBottomManager {
         if (this.isEnabled) return;
         this.isEnabled = true;
         
-        // 绑定事件（监听时间轴的激活变化事件）
+        // 绑定事件（监听Timeline的激活变化事件）
         this._bindEvents();
         
         // 启动输入框检测（用于定位按钮位置）
@@ -90,12 +90,12 @@ class ScrollToBottomManager {
         // 隐藏按钮
         this._hideButton();
         
-        // 清空引用
+        // Clear引用
         this.inputElement = null;
     }
     
     /**
-     * 加载平台设置
+     * 加载平台Settings
      */
     async _loadPlatformSettings() {
         try {
@@ -113,7 +113,7 @@ class ScrollToBottomManager {
      */
     _isPlatformEnabled() {
         try {
-            // 先检查全局开关
+            // 先检查全局Toggle
             if (!this.globalEnabled) return false;
             
             const platform = getCurrentPlatform();
@@ -135,13 +135,13 @@ class ScrollToBottomManager {
             if (areaName === 'local') {
                 let needsUpdate = false;
                 
-                // 监听全局开关变化
+                // 监听全局Toggle变化
                 if (changes.scrollToBottomEnabled) {
                     this.globalEnabled = changes.scrollToBottomEnabled.newValue === true;
                     needsUpdate = true;
                 }
                 
-                // 监听平台设置变化
+                // 监听平台Settings变化
                 if (changes.scrollToBottomPlatformSettings) {
                     this.platformSettings = changes.scrollToBottomPlatformSettings.newValue || {};
                     needsUpdate = true;
@@ -207,7 +207,7 @@ class ScrollToBottomManager {
         this._onResize = scheduleUpdate;
         window.addEventListener('resize', this._onResize);
         
-        // 监听时间轴的激活节点变化事件
+        // 监听Timeline的激活节点变化事件
         this._onActiveChange = (e) => {
             const { totalCount, isLast } = e.detail || {};
             
@@ -221,7 +221,7 @@ class ScrollToBottomManager {
         };
         window.addEventListener('timeline:activeChange', this._onActiveChange);
         
-        // 监听节点数量变化事件（新消息添加时激活状态会通过 activeChange 事件通知）
+        // 监听节点数量变化事件（新消息Add时激活状态会通过 activeChange 事件通知）
         this._onNodesChange = () => {};
         window.addEventListener('timeline:nodesChange', this._onNodesChange);
     }
@@ -340,7 +340,7 @@ class ScrollToBottomManager {
             const safeTop = Math.max(8, Math.min(top, window.innerHeight - buttonWidth - 8));
             const safeLeft = Math.max(8, Math.min(left, window.innerWidth - buttonWidth - 8));
             
-            // 设置位置
+            // Settings位置
             this.buttonElement.style.top = `${safeTop}px`;
             this.buttonElement.style.left = `${safeLeft}px`;
             this.buttonElement.style.right = 'auto';
@@ -372,10 +372,10 @@ class ScrollToBottomManager {
     
     /**
      * 滚动到底部
-     * 优先使用时间轴的 API（支持虚拟滚动）
+     * 优先使用Timeline的 API（支持虚拟滚动）
      */
     _scrollToBottom() {
-        // 优先使用时间轴的对外 API（正确处理虚拟滚动）
+        // 优先使用Timeline的对外 API（正确处理虚拟滚动）
         try {
             if (window.timelineManager?.scrollToLast) {
                 const success = window.timelineManager.scrollToLast();
@@ -385,7 +385,7 @@ class ScrollToBottomManager {
             console.warn('[ScrollToBottom] Timeline scroll failed, using native fallback:', e);
         }
         
-        // fallback: 使用原生滚动（不支持时间轴的平台）
+        // fallback: 使用原生滚动（不支持Timeline的平台）
         const scrollContainer = this._detectScrollContainer();
         if (!scrollContainer) return;
         
@@ -411,7 +411,7 @@ class ScrollToBottomManager {
     }
     
     /**
-     * 自动检测滚动容器（复用时间轴逻辑）
+     * 自动检测滚动容器（复用Timeline逻辑）
      */
     _detectScrollContainer() {
         // 优先使用适配器指定的滚动容器

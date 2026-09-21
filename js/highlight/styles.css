@@ -59,7 +59,7 @@ mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
     opacity: 0.7;
 }
 
-/* ==================== 标注按钮（独立模式，非 AI 网站） ==================== */
+/* ==================== Highlight按钮（独立模式，非 AI 网站） ==================== */
 
 .ait-highlight-standalone-btn {
     position: absolute;
@@ -80,7 +80,7 @@ mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
     transform: translateY(0);
 }
 
-/* ==================== 工具栏按钮（标注 / 复制 通用样式，追问栏 + 独立模式共用） ==================== */
+/* ==================== 工具栏按钮（Highlight / Copy 通用样式，Follow up栏 + 独立模式共用） ==================== */
 
 /* 强制工具栏内所有按钮等高，避免因图标 SVG 视觉密度不同导致的视觉错位 */
 .ait-quick-ask-btn,
@@ -138,14 +138,14 @@ mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
     flex-shrink: 0;
 }
 
-/* 追问栏内的分隔线 */
+/* Follow up栏内的分隔线 */
 .ait-toolbar-divider {
     width: 1px;
     background: var(--ait-quick-ask-divider, rgba(255, 255, 255, 0.15));
     margin: 4px 0;
 }
 
-/* ==================== 标注浮窗 ==================== */
+/* ==================== Highlight浮窗 ==================== */
 
 .ait-hl-popover {
     position: absolute;
@@ -295,7 +295,7 @@ mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* ---- 编辑模式元素 ---- */
+/* ---- Edit模式元素 ---- */
 
 .ait-hl-pop-edit-only {
     display: none;
@@ -339,7 +339,7 @@ mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
     background: rgba(255, 255, 255, 0.14);
 }
 
-/* ---- 删除按钮（编辑模式） ---- */
+/* ---- Delete按钮（Edit模式） ---- */
 
 .ait-hl-pop-delete {
     width: 28px;
@@ -391,7 +391,7 @@ mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
     transform: scale(0.94);
 }
 
-/* ==================== 浅色主题 ==================== */
+/* ==================== Light主题 ==================== */
 
 .ait-hl-popover.ait-hl-light {
     background: rgba(255, 255, 255, 0.92);

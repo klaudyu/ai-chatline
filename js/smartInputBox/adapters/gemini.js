@@ -14,7 +14,7 @@ class GeminiSmartEnterAdapter extends BaseSmartEnterAdapter {
     
     /**
      * 获取输入框选择器
-     * Gemini 使用 Quill 编辑器，内部有 contenteditable div
+     * Gemini 使用 Quill Edit器，内部有 contenteditable div
      * 结构：<rich-textarea><div class="ql-editor textarea" contenteditable="true">
      */
     getInputSelector() {
@@ -31,7 +31,7 @@ class GeminiSmartEnterAdapter extends BaseSmartEnterAdapter {
     }
     
     /**
-     * 获取提示词按钮位置偏移量
+     * 获取Prompt按钮位置偏移量
      */
     getPromptButtonOffset() {
         return { top: 15, left: -2 };
@@ -42,7 +42,7 @@ class GeminiSmartEnterAdapter extends BaseSmartEnterAdapter {
      * 位置：输入框右上方
      */
     getScrollToBottomOffset() {
-        return { top: -3, right: 8 };  // 向下移动 5px（从 -8 改为 -3）
+        return { top: -3, right: 8 };  // 向Move down动 5px（从 -8 改为 -3）
     }
     
     /**

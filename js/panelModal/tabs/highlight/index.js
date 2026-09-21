@@ -1,17 +1,17 @@
 /**
- * HighlightTab - 划重点功能设置面板
+ * HighlightTab - 划重点功能Settings面板
  *
  * 提供：
- * - 功能开关
+ * - 功能Toggle
  * - 高亮样式选择（4 种）
- * - 高亮颜色管理（排序、添加、删除）
+ * - 高亮颜色管理（排序、Add、Delete）
  */
 
 class HighlightTab extends BaseTab {
     constructor() {
         super();
         this.id = 'highlight';
-        this.name = chrome.i18n.getMessage('highlightMark') || '文本高亮';
+        this.name = chrome.i18n.getMessage('highlightMark') || 'Text highlighting';
         this.badge = 'NEW';
         this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 20h9"/>
@@ -30,8 +30,8 @@ class HighlightTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${chrome.i18n.getMessage('highlightToggleTitle') || '启用文本高亮'}</div>
-                        <div class="setting-hint">${chrome.i18n.getMessage('highlightToggleHint') || '开启后，选中网页文字时可进行高亮标注'}</div>
+                        <div class="setting-label">${chrome.i18n.getMessage('highlightToggleTitle') || '启用Text highlighting'}</div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('highlightToggleHint') || '开启后，选中网页文字时可进行高亮Highlight'}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="highlight-toggle">
@@ -99,8 +99,8 @@ class HighlightTab extends BaseTab {
         if (!styleList) return;
 
         const styles = [
-            { id: 'solid', name: chrome.i18n.getMessage('highlightStyleFullCover') || '全覆盖', desc: chrome.i18n.getMessage('highlightStyleFullCoverDesc') || '高亮区域完整罩住文字' },
-            { id: 'half', name: chrome.i18n.getMessage('highlightStyleHalfCover') || '半覆盖', desc: chrome.i18n.getMessage('highlightStyleHalfCoverDesc') || '高亮区域在文字腰部以下' },
+            { id: 'solid', name: chrome.i18n.getMessage('highlightStyleFullCover') || '全Overwrite', desc: chrome.i18n.getMessage('highlightStyleFullCoverDesc') || '高亮区域完整罩住文字' },
+            { id: 'half', name: chrome.i18n.getMessage('highlightStyleHalfCover') || '半Overwrite', desc: chrome.i18n.getMessage('highlightStyleHalfCoverDesc') || '高亮区域在文字腰部以下' },
             { id: 'underline', name: chrome.i18n.getMessage('highlightStyleUnderline') || '下划线', desc: chrome.i18n.getMessage('highlightStyleUnderlineDesc') || '高亮区域在文字下方' },
             { id: 'textOnly', name: chrome.i18n.getMessage('highlightStyleTextOnly') || '仅文字', desc: chrome.i18n.getMessage('highlightStyleTextOnlyDesc') || '无背景高亮，仅文字变色' },
         ];
@@ -221,8 +221,8 @@ class HighlightTab extends BaseTab {
                 const color = row.dataset.color;
                 if (!window.globalPopconfirmManager) return;
                 const confirmed = await window.globalPopconfirmManager.show({
-                    title: chrome.i18n.getMessage('mzxvkp') || '删除',
-                    content: (chrome.i18n.getMessage('highlightDeleteColorConfirm') || '确定要删除颜色 {color} 吗？').replace('{color}', color),
+                    title: chrome.i18n.getMessage('mzxvkp') || 'Delete',
+                    content: (chrome.i18n.getMessage('highlightDeleteColorConfirm') || 'Confirm要Delete颜色 {color} 吗？').replace('{color}', color),
                 });
                 if (!confirmed) return;
                 const customColors = await this._getCustomColors();
@@ -261,7 +261,7 @@ class HighlightTab extends BaseTab {
 
             const header = document.createElement('div');
             header.className = 'folder-edit-modal-header';
-            header.innerHTML = `<h3>${chrome.i18n.getMessage('highlightAddColorTitle') || '添加颜色'}</h3>`;
+            header.innerHTML = `<h3>${chrome.i18n.getMessage('highlightAddColorTitle') || 'Add颜色'}</h3>`;
 
             const body = document.createElement('div');
             body.className = 'folder-edit-modal-body';
@@ -321,11 +321,11 @@ class HighlightTab extends BaseTab {
 
             const cancelBtn = document.createElement('button');
             cancelBtn.className = 'folder-edit-modal-cancel';
-            cancelBtn.textContent = chrome.i18n.getMessage('pxvkmz') || '取消';
+            cancelBtn.textContent = chrome.i18n.getMessage('pxvkmz') || 'Cancel';
 
             const confirmBtn = document.createElement('button');
             confirmBtn.className = 'folder-edit-modal-confirm';
-            confirmBtn.textContent = chrome.i18n.getMessage('vkmzpx') || '确定';
+            confirmBtn.textContent = chrome.i18n.getMessage('vkmzpx') || 'Confirm';
 
             footer.appendChild(cancelBtn);
             footer.appendChild(confirmBtn);

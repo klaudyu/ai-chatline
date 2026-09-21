@@ -5,13 +5,13 @@
  * 
  * 特性：
  * - 全局单例模式
- * - 完全可配置（标题、默认值、占位符、验证）
- * - 键盘交互（ESC取消、Enter确认）
- * - 点击遮罩层取消
- * - 深色模式自适应
+ * - 完全可配置（标题、Default值、占位符、验证）
+ * - 键盘交互（ESCCancel、Enter确认）
+ * - 点击遮罩层Cancel
+ * - Dark模式自适应
  * - Promise 异步返回
  * - 自动聚焦和光标定位
- * - ✨ 组件自治：URL 变化时自动关闭并清理 DOM（无需外部调用）
+ * - ✨ 组件自治：URL 变化时自动Close并清理 DOM（无需外部调用）
  * 
  * @example
  * // 基本用法
@@ -26,7 +26,7 @@
  * if (result) {
  *     console.log('用户输入:', result);
  * } else {
- *     console.log('用户取消了');
+ *     console.log('用户Cancel了');
  * }
  */
 
@@ -47,7 +47,7 @@ class GlobalInputModal {
             currentUrl: location.href  // 记录当前 URL
         };
         
-        // ✅ 监听 URL 变化，自动关闭 modal（组件自治）
+        // ✅ 监听 URL 变化，自动Close modal（组件自治）
         this._boundHandleUrlChange = this._handleUrlChange.bind(this);
         this._attachUrlListeners();
         
@@ -58,15 +58,15 @@ class GlobalInputModal {
      * 显示输入对话框
      * @param {Object} options - 配置选项
      * @param {string} options.title - 对话框标题（必填）
-     * @param {string} options.defaultValue - 默认输入值
+     * @param {string} options.defaultValue - Default输入值
      * @param {string} options.placeholder - 输入框占位符
-     * @param {boolean} options.required - 是否必填（默认 false）
+     * @param {boolean} options.required - 是否必填（Default false）
      * @param {string} options.requiredMessage - 必填验证失败消息
-     * @param {number} options.maxLength - 最大长度（默认 100）
+     * @param {number} options.maxLength - 最大长度（Default 100）
      * @param {Function} options.validator - 自定义验证函数 (value) => { valid: boolean, message: string }
-     * @param {string} options.confirmText - 确认按钮文本（默认从 i18n 获取）
-     * @param {string} options.cancelText - 取消按钮文本（默认从 i18n 获取）
-     * @returns {Promise<string|null>} 返回用户输入的值，取消则返回 null
+     * @param {string} options.confirmText - 确认按钮文本（Default从 i18n 获取）
+     * @param {string} options.cancelText - Cancel按钮文本（Default从 i18n 获取）
+     * @returns {Promise<string|null>} 返回用户输入的值，Cancel则返回 null
      */
     async show(options = {}) {
         try {
@@ -82,7 +82,7 @@ class GlobalInputModal {
                 return null;
             }
             
-            // 合并配置
+            // Merge配置
             const config = {
                 title: options.title,
                 defaultValue: options.defaultValue || '',
@@ -104,7 +104,7 @@ class GlobalInputModal {
     }
     
     /**
-     * 强制关闭当前显示的 modal
+     * 强制Close当前显示的 modal
      */
     forceClose() {
         if (this.state.isShowing && this.state.currentResolve) {
@@ -183,7 +183,7 @@ class GlobalInputModal {
                 overlay.classList.add('visible');
                 input.focus();
                 
-                // 如果有默认值，将光标定位到末尾
+                // 如果有Default值，将光标定位到末尾
                 if (config.defaultValue) {
                     setTimeout(() => {
                         const length = input.value.length;
@@ -229,19 +229,19 @@ class GlobalInputModal {
                 resolve(value || null);
             };
             
-            // 取消输入
+            // Cancel输入
             const cancelInput = () => {
                 this._cleanup();
                 resolve(null);
             };
             
-            // 确定按钮
+            // Confirm按钮
             confirmBtn.addEventListener('click', submitInput);
             
-            // 取消按钮
+            // Cancel按钮
             cancelBtn.addEventListener('click', cancelInput);
             
-            // 点击遮罩层取消
+            // 点击遮罩层Cancel
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) {
                     cancelInput();
@@ -291,7 +291,7 @@ class GlobalInputModal {
     
     /**
      * 附加 URL 变化监听器
-     * 当 URL 变化时自动关闭 modal，无需外部调用
+     * 当 URL 变化时自动Close modal，无需外部调用
      */
     _attachUrlListeners() {
         try {
@@ -316,17 +316,17 @@ class GlobalInputModal {
     
     /**
      * 处理 URL 变化
-     * ✅ 组件自治：URL 变化时自动关闭 modal
+     * ✅ 组件自治：URL 变化时自动Close modal
      */
     _handleUrlChange() {
         const newUrl = location.href;
         
-        // URL 变化了，自动关闭 modal
+        // URL 变化了，自动Close modal
         if (newUrl !== this.state.currentUrl) {
             this._log('URL changed, auto-closing modal:', this.state.currentUrl, '->', newUrl);
             this.state.currentUrl = newUrl;
             
-            // 如果 modal 正在显示，自动关闭
+            // 如果 modal 正在显示，自动Close
             if (this.state.isShowing) {
                 this.forceClose();
             }
@@ -339,7 +339,7 @@ class GlobalInputModal {
 // 创建全局实例（只在第一次加载时）
 if (typeof window.globalInputModal === 'undefined') {
     window.globalInputModal = new GlobalInputModal({
-        debug: false  // 生产环境关闭，调试时可设为 true
+        debug: false  // 生产环境Close，调试时可设为 true
     });
 }
 

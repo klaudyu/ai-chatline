@@ -144,7 +144,7 @@ class StarredTab extends BaseTab {
                         <div class="setting-label">${chrome.i18n.getMessage('starredDisplayLabel') || '显示文件夹'}</div>
                         <div class="setting-hint">${chrome.i18n.getMessage('sidebarStarredHint') || 'Control which platforms show the starred folder in their sidebar'}</div>
                     </div>
-                    <button class="starred-manage-btn">${chrome.i18n.getMessage('promptBtnSwitch') || '开关'}</button>
+                    <button class="starred-manage-btn">${chrome.i18n.getMessage('promptBtnSwitch') || 'Toggle'}</button>
                 </div>
             `;
             container.appendChild(manageSection);

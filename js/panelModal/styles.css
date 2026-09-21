@@ -99,7 +99,7 @@
     border-right: 1px solid #e5e5e7;
 }
 
-/* 左侧顶部区域（关闭按钮 + 标题） */
+/* 左侧顶部区域（Close按钮 + 标题） */
 .ait-panel-modal-sidebar-header {
     height: 56px;
     display: flex;
@@ -110,7 +110,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-/* 关闭按钮 */
+/* Close按钮 */
 .ait-panel-modal-close {
     width: 32px;
     height: 32px;
@@ -467,9 +467,9 @@ html[data-timeline-theme="dark"] .ait-panel-modal-content::-webkit-scrollbar-thu
 }
 
 /* ========== 共享组件暗黑模式（setting 通用 / toggle / platform 列表） ========== */
-/* 注：使用 !important 确保在任意 CSS 加载顺序下覆盖各 tab 文件中定义的全局同类规则 */
+/* 注：使用 !important 确保在任意 CSS 加载顺序下Overwrite各 tab 文件中定义的全局同类规则 */
 
-/* 通用设置项卡片（所有 tab 复用） */
+/* 通用Settings项卡片（所有 tab 复用） */
 html[data-timeline-theme="dark"] .ait-panel-modal-content .setting-item {
     background: rgba(255, 255, 255, 0.06) !important;
 }
@@ -495,7 +495,7 @@ html[data-timeline-theme="dark"] .ait-panel-modal-content .divider {
     background: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Toggle 开关（所有 tab 复用） */
+/* Toggle Toggle（所有 tab 复用） */
 html[data-timeline-theme="dark"] .ait-toggle-slider {
     background-color: #4b5563 !important;
 }
@@ -508,7 +508,7 @@ html[data-timeline-theme="dark"] .ait-toggle-switch input:focus + .ait-toggle-sl
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
 }
 
-/* Platform 列表（智能输入框 / 代码运行器 / 收藏夹等复用） */
+/* Platform 列表（智能输入框 / 代码Run器 / 收藏夹等复用） */
 html[data-timeline-theme="dark"] .platform-list-title {
     color: #e5e7eb !important;
 }

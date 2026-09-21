@@ -3,18 +3,18 @@
  * 
  * 职责：悬浮窗口的定位、拖动、调整大小
  * 配色策略：
- *   - 页面浅色主题 → Runner 深色背景（VSCode Dark+）
- *   - 页面深色主题 → Runner 浅色背景（VSCode Light+）
+ *   - 页面Light主题 → Runner Dark背景（VSCode Dark+）
+ *   - 页面Dark主题 → Runner Light背景（VSCode Light+）
  */
 
-/* ===== 默认：GitHub Dark 风格（用于浅色页面）===== */
+/* ===== Default：GitHub Dark 风格（用于Light页面）===== */
 .floating-runner-container {
     --floating-bg: #0d1117;
     --floating-border: #30363d;
     --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
-/* ===== 深色页面：VSCode Light+ 风格 ===== */
+/* ===== Dark页面：VSCode Light+ 风格 ===== */
 html.dark .floating-runner-container,
 body.dark .floating-runner-container,
 body.dark-theme .floating-runner-container,
@@ -58,7 +58,7 @@ html[style*="color-scheme: dark"] .floating-runner-container {
     border-radius: 0;
 }
 
-/* 悬浮模式下只有编辑器区域的 header 可拖动 */
+/* 悬浮模式下只有Edit器区域的 header 可拖动 */
 .floating-runner-container .runner-panel-editor-section .runner-panel-header {
     cursor: move;
 }

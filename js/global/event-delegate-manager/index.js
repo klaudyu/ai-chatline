@@ -44,7 +44,7 @@ class EventDelegateManager {
             this.handlers[eventType] = new Map();
         }
         
-        // 存储处理器（相同选择器会覆盖）
+        // 存储处理器（相同选择器会Overwrite）
         this.handlers[eventType].set(selector, handler);
         
         // 确保该事件类型已在 document 上绑定

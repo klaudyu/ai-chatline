@@ -1,16 +1,16 @@
 /**
  * Selection Copy
  *
- * 选区复制增强：当选区包含「文本高亮」或「公式」时，提供"复制"按钮。
- * 复制后剪贴板包含两份内容：
+ * 选区Copy增强：当选区包含「Text highlighting」或「公式」时，提供"Copy"按钮。
+ * Copy后剪贴板包含两份内容：
  *   - text/html  — 保留高亮的视觉样式（inline style），公式转 LaTeX/MathML 节点
  *   - text/plain — 公式按 formulaFormat 模板（如 $%s$）输出，其余按 textContent
  *
- * 公式优先级（按用户设置）：
+ * 公式优先级（按用户Settings）：
  *   - 同时启用：LaTeX → MathML 兜底
  *   - 仅 LaTeX：仅 LaTeX，无源时跳过
  *   - 仅 MathML：仅 MathML
- *   - 全部关闭：公式不再作为触发器（高亮仍然算）
+ *   - 全部Close：公式不再作为触发器（高亮仍然算）
  *
  * 该模块完全独立，不依赖 QuickAsk / Highlight；
  * 通过 window.AIChatTimelineSelectionCopy 暴露能力。
@@ -19,7 +19,7 @@
 (function () {
     'use strict';
 
-    // 公式元素选择器：覆盖 KaTeX、豆包、维基、MathJax、Gemini、Grok 等
+    // 公式元素选择器：Overwrite KaTeX、豆包、维基、MathJax、Gemini、Grok 等
     const FORMULA_SELECTOR = [
         '.katex-display',
         '.katex',
@@ -38,14 +38,14 @@
     const COPY_MARKER_ATTR = 'data-ait-copy-marker';
 
     /**
-     * 选区复制管理器
+     * 选区Copy管理器
      */
     class SelectionCopyManager {
         constructor() {
             // 公式相关配置（异步从 storage 加载）
             this._config = {
-                latexOn: false,   // formulaLatexEnabled，默认 false
-                mathmlOn: false,  // formulaMathMLEnabled，默认 false
+                latexOn: false,   // formulaLatexEnabled，Default false
+                mathmlOn: false,  // formulaMathMLEnabled，Default false
                 template: '%s'    // formulaFormat 对应的模板
             };
             this._configReady = false;
@@ -65,7 +65,7 @@
                 this._configReady = true;
             } catch (e) {
                 console.warn('[SelectionCopy] init config failed:', e);
-                this._configReady = true; // 用默认值
+                this._configReady = true; // 用Default值
             }
 
             try {
@@ -216,7 +216,7 @@
             });
 
             // 高亮：转为 <span> 并保留 inline style，剥离扩展私有属性
-            // 同时覆盖 pending 态（编辑中的标注），避免私有 class 泄漏
+            // 同时Overwrite pending 态（Edit中的Highlight），避免私有 class 泄漏
             fragment.querySelectorAll('mark.ait-highlight, mark.ait-highlight-pending').forEach(mark => {
                 this._sanitizeHighlightMark(mark);
             });
@@ -240,7 +240,7 @@
                 // 无源时保留原始克隆（textContent 会拿到公式的渲染后文本，至少不丢内容）
             });
 
-            // 浏览器 Cmd+C 默认会用换行表达块级元素，这里使用一个轻量 walker 做近似
+            // 浏览器 Cmd+C Default会用换行表达块级元素，这里使用一个轻量 walker 做近似
             return this._fragmentToPlainText(fragment);
         }
 
@@ -378,7 +378,7 @@
         // ==================== 剪贴板写入 ====================
 
         /**
-         * 复制选区（必须在用户手势的同步路径上调用以确保 user gesture）
+         * Copy选区（必须在用户手势的同步路径上调用以确保 user gesture）
          * @param {Range} range
          * @returns {Promise<boolean>}
          */

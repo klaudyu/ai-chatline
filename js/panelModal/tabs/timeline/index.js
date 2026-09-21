@@ -1,8 +1,8 @@
 /**
- * Timeline Settings Tab - 时间轴设置
+ * Timeline Settings Tab - TimelineSettings
  * 
  * 功能：
- * - 提供开关控制上下键跳转对话节点功能
+ * - 提供Toggle控制上下键跳转对话节点功能
  * - 按↑↓方向键快速浏览对话历史
  * - 控制各平台的箭头键导航功能
  */
@@ -31,7 +31,7 @@ class TimelineSettingsTab extends BaseTab {
     constructor() {
         super();
         this.id = 'timeline';
-        this.name = timelineTabI18n('pxkmvz', '时间轴');
+        this.name = timelineTabI18n('pxkmvz', 'Timeline');
         this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <circle cx="12" cy="12" r="9"/>
         </svg>`;
@@ -48,7 +48,7 @@ class TimelineSettingsTab extends BaseTab {
     }
     
     /**
-     * 渲染设置内容
+     * 渲染Settings内容
      */
     render() {
         const container = document.createElement('div');
@@ -61,7 +61,7 @@ class TimelineSettingsTab extends BaseTab {
                 <div class="setting-item timeline-long-conversation-setting">
                     <div class="setting-info">
                         <div class="setting-label">${timelineTabI18n('longConversationPerformanceTitle', '长对话性能优化')}</div>
-                        <div class="setting-hint">${timelineTabI18n('longConversationPerformanceHint', '当对话消息超过指定数量后生效，仅折叠历史消息节点，不删除真实对话内容。')}</div>
+                        <div class="setting-hint">${timelineTabI18n('longConversationPerformanceHint', '当对话消息超过指定数量后生效，仅折叠历史消息节点，不Delete真实对话内容。')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="long-conversation-performance-toggle">
@@ -96,7 +96,7 @@ class TimelineSettingsTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${timelineTabI18n('chatTimeLabelTitle', '显示对话时间')}</div>
+                        <div class="setting-label">${timelineTabI18n('chatTimeLabelTitle', 'Show conversation times')}</div>
                         <div class="setting-hint">${timelineTabI18n('chatTimeLabelHint', '在对话消息旁显示时间标签')}</div>
                     </div>
                     <label class="ait-toggle-switch">
@@ -109,17 +109,17 @@ class TimelineSettingsTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${timelineTabI18n('timelineThemeColorLabel', '时间轴主题色')}</div>
-                        <div class="setting-hint">${timelineTabI18n('timelineThemeColorHint', '为不同平台设置时间轴激活节点的主题色')}</div>
+                        <div class="setting-label">${timelineTabI18n('timelineThemeColorLabel', 'Timeline主题色')}</div>
+                        <div class="setting-hint">${timelineTabI18n('timelineThemeColorHint', '为不同平台SettingsTimeline激活节点的主题色')}</div>
                     </div>
-                    <button class="starred-manage-btn timeline-theme-color-manage-btn">${timelineTabI18n('timelineThemeColorManageButton', '设置')}</button>
+                    <button class="starred-manage-btn timeline-theme-color-manage-btn">${timelineTabI18n('timelineThemeColorManageButton', 'Settings')}</button>
                 </div>
             </div>
             ${divider}
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${timelineTabI18n('timelineAICompleteToastTitle', '回复完成提醒')}</div>
+                        <div class="setting-label">${timelineTabI18n('timelineAICompleteToastTitle', 'Response complete notification')}</div>
                         <div class="setting-hint">${timelineTabI18n('timelineAICompleteToastHint', 'AI 回复完成且当前不在最新位置时显示提醒')}</div>
                     </div>
                     <label class="ait-toggle-switch">
@@ -134,7 +134,7 @@ class TimelineSettingsTab extends BaseTab {
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label"><svg class="setting-label-icon setting-label-icon-pin" viewBox="0 0 24 24" fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1 1 1 0 0 1 1 1z"/></svg>${timelineTabI18n('pxmzkv', '长按标记重点')}</div>
-                        <div class="setting-hint">${timelineTabI18n('kzxvpm', '长按时间轴节点可标记重点对话')}</div>
+                        <div class="setting-hint">${timelineTabI18n('kzxvpm', '长按Timeline节点可标记重点对话')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="long-press-mark-toggle">
@@ -146,8 +146,8 @@ class TimelineSettingsTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${timelineTabI18n('notepadTitle', '闪记')}</div>
-                        <div class="setting-hint">${timelineTabI18n('notepadToggleHint', '在时间轴底部显示闪记入口')}</div>
+                        <div class="setting-label">${timelineTabI18n('notepadTitle', 'Quick note')}</div>
+                        <div class="setting-hint">${timelineTabI18n('notepadToggleHint', '在Timeline底部显示Quick note入口')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="notepad-toggle">
@@ -159,7 +159,7 @@ class TimelineSettingsTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${timelineTabI18n('vkpmzx', '上下键导航')}</div>
+                        <div class="setting-label">${timelineTabI18n('vkpmzx', 'Navigate with arrow keys')}</div>
                         <div class="setting-hint">${timelineTabI18n('xpvmkz', '按上下方向键快速浏览对话历史')}</div>
                     </div>
                     <label class="ait-toggle-switch">
@@ -181,10 +181,10 @@ class TimelineSettingsTab extends BaseTab {
         bottomSection.innerHTML = `
             <div class="setting-item">
                 <div class="setting-info">
-                    <div class="setting-label">${timelineTabI18n('timelineDisplayLabel', '显示时间轴')}</div>
-                    <div class="setting-hint">${timelineTabI18n('mzkvxp', '控制哪些平台显示时间轴')}</div>
+                    <div class="setting-label">${timelineTabI18n('timelineDisplayLabel', '显示Timeline')}</div>
+                    <div class="setting-hint">${timelineTabI18n('mzkvxp', '控制哪些平台显示Timeline')}</div>
                 </div>
-                <button class="starred-manage-btn">${timelineTabI18n('promptBtnSwitch', '开关')}</button>
+                <button class="starred-manage-btn">${timelineTabI18n('promptBtnSwitch', 'Toggle')}</button>
             </div>
         `;
         container.appendChild(bottomSection);
@@ -322,25 +322,25 @@ class TimelineSettingsTab extends BaseTab {
     async mounted() {
         super.mounted();
         
-        // 0. 处理显示对话时间开关（默认开启）
+        // 0. 处理Show conversation timesToggle（Default开启）
         const chatTimeLabelCheckbox = document.getElementById('chat-time-label-toggle');
         if (chatTimeLabelCheckbox) {
-            // 读取当前状态（默认开启）
+            // 读取当前状态（Default开启）
             try {
                 const result = await chrome.storage.local.get('chatTimeLabelEnabled');
-                // 默认值为 true（开启）
+                // Default值为 true（开启）
                 chatTimeLabelCheckbox.checked = result.chatTimeLabelEnabled !== false;
             } catch (e) {
                 this._handleExtensionError('Failed to load chat time label state', e);
                 chatTimeLabelCheckbox.checked = true;
             }
             
-            // 监听开关变化
+            // 监听Toggle变化
             this.addEventListener(chatTimeLabelCheckbox, 'change', async (e) => {
                 try {
                     const enabled = e.target.checked;
                     
-                    // 保存到 Storage
+                    // Save到 Storage
                     await chrome.storage.local.set({ chatTimeLabelEnabled: enabled });
                     
                     // 立即更新当前页面的时间标签显示
@@ -354,7 +354,7 @@ class TimelineSettingsTab extends BaseTab {
             });
         }
         
-        // 1. 处理 AI 回复完成提醒开关（默认开启）
+        // 1. 处理 AI Response complete notificationToggle（Default开启）
         const aiCompleteToastCheckbox = document.getElementById('ai-complete-toast-toggle');
         if (aiCompleteToastCheckbox) {
             try {
@@ -376,7 +376,7 @@ class TimelineSettingsTab extends BaseTab {
             });
         }
 
-        // 1.1 处理长对话性能优化配置（默认关闭，仅支持平台展示）
+        // 1.1 处理长对话性能优化配置（DefaultClose，仅支持平台展示）
         if (this._supportsLongConversationOptimize()) {
             const performanceToggle = document.getElementById('long-conversation-performance-toggle');
             const performanceControls = document.getElementById('timeline-performance-controls');
@@ -449,7 +449,7 @@ class TimelineSettingsTab extends BaseTab {
             });
         }
 
-        // 1. 处理闪记开关（默认开启）
+        // 1. 处理Quick noteToggle（Default开启）
         const notepadCheckbox = document.getElementById('notepad-toggle');
         if (notepadCheckbox) {
             try {
@@ -464,12 +464,12 @@ class TimelineSettingsTab extends BaseTab {
                     const enabled = e.target.checked;
                     await chrome.storage.local.set({ aitNotepadEnabled: enabled });
                     
-                    // 立即更新时间轴上闪记按钮的显隐
+                    // 立即更新Timeline上Quick note按钮的显隐
                     const notepadBtn = document.querySelector('.ait-notepad-btn');
                     if (notepadBtn) {
                         notepadBtn.style.display = enabled ? 'flex' : 'none';
                     }
-                    // 关闭时同时收起面板
+                    // Close时同时收起面板
                     if (!enabled && window.notepadManager && window.notepadManager.isOpen) {
                         window.notepadManager.close();
                     }
@@ -479,33 +479,33 @@ class TimelineSettingsTab extends BaseTab {
             });
         }
         
-        // 2. 处理长按标记重点对话开关（默认开启，无法关闭）
+        // 2. 处理长按标记重点对话Toggle（Default开启，无法Close）
         const longPressCheckbox = document.getElementById('long-press-mark-toggle');
         if (longPressCheckbox) {
-            // 设置为默认开启
+            // Settings为Default开启
             longPressCheckbox.checked = true;
             
-            // 监听点击事件，阻止关闭并显示提示
+            // 监听点击事件，阻止Close并显示提示
             this.addEventListener(longPressCheckbox, 'change', (e) => {
-                // 阻止关闭，保持开启状态
+                // 阻止Close，保持开启状态
                 e.target.checked = true;
                 
                 // 显示 toast 提示
                 if (window.globalToastManager) {
-                    const message = timelineTabI18n('qoytxz', '该功能默认开启');
+                    const message = timelineTabI18n('qoytxz', '该功能Default开启');
                     window.globalToastManager.info(message, e.target, {
                         duration: 2200,
                         icon: '',  // 不显示图标
                         color: {
                             light: {
-                                backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                                textColor: '#ffffff',        // 浅色模式：白色文字
-                                borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                                backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                                textColor: '#ffffff',        // Light模式：白色文字
+                                borderColor: '#0d0d0d'       // Light模式：黑色边框
                             },
                             dark: {
-                                backgroundColor: '#ffffff',  // 深色模式：白色背景
-                                textColor: '#1f2937',        // 深色模式：深灰色文字
-                                borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                                backgroundColor: '#ffffff',  // Dark模式：白色背景
+                                textColor: '#1f2937',        // Dark模式：深灰色文字
+                                borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                             }
                         }
                     });
@@ -513,31 +513,31 @@ class TimelineSettingsTab extends BaseTab {
             });
         }
         
-        // 2. 处理全局箭头键导航开关
+        // 2. 处理全局箭头键导航Toggle
         const checkbox = document.getElementById('arrow-keys-nav-toggle');
         if (checkbox) {
-            // 读取当前状态（默认开启）
+            // 读取当前状态（Default开启）
             try {
                 const result = await chrome.storage.local.get('arrowKeysNavigationEnabled');
-                // 默认值为 true（开启）
+                // Default值为 true（开启）
                 checkbox.checked = result.arrowKeysNavigationEnabled !== false;
             } catch (e) {
                 this._handleExtensionError('Failed to load state', e);
-                // 读取失败，默认开启
+                // 读取失败，Default开启
                 checkbox.checked = true;
             }
             
-            // 监听开关变化
+            // 监听Toggle变化
             this.addEventListener(checkbox, 'change', async (e) => {
                 try {
                     const enabled = e.target.checked;
                     
-                    // 保存到 Storage
+                    // Save到 Storage
                     await chrome.storage.local.set({ arrowKeysNavigationEnabled: enabled });
                 } catch (e) {
                     this._handleExtensionError('Failed to save state', e);
                     
-                    // 保存失败，恢复checkbox状态
+                    // Save失败，恢复checkbox状态
                     checkbox.checked = !checkbox.checked;
                 }
             });
@@ -575,7 +575,7 @@ class TimelineSettingsTab extends BaseTab {
         overlay.innerHTML = `
             <div class="starred-platform-modal">
                 <div class="starred-platform-modal-header">
-                    <span>${timelineTabI18n('mkvzpx', '支持的平台')}</span>
+                    <span>${timelineTabI18n('mkvzpx', 'Supported platforms')}</span>
                     <button class="starred-platform-modal-close">✕</button>
                 </div>
                 <div class="starred-platform-modal-body">${items}</div>
@@ -611,7 +611,7 @@ class TimelineSettingsTab extends BaseTab {
         const result = await chrome.storage.local.get('timelineActiveColorByPlatform');
         const activeColorByPlatform = result.timelineActiveColorByPlatform || {};
         const activeColorOptions = getTimelineActiveColorOptions();
-        const themeColorLabel = timelineTabI18n('timelineThemeColorLabel', '时间轴主题色');
+        const themeColorLabel = timelineTabI18n('timelineThemeColorLabel', 'Timeline主题色');
 
         const overlay = document.createElement('div');
         overlay.className = 'starred-platform-modal-overlay';

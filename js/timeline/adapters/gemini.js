@@ -256,7 +256,7 @@ class GeminiAdapter extends SiteAdapter {
     }
     
     /**
-     * 检测是否应该隐藏时间轴
+     * 检测是否应该隐藏Timeline
      * Gemini: 当存在沉浸式面板或生成式UI框架时隐藏
      * @returns {boolean}
      */

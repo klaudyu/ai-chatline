@@ -21,7 +21,7 @@
 .ant-antenna-r { animation-delay: 0.15s; }
 @keyframes ant-antenna { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(4deg); } }
 
-/* 深色模式下蚂蚁提亮 */
+/* Dark模式下蚂蚁提亮 */
 html[data-timeline-theme="dark"] .ait-ant-parade svg,
 html[class*="dark"] .ait-ant-parade svg,
 body.dark .ait-ant-parade svg,

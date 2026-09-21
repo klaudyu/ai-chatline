@@ -150,7 +150,7 @@ class SiteAdapter {
      * @returns {Element} - 时间标签实际渲染到的元素
      */
     getTimeLabelTarget(element) {
-        return element; // 默认返回消息元素本身
+        return element; // Default返回消息元素本身
     }
 
     /**
@@ -285,7 +285,7 @@ class SiteAdapter {
      * @returns {Element|null} - Target element to insert before, or null if not supported
      */
     getStarChatButtonTarget() {
-        return null; // 默认不支持，返回 null
+        return null; // Default不支持，返回 null
     }
     
     /**
@@ -293,7 +293,7 @@ class SiteAdapter {
      * @returns {string} - Default theme name, empty string means no default
      */
     getDefaultChatTheme() {
-        return ''; // 默认返回空字符串
+        return ''; // Default返回空字符串
     }
     
     /**
@@ -310,7 +310,7 @@ class SiteAdapter {
      * @returns {boolean} - true if timeline should be hidden
      */
     shouldHideTimeline() {
-        return false; // 默认不隐藏
+        return false; // Default不隐藏
     }
     
     /**
@@ -319,7 +319,7 @@ class SiteAdapter {
      * @returns {number} - Scroll offset in pixels
      */
     getScrollOffset() {
-        return 30; // 默认偏移量
+        return 30; // Default偏移量
     }
     
     /**
@@ -328,7 +328,7 @@ class SiteAdapter {
      * @returns {boolean|null} - true: AI generating, false: AI stopped, null: not implemented
      */
     isAIGenerating() {
-        return null; // 默认返回 null 表示未实现，子类需覆盖才能启用 padding 功能
+        return null; // Default返回 null 表示未实现，子类需覆盖才能启用 padding 功能
     }
     
 }

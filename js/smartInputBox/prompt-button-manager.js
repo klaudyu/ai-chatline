@@ -1,8 +1,8 @@
 /**
  * Prompt Button Manager
  * 
- * 提示词按钮管理器
- * 在输入框左上角显示一个 fixed 定位的"提示词"按钮
+ * Prompt按钮管理器
+ * 在输入框左上角显示一个 fixed 定位的"Prompt"按钮
  * 
  * 位置更新策略（事件驱动）：
  * - resize 时立即更新
@@ -23,9 +23,9 @@ class PromptButtonManager {
         this.isDestroyed = false;
         this.platformSettings = {};
         this.storageListener = null;
-        this._unsubscribeObserver = null;  // DOMObserverManager 取消订阅函数
+        this._unsubscribeObserver = null;  // DOMObserverManager Cancel订阅函数
         
-        // 提示词列表
+        // Prompt列表
         this.prompts = [];
         
         // 版本更新 Logo 按钮
@@ -40,7 +40,7 @@ class PromptButtonManager {
         // 配置
         this.config = {
             gap: 8,  // 按钮与输入框的间距
-            updateBtnGap: 6  // Logo 按钮与提示词按钮的间距
+            updateBtnGap: 6  // Logo 按钮与Prompt按钮的间距
         };
     }
     
@@ -48,10 +48,10 @@ class PromptButtonManager {
      * 初始化
      */
     async init() {
-        // 1. 加载平台设置
+        // 1. 加载平台Settings
         await this._loadPlatformSettings();
         
-        // 2. 加载提示词列表
+        // 2. 加载Prompt列表
         await this._loadPrompts();
         
         // 3. 监听 Storage 变化
@@ -71,7 +71,7 @@ class PromptButtonManager {
     }
     
     /**
-     * 加载提示词列表
+     * 加载Prompt列表
      */
     async _loadPrompts() {
         try {
@@ -116,12 +116,12 @@ class PromptButtonManager {
         // 隐藏按钮
         this._hideButton();
         
-        // 清空输入框引用
+        // Clear输入框引用
         this.inputElement = null;
     }
     
     /**
-     * 加载平台设置
+     * 加载平台Settings
      */
     async _loadPlatformSettings() {
         try {
@@ -168,7 +168,7 @@ class PromptButtonManager {
             if (this.isDestroyed) return;
             
             if (areaName === 'local') {
-                // 监听平台设置变化
+                // 监听平台Settings变化
                 if (changes.promptButtonPlatformSettings) {
                     this.platformSettings = changes.promptButtonPlatformSettings.newValue || {};
                     const shouldEnable = this._shouldTrackInput();
@@ -180,7 +180,7 @@ class PromptButtonManager {
                     }
                 }
                 
-                // 监听提示词列表变化
+                // 监听Prompt列表变化
                 if (changes.prompts) {
                     this.prompts = changes.prompts.newValue || [];
                 }
@@ -244,7 +244,7 @@ class PromptButtonManager {
      */
     async _checkUpdateStatus() {
         try {
-            // 仅 icon 模式下在提示词按钮旁显示 Logo，popup 模式由 ChangelogModal 自行弹窗
+            // 仅 icon 模式下在Prompt按钮旁显示 Logo，popup 模式由 ChangelogModal 自行弹窗
             if (typeof CHANGELOG_DATA !== 'undefined' && CHANGELOG_DATA.displayMode !== 'icon') {
                 this._hasUpdate = false;
                 return;
@@ -498,7 +498,7 @@ class PromptButtonManager {
         try {
             const promptEnabled = this._isPlatformEnabled();
             const animationEnabled = this._isAnimationEnabled();
-            // 获取定位参考元素（适配器可自定义，默认使用输入框）
+            // 获取定位参考元素（适配器可自定义，Default使用输入框）
             const referenceElement = this.adapter.getPositionReferenceElement?.(this.inputElement) || this.inputElement;
             const rect = referenceElement.getBoundingClientRect();
             
@@ -528,7 +528,7 @@ class PromptButtonManager {
                 const top = rect.top + offset.top;
                 const left = rect.left - buttonRect.width - this.config.gap + offset.left;
 
-                // 左侧空间不足时隐藏，避免按钮被钳制后覆盖输入框或页面核心操作
+                // 左侧空间不足时隐藏，避免按钮被钳制后Overwrite输入框或页面核心操作
                 if (left < 8) {
                     this.buttonElement.style.display = 'none';
                     if (this._updateBtnElement) {
@@ -539,12 +539,12 @@ class PromptButtonManager {
                     const safeTop = Math.max(8, Math.min(top, window.innerHeight - buttonRect.height - 8));
                     const safeLeft = left;
 
-                    // 设置位置并显示
+                    // Settings位置并显示
                     this.buttonElement.style.top = `${safeTop}px`;
                     this.buttonElement.style.left = `${safeLeft}px`;
                     this.buttonElement.style.visibility = 'visible';
 
-                    // 更新 Logo 按钮位置（在提示词按钮左侧）
+                    // 更新 Logo 按钮位置（在Prompt按钮左侧）
                     if (this._updateBtnElement && this._hasUpdate) {
                         this._updateBtnElement.style.visibility = 'hidden';
                         this._updateBtnElement.style.display = 'flex';
@@ -604,7 +604,7 @@ class PromptButtonManager {
             return;
         }
         
-        // 如果已经显示，则关闭
+        // 如果已经显示，则Close
         if (this._promptDropdown) {
             this._hidePromptDropdown();
             return;
@@ -615,7 +615,7 @@ class PromptButtonManager {
     }
     
     /**
-     * 显示提示词下拉菜单（委托给共享 prompt-dropdown-ui）
+     * 显示Prompt下拉菜单（委托给共享 prompt-dropdown-ui）
      */
     _showPromptDropdown() {
         if (window.globalDropdownManager) {
@@ -672,7 +672,7 @@ class PromptButtonManager {
         const topPadding = 20; // 顶部安全距离
         const gap = 8; // 弹窗与按钮的间距
         
-        // 设置固定宽高
+        // Settings固定宽高
         this._promptDropdown.style.width = `${dropdownWidth}px`;
         this._promptDropdown.style.height = `${dropdownHeight}px`;
         this._promptDropdown.style.visibility = 'hidden';
@@ -686,7 +686,7 @@ class PromptButtonManager {
         left = Math.max(8, left);
         
         // 垂直位置：往上展开，底部挨着按钮顶部
-        // 如果超过顶部安全距离，就把弹窗往下移
+        // 如果超过顶部安全距离，就把弹窗往Move down
         const top = Math.max(topPadding, buttonRect.top - gap - dropdownHeight);
         
         this._promptDropdown.style.left = `${left}px`;
@@ -695,7 +695,7 @@ class PromptButtonManager {
     }
     
     /**
-     * 隐藏提示词下拉菜单
+     * 隐藏Prompt下拉菜单
      */
     _hidePromptDropdown() {
         if (this._boundCloseOnClickOutside) {
@@ -703,7 +703,7 @@ class PromptButtonManager {
             this._boundCloseOnClickOutside = null;
         }
         
-        // 关闭可能还在显示的 tooltip
+        // Close可能还在显示的 tooltip
         if (window.globalTooltipManager) {
             window.globalTooltipManager.hide();
         }
@@ -725,7 +725,7 @@ class PromptButtonManager {
     }
     
     /**
-     * 插入提示词到输入框
+     * 插入Prompt到输入框
      */
     _insertPrompt(prompt) {
         if (!this.inputElement || !prompt.content) {
@@ -737,7 +737,7 @@ class PromptButtonManager {
             if (this.adapter.insertText) {
                 this.adapter.insertText(this.inputElement, prompt.content);
             } else {
-                // 默认插入逻辑
+                // Default插入逻辑
                 this._defaultInsertText(prompt.content);
             }
         } catch (e) {
@@ -746,7 +746,7 @@ class PromptButtonManager {
     }
     
     /**
-     * 默认的文本插入逻辑（追加到末尾）
+     * Default的文本插入逻辑（追加到末尾）
      */
     _defaultInsertText(text) {
         if (!this.inputElement) return;
@@ -793,11 +793,11 @@ class PromptButtonManager {
             // 使用 insertText 命令追加（execCommand 虽已弃用，但无替代方案能避免框架重格式化问题）
             document.execCommand('insertText', false, appendText);
             
-            // 延迟设置焦点、光标和滚动
+            // 延迟Settings焦点、光标和滚动
             setTimeout(() => {
                 this.inputElement.focus();
                 
-                // 设置光标到末尾（contenteditable 需要 selection 才能显示光标）
+                // Settings光标到末尾（contenteditable 需要 selection 才能显示光标）
                 const selection = window.getSelection();
                 const range = document.createRange();
                 range.selectNodeContents(this.inputElement);
@@ -814,7 +814,7 @@ class PromptButtonManager {
             if (!existingText.trim()) {
                 finalText = text + '\n\n';
             } else {
-                // 清理末尾换行符，添加1个空行（2个换行符）作为分隔
+                // 清理末尾换行符，Add1个空行（2个换行符）作为分隔
                 const cleanedText = existingText.replace(/\n+$/, '');
                 finalText = cleanedText + '\n\n' + text + '\n\n';
             }
@@ -824,7 +824,7 @@ class PromptButtonManager {
             // 触发 input 事件
             this.inputElement.dispatchEvent(new Event('input', { bubbles: true }));
             
-            // 延迟设置焦点和滚动
+            // 延迟Settings焦点和滚动
             setTimeout(() => {
                 this.inputElement.focus();
                 this.inputElement.selectionStart = this.inputElement.selectionEnd = this.inputElement.value.length;
@@ -856,7 +856,7 @@ class PromptButtonManager {
         this.isDestroyed = true;
         this._disable();
         
-        // 关闭下拉菜单
+        // Close下拉菜单
         this._hidePromptDropdown();
         
         // 移除 Storage 监听

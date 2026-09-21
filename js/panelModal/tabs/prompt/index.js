@@ -1,9 +1,9 @@
 /**
- * Prompt Tab - 提示词设置
+ * Prompt Tab - PromptSettings
  * 
  * 功能：
- * - 提示词列表管理（添加、编辑、删除）
- * - 提示词按钮显示开关
+ * - Prompt列表管理（Add、Edit、Delete）
+ * - Prompt按钮显示Toggle
  */
 
 class PromptTab extends BaseTab {
@@ -22,15 +22,15 @@ class PromptTab extends BaseTab {
     getInitialState() {
         return {
             transient: {
-                prompts: [],      // 提示词列表
-                editingId: null   // 正在编辑的提示词 ID
+                prompts: [],      // Prompt列表
+                editingId: null   // 正在Edit的Prompt ID
             },
             persistent: {}
         };
     }
     
     /**
-     * 渲染设置内容
+     * 渲染Settings内容
      */
     render() {
         const container = document.createElement('div');
@@ -66,10 +66,10 @@ class PromptTab extends BaseTab {
         bottomSection.innerHTML = `
             <div class="setting-item">
                 <div class="setting-info">
-                    <div class="setting-label">${chrome.i18n.getMessage('promptBtnDisplayLabel') || '显示提示词按钮'}</div>
+                    <div class="setting-label">${chrome.i18n.getMessage('promptBtnDisplayLabel') || '显示Prompt按钮'}</div>
                     <div class="setting-hint">${chrome.i18n.getMessage('hobsidbg')}</div>
                 </div>
-                <button class="starred-manage-btn">${chrome.i18n.getMessage('promptBtnSwitch') || '开关'}</button>
+                <button class="starred-manage-btn">${chrome.i18n.getMessage('promptBtnSwitch') || 'Toggle'}</button>
             </div>
         `;
         container.appendChild(bottomSection);
@@ -87,18 +87,18 @@ class PromptTab extends BaseTab {
     async mounted() {
         super.mounted();
         
-        // 加载提示词列表
+        // 加载Prompt列表
         await this.loadPrompts();
         
-        // 渲染提示词列表
+        // 渲染Prompt列表
         this.renderPromptList();
         
-        // 绑定添加按钮事件
+        // 绑定Add按钮事件
         this.bindAddButtonEvent();
     }
     
     /**
-     * 加载提示词列表
+     * 加载Prompt列表
      */
     async loadPrompts() {
         try {
@@ -111,7 +111,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 保存提示词列表
+     * SavePrompt列表
      */
     async savePrompts() {
         try {
@@ -123,7 +123,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 从 storage 中获取最新的提示词列表（防止内存状态过期导致数据丢失）
+     * 从 storage 中获取最新的Prompt列表（防止内存状态过期导致数据丢失）
      */
     async _getFreshPrompts() {
         try {
@@ -143,7 +143,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 渲染提示词列表
+     * 渲染Prompt列表
      */
     renderPromptList() {
         const container = document.getElementById('prompt-list-container');
@@ -166,7 +166,7 @@ class PromptTab extends BaseTab {
             return;
         }
         
-        // 排序：置顶的在前面
+        // 排序：Pin的在前面
         const sortedPrompts = [...prompts].sort((a, b) => {
             if (a.pinned && !b.pinned) return -1;
             if (!a.pinned && b.pinned) return 1;
@@ -228,7 +228,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 绑定添加按钮事件
+     * 绑定Add按钮事件
      */
     bindAddButtonEvent() {
         const addBtn = document.getElementById('prompt-add-btn');
@@ -240,10 +240,10 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 绑定提示词项的按钮事件
+     * 绑定Prompt项的按钮事件
      */
     bindPromptItemEvents() {
-        // 置顶按钮
+        // Pin按钮
         const pinBtns = document.querySelectorAll('.prompt-pin-btn');
         pinBtns.forEach(btn => {
             this.addEventListener(btn, 'click', (e) => {
@@ -251,14 +251,14 @@ class PromptTab extends BaseTab {
                 this.togglePin(id);
             });
             this.addEventListener(btn, 'mouseenter', () => {
-                window.globalTooltipManager?.show('prompt-pin', 'button', btn, chrome.i18n.getMessage('pntotp') || '置顶');
+                window.globalTooltipManager?.show('prompt-pin', 'button', btn, chrome.i18n.getMessage('pntotp') || 'Pin');
             });
             this.addEventListener(btn, 'mouseleave', () => {
                 window.globalTooltipManager?.hide();
             });
         });
         
-        // 编辑按钮
+        // Edit按钮
         const editBtns = document.querySelectorAll('.prompt-edit-btn');
         editBtns.forEach(btn => {
             this.addEventListener(btn, 'click', (e) => {
@@ -266,14 +266,14 @@ class PromptTab extends BaseTab {
                 this.hsksuywm(id);
             });
             this.addEventListener(btn, 'mouseenter', () => {
-                window.globalTooltipManager?.show('prompt-edit', 'button', btn, chrome.i18n.getMessage('vkpxzm') || '编辑');
+                window.globalTooltipManager?.show('prompt-edit', 'button', btn, chrome.i18n.getMessage('vkpxzm') || 'Edit');
             });
             this.addEventListener(btn, 'mouseleave', () => {
                 window.globalTooltipManager?.hide();
             });
         });
         
-        // 删除按钮
+        // Delete按钮
         const deleteBtns = document.querySelectorAll('.prompt-delete-btn');
         deleteBtns.forEach(btn => {
             this.addEventListener(btn, 'click', (e) => {
@@ -281,14 +281,14 @@ class PromptTab extends BaseTab {
                 this.deletePrompt(id);
             });
             this.addEventListener(btn, 'mouseenter', () => {
-                window.globalTooltipManager?.show('prompt-delete', 'button', btn, chrome.i18n.getMessage('mzxvkp') || '删除');
+                window.globalTooltipManager?.show('prompt-delete', 'button', btn, chrome.i18n.getMessage('mzxvkp') || 'Delete');
             });
             this.addEventListener(btn, 'mouseleave', () => {
                 window.globalTooltipManager?.hide();
             });
         });
         
-        // 上移按钮
+        // Move up按钮
         const moveUpBtns = document.querySelectorAll('.prompt-move-up-btn');
         moveUpBtns.forEach(btn => {
             this.addEventListener(btn, 'click', (e) => {
@@ -296,14 +296,14 @@ class PromptTab extends BaseTab {
                 this.movePrompt(id, 'up');
             });
             this.addEventListener(btn, 'mouseenter', () => {
-                window.globalTooltipManager?.show('prompt-move-up', 'button', btn, chrome.i18n.getMessage('mvupkt') || '上移');
+                window.globalTooltipManager?.show('prompt-move-up', 'button', btn, chrome.i18n.getMessage('mvupkt') || 'Move up');
             });
             this.addEventListener(btn, 'mouseleave', () => {
                 window.globalTooltipManager?.hide();
             });
         });
         
-        // 下移按钮
+        // Move down按钮
         const moveDownBtns = document.querySelectorAll('.prompt-move-down-btn');
         moveDownBtns.forEach(btn => {
             this.addEventListener(btn, 'click', (e) => {
@@ -311,7 +311,7 @@ class PromptTab extends BaseTab {
                 this.movePrompt(id, 'down');
             });
             this.addEventListener(btn, 'mouseenter', () => {
-                window.globalTooltipManager?.show('prompt-move-down', 'button', btn, chrome.i18n.getMessage('mvdnkt') || '下移');
+                window.globalTooltipManager?.show('prompt-move-down', 'button', btn, chrome.i18n.getMessage('mvdnkt') || 'Move down');
             });
             this.addEventListener(btn, 'mouseleave', () => {
                 window.globalTooltipManager?.hide();
@@ -320,7 +320,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 切换置顶状态
+     * 切换Pin状态
      */
     async togglePin(id) {
         const prompts = await this._getFreshPrompts();
@@ -345,8 +345,8 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 移动提示词位置
-     * @param {string} id - 提示词 ID
+     * 移动Prompt位置
+     * @param {string} id - Prompt ID
      * @param {string} direction - 移动方向：'up' 或 'down'
      */
     async movePrompt(id, direction) {
@@ -387,7 +387,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 显示提示词编辑弹窗
+     * 显示PromptEdit弹窗
      */
     showPromptModal(prompt = null) {
         const isEdit = !!prompt;
@@ -476,7 +476,7 @@ class PromptTab extends BaseTab {
             autoResize();
         });
         
-        // 初始化高度（编辑时内容可能已存在）
+        // 初始化高度（Edit时内容可能已存在）
         autoResize();
         
         // 平台选择器点击
@@ -505,7 +505,7 @@ class PromptTab extends BaseTab {
             overlay.classList.add('visible');
         });
         
-        // 关闭弹窗
+        // Close弹窗
         const closeModal = () => {
             overlay.classList.remove('visible');
             setTimeout(() => {
@@ -515,7 +515,7 @@ class PromptTab extends BaseTab {
             }, 200);
         };
         
-        // 保存
+        // Save
         const savePrompt = async () => {
             const name = nameInput.value.trim();
             const content = contentInput.value.trim();
@@ -538,7 +538,7 @@ class PromptTab extends BaseTab {
                 return;
             }
             
-            // 保存
+            // Save
             if (isEdit) {
                 await this.updatePrompt(prompt.id, { name, content, platformId: selectedPlatformId });
             } else {
@@ -555,7 +555,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 添加提示词
+     * AddPrompt
      */
     async byaskjndg(values) {
         const prompts = await this._getFreshPrompts();
@@ -580,7 +580,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 编辑提示词
+     * EditPrompt
      */
     hsksuywm(id) {
         const prompts = this.getState('prompts') || [];
@@ -591,7 +591,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 更新提示词
+     * 更新Prompt
      */
     async updatePrompt(id, values) {
         const prompts = await this._getFreshPrompts();
@@ -618,7 +618,7 @@ class PromptTab extends BaseTab {
     }
     
     /**
-     * 删除提示词
+     * DeletePrompt
      */
     async deletePrompt(id) {
         const prompts = await this._getFreshPrompts();

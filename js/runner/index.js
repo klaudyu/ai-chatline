@@ -1,8 +1,8 @@
 /**
- * Runner - 代码块运行器
+ * Runner - 代码块Run器
  * 
- * 检测页面中的代码块，为 JavaScript 代码块添加运行按钮
- * 完全独立运行，不依赖时间轴功能
+ * 检测页面中的代码块，为 JavaScript 代码块AddRun按钮
+ * 完全独立Run，不依赖Timeline功能
  * 支持多平台：ChatGPT、Gemini、Claude、DeepSeek、豆包等
  */
 
@@ -14,7 +14,7 @@
         try {
             return chrome.i18n.getMessage(key) || fallback;
         } catch (e) {
-            // 扩展上下文失效时返回默认值
+            // 扩展上下文失效时返回Default值
             return fallback;
         }
     }
@@ -30,7 +30,7 @@
         // ===== 高度配置 =====
         headerHeight: 36,              // header 高度
         resizerHeight: 4,              // 分隔条高度
-        outputContentHeight: 150,      // output 内容区默认高度
+        outputContentHeight: 150,      // output 内容区Default高度
         
         // 调整限制
         outputContentMinHeight: 50,    // output 内容区最小高度
@@ -38,7 +38,7 @@
     };
 
     // 代码块配置（按优先级排序，特殊规则在前，通用规则在后）
-    // top/right: Run 按钮相对于布局容器的偏移量（可选，默认 0）
+    // top/right: Run 按钮相对于布局容器的偏移量（可选，Default 0）
     const CODE_BLOCK_CONFIGS = [
         { 
             codeSelector: 'code-block code',  // Gemini
@@ -75,7 +75,7 @@
     // ===== 状态变量 =====
     
     let runnerManagerInstance = null;
-    let unsubscribeObserver = null;  // DOMObserverManager 取消订阅函数
+    let unsubscribeObserver = null;  // DOMObserverManager Cancel订阅函数
 
     // ===== 工具函数 =====
 
@@ -139,7 +139,7 @@
     // ===== UI 创建函数 =====
 
     /**
-     * 创建运行按钮
+     * 创建Run按钮
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
      * @param {string} language - 语言类型
@@ -149,7 +149,7 @@
     function createRunButton(codeElement, layoutContainer, language = 'javascript', config = {}) {
         const button = document.createElement('button');
         button.className = 'runner-code-run-btn';
-        const runLabel = safeI18n('runBtn', '运行');
+        const runLabel = safeI18n('runBtn', 'Run');
         button.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z"/>
@@ -192,7 +192,7 @@
     /**
      * 创建 Runner 容器（使用 RunnerPanel 核心组件）
      * @param {HTMLElement} layoutContainer - 布局容器
-     * @param {HTMLElement} runButton - 运行按钮
+     * @param {HTMLElement} runButton - Run按钮
      * @param {string} language - 语言类型
      * @returns {Object} { container, panel }
      */
@@ -254,16 +254,16 @@
      * 执行代码
      * @param {string} code - 代码
      * @param {HTMLElement} contentEl - 输出容器
-     * @param {HTMLElement} runButton - 运行按钮
+     * @param {HTMLElement} runButton - Run按钮
      * @param {string} language - 语言类型
      */
     async function executeCode(code, contentEl, runButton, language = 'javascript') {
         if (!code.trim()) {
-            contentEl.innerHTML = '<div class="runner-output-empty">（无代码）</div>';
+            contentEl.innerHTML = '<div class="runner-output-empty">(No code)</div>';
             return;
         }
 
-        contentEl.innerHTML = '<div class="runner-result-loading">执行中...</div>';
+        contentEl.innerHTML = '<div class="runner-result-loading">Running...</div>';
         runButton.classList.add('loading');
         runButton.disabled = true;
 
@@ -317,10 +317,10 @@
     }
 
     /**
-     * 处理运行按钮点击
+     * 处理Run按钮点击
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
-     * @param {HTMLElement} runButton - 运行按钮
+     * @param {HTMLElement} runButton - Run按钮
      * @param {string} language - 语言类型
      */
     async function handleRunClick(codeElement, layoutContainer, runButton, language = 'javascript') {
@@ -337,7 +337,7 @@
             CONFIG.headerHeight +          // output header
             CONFIG.outputContentHeight;    // output 内容区
         
-        // 保存原始高度（用于关闭时恢复）
+        // Save原始高度（用于Close时恢复）
         if (!layoutContainer.dataset.originalHeight) {
             layoutContainer.dataset.originalHeight = layoutContainer.offsetHeight;
         }
@@ -357,7 +357,7 @@
             const result = createRunnerContainer(layoutContainer, runButton, language);
             container = result.container;
             panel = result.panel;
-            // 存储 runButton 引用，用于关闭时恢复显示
+            // 存储 runButton 引用，用于Close时恢复显示
             container._runButton = runButton;
             // 插入到布局容器内部
             layoutContainer.appendChild(container);
@@ -371,7 +371,7 @@
         // 直接使用 textContent 获取代码
         const code = getCodeText(codeElement);
 
-        // 设置代码并运行
+        // Settings代码并Run
         if (panel) {
             panel.setCode(code);
             panel.setLanguage(language);
@@ -389,7 +389,7 @@
      */
     function renderOutput(container, outputs) {
         if (!outputs || outputs.length === 0) {
-            container.innerHTML = '<div class="runner-output-empty">（无输出）</div>';
+            container.innerHTML = '<div class="runner-output-empty">(No output)</div>';
             return;
         }
 
@@ -481,7 +481,7 @@
      */
     function renderSQLTable(columns, values) {
         if (!columns || columns.length === 0) {
-            return '<div class="runner-output-info">查询成功，无返回数据</div>';
+            return '<div class="runner-output-info">Query succeeded with no returned data</div>';
         }
 
         const headerCells = columns.map(col => `<th>${escapeHtml(col)}</th>`).join('');
@@ -526,17 +526,17 @@
     // ===== 扫描与初始化 =====
 
     /**
-     * 为代码块初始化运行器
+     * 为代码块初始化Run器
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
      * @param {Object} config - 配置对象
      * @param {Object} enabledLanguages - 已启用的语言
      */
     function initializeCodeBlock(codeElement, layoutContainer, config, enabledLanguages) {
-        // 跳过已处理的（已添加 Run 按钮的）
+        // 跳过已处理的（已Add Run 按钮的）
         if (codeElement.hasAttribute(CONFIG.processedAttr)) return;
         
-        // 跳过已有 Run 按钮的 layoutContainer（防止嵌套 code 重复添加）
+        // 跳过已有 Run 按钮的 layoutContainer（防止嵌套 code 重复Add）
         if (layoutContainer.querySelector('.runner-code-run-btn')) {
             codeElement.setAttribute(CONFIG.processedAttr, 'true');
             return;
@@ -573,7 +573,7 @@
             layoutContainer.style.position = 'relative';
         }
 
-        // 创建运行按钮（absolute 定位在 layoutContainer 内）
+        // 创建Run按钮（absolute 定位在 layoutContainer 内）
         const runButton = createRunButton(codeElement, layoutContainer, language, config);
         
         // 插入按钮到 layoutContainer 内部
@@ -757,7 +757,7 @@
      * 初始化 Runner 模块
      */
     async function initialize() {
-        // 只在已知 AI 平台上运行
+        // 只在已知 AI 平台上Run
         if (!isAiPlatform()) {
             return;
         }
@@ -793,7 +793,7 @@
         await scanCodeBlocks();
         
         // 使用 DOMObserverManager 监听 DOM 变化
-        // 防抖 500ms：等代码块输出完整后再添加 Run 按钮
+        // 防抖 500ms：等代码块输出完整后再Add Run 按钮
         unsubscribeObserver = window.DOMObserverManager.getInstance().subscribeBody('runner', {
             callback: () => scanCodeBlocks(),
             filter: { hasAddedNodes: true },
@@ -805,7 +805,7 @@
      * 清理资源
      */
     function cleanup() {
-        // 取消 DOMObserverManager 订阅
+        // Cancel DOMObserverManager 订阅
         if (unsubscribeObserver) {
             unsubscribeObserver();
             unsubscribeObserver = null;

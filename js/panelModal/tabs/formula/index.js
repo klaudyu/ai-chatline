@@ -1,9 +1,9 @@
 /**
- * FormulaTab - 公式复制功能的设置面板
+ * FormulaTab - 公式Copy功能的Settings面板
  * 
- * 提供公式复制相关的用户配置界面，包括：
- * - LaTeX 复制开关及输出格式选择
- * - MathML 复制开关（当前通过 CSS 隐藏，后续重新实现）
+ * 提供公式Copy相关的用户配置界面，包括：
+ * - LaTeX CopyToggle及输出格式选择
+ * - MathML CopyToggle（当前通过 CSS 隐藏，后续重新实现）
  */
 
 class FormulaTab extends BaseTab {
@@ -18,8 +18,8 @@ class FormulaTab extends BaseTab {
     }
     
     /**
-     * 构建设置面板 DOM 结构
-     * 包含 MathML 开关区域（CSS 隐藏）和 LaTeX 开关区域（含格式选项）
+     * 构建Settings面板 DOM 结构
+     * 包含 MathML Toggle区域（CSS 隐藏）和 LaTeX Toggle区域（含格式选项）
      */
     render() {
         const container = document.createElement('div');
@@ -37,8 +37,8 @@ class FormulaTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${chrome.i18n.getMessage('formulaMathMLTitle') || '复制 MathML 公式'}</div>
-                        <div class="setting-hint">${chrome.i18n.getMessage('formulaMathMLHint') || '点击公式复制为 MathML 格式，可直接粘贴到 Word'}</div>
+                        <div class="setting-label">${chrome.i18n.getMessage('formulaMathMLTitle') || 'Copy MathML formula'}</div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('formulaMathMLHint') || '点击公式Copy为 MathML 格式，可直接粘贴到 Word'}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="formula-mathml-toggle">
@@ -50,10 +50,10 @@ class FormulaTab extends BaseTab {
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${chrome.i18n.getMessage('formulaLatexTitle') || '复制 LaTeX 公式'}</div>
-                        <div class="setting-hint">${chrome.i18n.getMessage('formulaLatexHint') || '点击公式复制为 LaTeX 格式'}</div>
+                        <div class="setting-label">${chrome.i18n.getMessage('formulaLatexTitle') || 'Copy LaTeX formula'}</div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('formulaLatexHint') || '点击公式Copy为 LaTeX 格式'}</div>
                         <div class="format-inline" id="format-section" style="display: none;">
-                            <div class="format-inline-title">${chrome.i18n.getMessage('formulaFormatTitle') || '选择复制格式'}</div>
+                            <div class="format-inline-title">${chrome.i18n.getMessage('formulaFormatTitle') || '选择Copy格式'}</div>
                             <div class="format-options">
                                 ${formatOptionsHtml}
                             </div>
@@ -71,10 +71,10 @@ class FormulaTab extends BaseTab {
     }
     
     /**
-     * Tab 激活后初始化：从 Storage 读取开关状态并绑定事件
-     * - 读取 LaTeX / MathML 开关状态和复制格式偏好
-     * - 绑定开关切换和格式选择的 change 事件
-     * - 当所有开关都关闭时，同步禁用整个公式复制功能
+     * Tab 激活后初始化：从 Storage 读取Toggle状态并绑定事件
+     * - 读取 LaTeX / MathML Toggle状态和Copy格式偏好
+     * - 绑定Toggle切换和格式选择的 change 事件
+     * - 当所有Toggle都Close时，同步禁用整个公式Copy功能
      */
     async mounted() {
         super.mounted();

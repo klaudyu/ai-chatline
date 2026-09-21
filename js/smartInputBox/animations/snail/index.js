@@ -1,6 +1,6 @@
 /**
  * Snail Animation — 养成版
- * 默认 1 只大蜗牛，消息达标后新增小蜗牛跟班，最多 3 只
+ * Default 1 只大蜗牛，消息达标后新增小蜗牛跟班，最多 3 只
  */
 class SnailAnimation {
     constructor() {

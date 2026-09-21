@@ -1,15 +1,15 @@
 /**
- * Prompt Dropdown UI - 共享的提示词下拉菜单渲染
+ * Prompt Dropdown UI - 共享的Prompt下拉菜单渲染
  *
- * 供 PromptButtonManager（插入模式）和 MirrorSiteFloatButton（复制模式）共用，
+ * 供 PromptButtonManager（插入模式）和 MirrorSiteFloatButton（Copy模式）共用，
  * 统一渲染逻辑，调用方只需提供行为回调。
  *
  * @param {Object} options
- * @param {Array}    options.prompts        - 提示词列表（已过滤）
+ * @param {Array}    options.prompts        - Prompt列表（已过滤）
  * @param {Function} options.onItemClick    - (prompt, itemElement) => void
  * @param {Function} options.onManageClick  - () => void  点击 "+" 按钮
  * @param {string}   [options.tooltipPlacement='right'] - tooltip 方向
- * @returns {HTMLElement} prompt-dropdown-container 元素（未添加到 DOM）
+ * @returns {HTMLElement} prompt-dropdown-container 元素（未Add到 DOM）
  */
 function createPromptDropdownUI({ prompts, onItemClick, onManageClick, tooltipPlacement = 'right' }) {
     const container = document.createElement('div');
@@ -51,7 +51,7 @@ function createPromptDropdownUI({ prompts, onItemClick, onManageClick, tooltipPl
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
         searchInput.className = 'prompt-dropdown-search-input';
-        searchInput.placeholder = chrome.i18n.getMessage('searchPrompt') || '搜索提示词...';
+        searchInput.placeholder = chrome.i18n.getMessage('searchPrompt') || '搜索Prompt...';
         searchInput.autocomplete = 'off';
         searchInput.addEventListener('input', () => {
             _promptDropdownFilter(container, searchInput.value.trim().toLowerCase());

@@ -94,7 +94,7 @@ class MarkdownRunner extends BaseRunner {
      * 获取占位符
      */
     getPlaceholder() {
-        return '# 标题\n\n输入 Markdown 内容...';
+        return '# Title\n\nEnter Markdown content...';
     }
 
     /**
@@ -108,7 +108,7 @@ class MarkdownRunner extends BaseRunner {
 
 这是 **粗体** 和 *斜体* 文本。
 
-这是 ~~删除线~~ 和 \`行内代码\`。
+这是 ~~Delete线~~ 和 \`行内代码\`。
 
 ## 列表
 

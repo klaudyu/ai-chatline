@@ -6,7 +6,7 @@
  * 对应 JS: ./index.js
  * 
  * 包含内容：
- * - 复制成功提示
+ * - Copied successfully提示
  * - 错误提示
  * - 显示/隐藏动画
  * 
@@ -17,7 +17,7 @@
    Toast 提示样式
    ============================================ */
 
-/* 复制成功提示 - 与 tooltip 保持一致的样式 */
+/* Copied successfully提示 - 与 tooltip 保持一致的样式 */
 .timeline-copy-feedback {
     position: fixed;
     background-color: #ffffff;
@@ -34,7 +34,7 @@
     transition: opacity 0.15s ease;
 }
 
-/* 深色主题下的"已复制"toast */
+/* Dark主题下的"Copied"toast */
 html[data-timeline-theme="dark"] .timeline-copy-feedback {
     background-color: #ffffff;
     color: #1f2937;

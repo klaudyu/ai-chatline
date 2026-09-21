@@ -3,7 +3,7 @@
  * 
  * 功能：
  * - 支持最多2级文件夹（根文件夹 + 子文件夹）
- * - 创建、编辑、删除文件夹
+ * - 创建、Edit、Delete文件夹
  * - 移动收藏项到文件夹
  * - 按文件夹分组展示
  */
@@ -62,7 +62,7 @@ class FolderManager {
     }
     
     /**
-     * 编辑文件夹
+     * Edit文件夹
      * @param {string} folderId - 文件夹 ID
      * @param {string} newName - 新名称
      * @param {string} [newIcon] - 新 emoji 图标（可选）
@@ -72,7 +72,7 @@ class FolderManager {
         const folder = folders.find(f => f.id === folderId);
         
         if (!folder) {
-            throw new Error('文件夹不存在');
+            throw new Error('Folder not found');
         }
         
         folder.name = newName;
@@ -83,10 +83,10 @@ class FolderManager {
     }
     
     /**
-     * 删除文件夹
-     * @param {string} folderId - 要删除的文件夹 ID
+     * Delete文件夹
+     * @param {string} folderId - 要Delete的文件夹 ID
      * @param {Object} [options]
-     * @param {boolean} [options.deleteItems=true] - true: 连同收藏项一起删除; false: 移到未分类
+     * @param {boolean} [options.deleteItems=true] - true: 连同收藏项一起Delete; false: 移到未分类
      */
     async deleteFolder(folderId, options = {}) {
         const { deleteItems = true } = options;
@@ -94,7 +94,7 @@ class FolderManager {
         const folderToDelete = folders.find(f => f.id === folderId);
         
         if (!folderToDelete) {
-            throw new Error('文件夹不存在');
+            throw new Error('Folder not found');
         }
         
         const childFolderIds = folders
@@ -134,7 +134,7 @@ class FolderManager {
         const item = await StarStorageManager.findByKey(key);
         
         if (!item) {
-            throw new Error('收藏项不存在');
+            throw new Error('Starred item not found');
         }
         
         // 更新 folderId 字段
@@ -154,7 +154,7 @@ class FolderManager {
         const starredItemsArray = await StarStorageManager.getAll();
         
         // ✅ 辅助函数：从 item 中提取信息
-        // ⚠️ 重要：turnId 必须从 item.key 中解析，确保 handleUnstar 时能正确删除
+        // ⚠️ 重要：turnId 必须从 item.key 中解析，确保 handleUnstar 时能正确Delete
         const extractItemInfo = (item) => {
             const key = item.key || '';
             // key 格式：chatTimelineStar:{urlWithoutProtocol}:{nodeKey}
@@ -184,7 +184,7 @@ class FolderManager {
             url: item.url || `https://${info.urlWithoutProtocol}`,
             urlWithoutProtocol: info.urlWithoutProtocol,
             index: info.nodeKey, nodeId: info.nodeKey,
-            theme: item.question || '整个对话',
+            theme: item.question || 'Entire conversation',
             timestamp: item.timestamp || 0,
             folderId: item.folderId,
             pinned: !!item.pinned
@@ -199,7 +199,7 @@ class FolderManager {
         // 构建树状结构
         const tree = {
             folders: [],      // 根文件夹列表
-            uncategorized: [] // 未分类收藏项（默认文件夹）
+            uncategorized: [] // 未分类收藏项（Default文件夹）
         };
         
         // 创建文件夹 ID 集合，用于快速查找
@@ -207,7 +207,7 @@ class FolderManager {
         const assignedTurnIds = new Set(); // 记录已分配的收藏项
         
         
-        // 1. 先构建根文件夹（置顶的在前）
+        // 1. 先构建根文件夹（Pin的在前）
         const rootFolders = folders.filter(f => f.parentId === null);
         rootFolders.sort((a, b) => {
             if (a.pinned && !b.pinned) return -1;
@@ -215,7 +215,7 @@ class FolderManager {
             return a.order - b.order;
         });
         
-        // 2. 为每个根文件夹添加子文件夹和收藏项
+        // 2. 为每个根文件夹Add子文件夹和收藏项
         for (const rootFolder of rootFolders) {
             const folderNode = {
                 ...rootFolder,
@@ -255,13 +255,13 @@ class FolderManager {
             tree.folders.push(folderNode);
         }
         
-        // 3. 添加未分类收藏项（没有 folderId 或 folderId 指向已删除文件夹的收藏项）
+        // 3. Add未分类收藏项（没有 folderId 或 folderId 指向已Delete文件夹的收藏项）
         
         for (const item of starredItemsArray) {
             const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(item);
             
-            // 如果该收藏项还没有被分配到任何文件夹，则归为未分类（默认文件夹）
-            // 这包括：folderId 为 null/undefined 或 folderId 指向已删除的文件夹
+            // 如果该收藏项还没有被分配到任何文件夹，则归为未分类（Default文件夹）
+            // 这包括：folderId 为 null/undefined 或 folderId 指向已Delete的文件夹
             if (!assignedTurnIds.has(turnId)) {
                 tree.uncategorized.push(mapItem(item, { urlWithoutProtocol, nodeKey, turnId }));
             }
@@ -298,7 +298,7 @@ class FolderManager {
      * 检查文件夹名称是否已存在（同级）
      * @param {string} name - 文件夹名称
      * @param {string|null} parentId - 父文件夹 ID
-     * @param {string|null} excludeId - 排除的文件夹 ID（用于编辑时）
+     * @param {string|null} excludeId - 排除的文件夹 ID（用于Edit时）
      * @returns {Promise<boolean>}
      */
     async isFolderNameExists(name, parentId = null, excludeId = null) {

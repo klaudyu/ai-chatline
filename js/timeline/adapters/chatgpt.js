@@ -273,7 +273,7 @@ class ChatGPTAdapter extends SiteAdapter {
     }
 
     getTimelinePosition() {
-        // ChatGPT 默认位置
+        // ChatGPT Default位置
         return {
             top: '120px',      // 避开顶部导航栏
             right: '22px',    // 右侧边距
@@ -299,12 +299,12 @@ class ChatGPTAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // ChatGPT 使用页面标题作为默认主题
+        // ChatGPT 使用页面标题作为Default主题
         return document.title || '';
     }
     
     /**
-     * 检测是否应该隐藏时间轴
+     * 检测是否应该隐藏Timeline
      * ChatGPT: 当页面存在 .text-token-primary 元素时隐藏
      * @returns {boolean}
      */

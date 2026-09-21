@@ -1,7 +1,7 @@
 /**
- * LanguageRegistry - 语言运行器注册表
+ * LanguageRegistry - 语言Run器注册表
  * 
- * 管理所有支持的编程语言及其运行器
+ * 管理所有支持的编程语言及其Run器
  * 语言配置来自全局 RUNNER_LANGUAGES（constants.js）
  */
 
@@ -30,7 +30,7 @@ class LanguageRegistry {
      * 初始化注册所有语言
      */
     initialize() {
-        // 根据配置动态注册运行器
+        // 根据配置动态注册Run器
         this.languageConfigs.forEach(config => {
             if (window[config.runnerClass]) {
                 this.register(config.id, new window[config.runnerClass]());
@@ -39,16 +39,16 @@ class LanguageRegistry {
     }
 
     /**
-     * 注册一个语言运行器
+     * 注册一个语言Run器
      * @param {string} language - 语言标识符
-     * @param {Object} runner - 运行器实例
+     * @param {Object} runner - Run器实例
      */
     register(language, runner) {
         this.runners.set(language, runner);
     }
 
     /**
-     * 获取指定语言的运行器
+     * 获取指定语言的Run器
      * @param {string} language - 语言标识符
      * @returns {Object|null}
      */
@@ -99,7 +99,7 @@ class LanguageRegistry {
     }
 
     /**
-     * 清理所有运行器
+     * 清理所有Run器
      */
     cleanup() {
         this.runners.forEach(runner => {

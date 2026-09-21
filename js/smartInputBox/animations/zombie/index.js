@@ -1,6 +1,6 @@
 /**
  * Zombie Animation — 养成版
- * 默认 1 只大僵尸，消息达标后新增小僵尸跟班，最多 7 只
+ * Default 1 只大僵尸，消息达标后新增小僵尸跟班，最多 7 只
  * 每只僵尸拥有独特的形象
  */
 class ZombieAnimation {

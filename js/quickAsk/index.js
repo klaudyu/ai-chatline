@@ -53,7 +53,7 @@
         }
     }
     
-    // 检查功能是否启用（轻量版默认关闭）
+    // 检查功能是否启用（轻量版DefaultClose）
     async function isQuickAskEnabled() {
         try {
             const result = await chrome.storage.local.get('quickAskEnabled');
@@ -115,16 +115,16 @@
             // 创建管理器（但不立即启用）
             manager = new QuickAskManager();
             
-            // 设置 URL 变化监听
+            // Settings URL 变化监听
             setupUrlChangeListener();
             
             // 根据当前页面状态决定是否启用
             await updateQuickAskState();
             
-            // 保存到全局
+            // Save到全局
             window.quickAskManager = manager;
             
-            // 监听设置变化
+            // 监听Settings变化
             chrome.storage.onChanged.addListener((changes, areaName) => {
                 if (areaName === 'local' && changes.quickAskEnabled !== undefined) {
                     updateQuickAskState();

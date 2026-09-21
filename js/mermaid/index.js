@@ -5,7 +5,7 @@
  * 1. detect(codeEl, wrapperEl) — 供 Runner 的 initializeCodeBlock 调用，
  *    判断代码块是否为 Mermaid 语法
  * 2. openFullscreen(svg) — 供输出面板点击图表时调用，
- *    打开全屏查看器（缩放 + 拖拽 + ESC 关闭）
+ *    打开全屏查看器（缩放 + 拖拽 + ESC Close）
  * 
  * 不再负责：内联渲染、扫描、DOM 监听（全部由 Runner 体系统一管理）
  * 
@@ -88,7 +88,7 @@
     }
 
     /**
-     * 从代码块 DOM 中读取语言标注
+     * 从代码块 DOM 中读取语言Highlight
      */
     function readLanguageLabel(codeEl, wrapperEl) {
         // class 中的 language-xxx（ChatGPT、Claude 等）

@@ -80,7 +80,7 @@ class GrokAdapter extends SiteAdapter {
          * 优势：比传统的向上遍历更精确，避免找到过于外层的容器
          */
         
-        // ✅ 隐藏 Grok 自带的时间轴元素，避免与本插件冲突
+        // ✅ 隐藏 Grok 自带的Timeline元素，避免与本插件冲突
         this.hideNativeTimeline();
         
         return ContainerFinder.findConversationContainer(firstMessage, {
@@ -89,7 +89,7 @@ class GrokAdapter extends SiteAdapter {
     }
     
     /**
-     * ✅ 隐藏 Grok 自带的时间轴元素
+     * ✅ 隐藏 Grok 自带的Timeline元素
      */
     hideNativeTimeline() {
         try {
@@ -101,7 +101,7 @@ class GrokAdapter extends SiteAdapter {
     }
     
     /**
-     * ✅ 恢复显示 Grok 自带的时间轴元素
+     * ✅ 恢复显示 Grok 自带的Timeline元素
      */
     showNativeTimeline() {
         try {
@@ -113,7 +113,7 @@ class GrokAdapter extends SiteAdapter {
     }
 
     getTimelinePosition() {
-        // Grok 时间轴位置配置
+        // Grok Timeline位置配置
         return {
             top: '120px',      // 避开顶部导航栏
             right: '22px',     // 右侧边距
@@ -127,7 +127,7 @@ class GrokAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // Grok 使用页面标题作为默认主题，去掉后缀 " - Grok"
+        // Grok 使用页面标题作为Default主题，去掉后缀 " - Grok"
         const title = document.title || '';
         return title.replace(/\s*-\s*Grok\s*$/i, '').trim();
     }

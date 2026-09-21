@@ -6,7 +6,7 @@
  * 特性：
  * - 全局单例模式
  * - 智能定位（自动调整位置避免超出视口）
- * - 点击外部自动关闭
+ * - 点击外部自动Close
  * - 支持图标、分割线、禁用状态
  * - DOM 自动清理
  * - ✨ 组件自治：URL 变化时自动清理
@@ -39,7 +39,7 @@ class GlobalDropdownManager {
         // 定时器管理
         this.timers = {
             hideAnimation: null,
-            submenuHide: null        // ✨ 新增：子菜单延迟关闭定时器
+            submenuHide: null        // ✨ 新增：子菜单延迟Close定时器
         };
         
         // 绑定方法
@@ -169,7 +169,7 @@ class GlobalDropdownManager {
             this.overlay.parentNode.removeChild(this.overlay);
         }
         
-        // 清空引用
+        // Clear引用
         this.dropdown = null;
         this.overlay = null;
     }
@@ -237,7 +237,7 @@ class GlobalDropdownManager {
                 return;
             }
             
-            // 移出菜单区域，关闭子菜单
+            // 移出菜单区域，Close子菜单
             console.log('[DropdownManager] Overlay -> outside, hiding submenu');
             this._hideAllSubmenus(true);
         });
@@ -249,7 +249,7 @@ class GlobalDropdownManager {
         this.dropdown.className = `global-dropdown ${config.className}`;
         this.dropdown.style.width = `${config.width}px`;
         
-        // 添加选项
+        // Add选项
         items.forEach((item, index) => {
             if (item.type === 'divider') {
                 // 分割线
@@ -263,7 +263,7 @@ class GlobalDropdownManager {
             }
         });
         
-        // 添加到 body
+        // Add到 body
         document.body.appendChild(this.dropdown);
         
         // 计算位置
@@ -271,7 +271,7 @@ class GlobalDropdownManager {
         this.dropdown.style.left = `${position.left}px`;
         this.dropdown.style.top = `${position.top}px`;
         
-        // 设置 placement 属性（用于箭头样式）
+        // Settings placement 属性（用于箭头样式）
         this.dropdown.setAttribute('data-placement', position.placement);
         
         // ✨ 主菜单的鼠标事件
@@ -295,7 +295,7 @@ class GlobalDropdownManager {
                 return;
             }
             
-            // 移出主菜单区域，关闭所有子菜单
+            // 移出主菜单区域，Close所有子菜单
             console.log('[DropdownManager] Moving away from main menu, hiding all submenus');
             this._hideAllSubmenus(true);
         });
@@ -310,7 +310,7 @@ class GlobalDropdownManager {
      * 创建下拉菜单选项
      * @param {Object} item - 菜单项数据
      * @param {Function} onSelect - 选择回调
-     * @param {number} level - 菜单层级（0=主菜单，1=二级，2=三级，默认 0）
+     * @param {number} level - 菜单层级（0=主菜单，1=二级，2=三级，Default 0）
      */
     _createDropdownItem(item, onSelect, level = 0) {
         const itemEl = document.createElement('div');
@@ -367,7 +367,7 @@ class GlobalDropdownManager {
                     console.log('[DropdownManager] Item mouseenter (has submenu, level ' + level + '):', item.label);
                     this._showSubmenu(item, itemEl, level);
                 } else {
-                    // 没有子菜单：关闭比当前层级更深的子菜单
+                    // 没有子菜单：Close比当前层级更深的子菜单
                     console.log('[DropdownManager] Item mouseenter (no submenu, level ' + level + '):', item.label);
                     this._hideSubmenusFromLevel(level + 1);
                 }
@@ -389,7 +389,7 @@ class GlobalDropdownManager {
                     onSelect(item);
                 }
                 
-                // 关闭下拉菜单（包括子菜单）
+                // Close下拉菜单（包括子菜单）
                 this.hide();
             });
         }
@@ -514,7 +514,7 @@ class GlobalDropdownManager {
     // ==================== 全局事件处理 ====================
     
     /**
-     * 设置全局监听器
+     * Settings全局监听器
      */
     _setupGlobalListeners() {
         // 点击时隐藏（除非点击的是 dropdown 或 trigger）
@@ -565,13 +565,13 @@ class GlobalDropdownManager {
         }
         
         if (clickedTrigger) {
-            // 点击了 trigger，关闭下拉菜单（toggle 行为）
+            // 点击了 trigger，Close下拉菜单（toggle 行为）
             this._log('Clicked trigger, closing dropdown');
             this.hide();
             return;
         }
         
-        // 点击了外部区域，关闭下拉菜单
+        // 点击了外部区域，Close下拉菜单
         this._log('Click outside dropdown, hiding');
         this.hide();
     }
@@ -646,7 +646,7 @@ class GlobalDropdownManager {
             return;
         }
         
-        // 清除延迟关闭定时器
+        // 清除延迟Close定时器
         if (this.timers.submenuHide) {
             clearTimeout(this.timers.submenuHide);
             this.timers.submenuHide = null;
@@ -664,7 +664,7 @@ class GlobalDropdownManager {
         // 移除同层级及更深层级的子菜单
         this._hideSubmenusFromLevel(submenuLevel);
         
-        // 给父菜单项添加激活状态
+        // 给父菜单项Add激活状态
         parentElement.classList.add('submenu-active');
         
         // 创建子菜单容器
@@ -700,7 +700,7 @@ class GlobalDropdownManager {
                 }
             }
             
-            // 移出菜单区域，关闭当前及更深层级
+            // 移出菜单区域，Close当前及更深层级
             console.log('[DropdownManager] Moving away from submenu, hiding from level ' + submenuLevel);
             this._hideSubmenusFromLevel(submenuLevel);
         });
@@ -718,7 +718,7 @@ class GlobalDropdownManager {
             }
         });
         
-        // 添加到 body
+        // Add到 body
         document.body.appendChild(submenu);
         
         // 计算位置
@@ -726,7 +726,7 @@ class GlobalDropdownManager {
         submenu.style.left = `${position.left}px`;
         submenu.style.top = `${position.top}px`;
         
-        // ✨ 保存状态到数组
+        // ✨ Save状态到数组
         this.state.activeSubmenus.push({
             level: submenuLevel,
             element: submenu,
@@ -791,7 +791,7 @@ class GlobalDropdownManager {
     }
     
     /**
-     * 延迟关闭子菜单
+     * 延迟Close子菜单
      */
     _scheduleSubmenuHide() {
         console.log('[DropdownManager] Scheduling submenu hide in 300ms');
@@ -801,7 +801,7 @@ class GlobalDropdownManager {
             clearTimeout(this.timers.submenuHide);
         }
         
-        // 300ms 后关闭子菜单（增加延迟，给用户更多时间移动鼠标）
+        // 300ms 后Close子菜单（增加延迟，给用户更多时间移动鼠标）
         this.timers.submenuHide = setTimeout(() => {
             console.log('[DropdownManager] Submenu hide timer triggered');
             this._hideAllSubmenus();
@@ -810,8 +810,8 @@ class GlobalDropdownManager {
     }
     
     /**
-     * 关闭指定层级及更深层级的子菜单
-     * @param {number} fromLevel - 从哪个层级开始关闭（包含该层级）
+     * Close指定层级及更深层级的子菜单
+     * @param {number} fromLevel - 从哪个层级开始Close（包含该层级）
      */
     _hideSubmenusFromLevel(fromLevel) {
         if (!this.state.activeSubmenus || this.state.activeSubmenus.length === 0) {
@@ -821,13 +821,13 @@ class GlobalDropdownManager {
         
         console.log('[DropdownManager] Hiding submenus from level ' + fromLevel);
         
-        // 找到需要关闭的子菜单
+        // 找到需要Close的子菜单
         const toClose = this.state.activeSubmenus.filter(s => s.level >= fromLevel);
         const toKeep = this.state.activeSubmenus.filter(s => s.level < fromLevel);
         
         console.log('[DropdownManager] Closing ' + toClose.length + ' submenu(s), keeping ' + toKeep.length);
         
-        // 关闭子菜单（添加淡出动画）
+        // Close子菜单（Add淡出动画）
         toClose.forEach(submenu => {
             // 移除父元素激活状态
             if (submenu.parentElement) {
@@ -852,7 +852,7 @@ class GlobalDropdownManager {
     }
     
     /**
-     * 关闭所有子菜单
+     * Close所有子菜单
      * @param {boolean} immediate - 是否立即隐藏
      */
     _hideAllSubmenus(immediate = false) {

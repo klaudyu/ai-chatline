@@ -15,7 +15,7 @@
 }
 
 /* ============================================
-   侧边栏开关
+   侧边栏Toggle
    ============================================ */
 
 .starred-sidebar-divider {
@@ -148,7 +148,7 @@
 @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
 /* ============================================
-   隐藏开关区域
+   隐藏Toggle区域
    ============================================ */
 
 .starred-hide-toggle-section {
@@ -301,7 +301,7 @@
     object-fit: contain;
 }
 
-/* Logo 内置 SVG（如闪记 notepad 笔记）—— 使用 currentColor，统一为次级灰，与 .timeline-starred-item-more 对齐 */
+/* Logo 内置 SVG（如Quick note notepad 笔记）—— 使用 currentColor，统一为次级灰，与 .timeline-starred-item-more 对齐 */
 .timeline-starred-item-logo svg {
     color: #6b7280;
 }
@@ -353,11 +353,11 @@
     gap: 6px;
 }
 
-/* 三个点默认隐藏，hover 显示 */
+/* 三个点Default隐藏，hover 显示 */
 .timeline-starred-item-more { display: none; }
 .timeline-starred-item:hover .timeline-starred-item-more { display: flex; }
 
-/* 编辑按钮 - 与星标按钮尺寸一致 */
+/* Edit按钮 - 与星标按钮尺寸一致 */
 .timeline-starred-item-edit {
     flex-shrink: 0;
     width: 28px;
@@ -423,7 +423,7 @@
     transform: scale(0.95);
 }
 
-/* 复制按钮 - 与编辑按钮尺寸一致 */
+/* Copy按钮 - 与Edit按钮尺寸一致 */
 .timeline-starred-item-copy {
     flex-shrink: 0;
     width: 28px;
@@ -460,7 +460,7 @@
     transform: scale(0.95);
 }
 
-/* 复制链接按钮 - 与其他按钮尺寸一致 */
+/* Copy链接按钮 - 与其他按钮尺寸一致 */
 .timeline-starred-item-link {
     flex-shrink: 0;
     width: 28px;
@@ -642,7 +642,7 @@
     display: block;
 }
 
-/* 置顶标识（默认显示，hover 时隐藏换成三个点） */
+/* Pin标识（Default显示，hover 时隐藏换成三个点） */
 .ait-pin-indicator {
     display: flex;
     align-items: center;
@@ -656,7 +656,7 @@
 .ait-folder-header:hover .ait-pin-indicator,
 .timeline-starred-item:hover .ait-pin-indicator { display: none; }
 
-/* 默认文件夹（虚拟）：不显示操作按钮 */
+/* Default文件夹（虚拟）：不显示操作按钮 */
 .default-folder .ait-folder-actions {
     display: none !important;
 }

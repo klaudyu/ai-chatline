@@ -1,9 +1,9 @@
 /**
  * Highlight Tab Styles
- * 文本高亮设置样式
+ * Text highlightingSettings样式
  */
 
-/* 连续的设置区块添加间距 */
+/* 连续的Settings区块Add间距 */
 .highlight-settings .setting-section + .setting-section {
     margin-top: 12px;
 }
@@ -166,7 +166,7 @@
     color: #ff4444;
 }
 
-/* ---- 添加颜色弹窗中的颜色预览 ---- */
+/* ---- Add颜色弹窗中的颜色预览 ---- */
 
 .hl-modal-color-preview {
     width: 32px;

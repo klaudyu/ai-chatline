@@ -1,5 +1,5 @@
 /**
- * FloatingRunnerContainer - 悬浮代码运行容器（单例）
+ * FloatingRunnerContainer - 悬浮代码Run容器（单例）
  * 
  * 职责：提供可拖动、可调整大小的悬浮窗口容器
  * 内部使用 RunnerPanel 核心组件
@@ -45,7 +45,7 @@
             // 当前语言
             this.language = 'javascript';
 
-            // 加载保存的状态
+            // 加载Save的状态
             this.loadState();
         }
 
@@ -76,7 +76,7 @@
             const body = this.container.querySelector('.floating-runner-body');
             this.panel = new window.RunnerPanel(body, {
                 language: this.language,
-                showClose: true,   // 显示关闭按钮
+                showClose: true,   // 显示Close按钮
                 showPopout: false, // 已经是悬浮状态了
                 onClose: () => {
                     this.hide();
@@ -90,7 +90,7 @@
             // 绑定事件
             this.bindEvents();
 
-            // 应用保存的位置和大小
+            // 应用Save的位置和大小
             this.applyState();
         }
 
@@ -98,7 +98,7 @@
          * 绑定事件
          */
         bindEvents() {
-            // 拖动：只绑定到编辑器区域的 header（标题栏），不包括 output 区域的 header
+            // 拖动：只绑定到Edit器区域的 header（标题栏），不包括 output 区域的 header
             const editorHeader = this.container.querySelector('.runner-panel-editor-section .runner-panel-header');
             if (editorHeader) {
                 editorHeader.style.cursor = 'move';
@@ -119,7 +119,7 @@
             document.addEventListener('mousemove', (e) => this.onMouseMove(e));
             document.addEventListener('mouseup', () => this.onMouseUp());
 
-            // ESC 关闭
+            // ESC Close
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && this.isVisible) {
                     this.hide();
@@ -257,7 +257,7 @@
             this.container.classList.add('visible');
             this.isVisible = true;
 
-            // 默认位置：右侧
+            // Default位置：右侧
             if (this.position.x === null) {
                 this.position.x = window.innerWidth - this.size.width - 20;
                 this.position.y = 100;

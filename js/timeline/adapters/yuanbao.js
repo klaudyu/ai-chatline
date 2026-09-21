@@ -206,7 +206,7 @@ class YuanbaoAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // 元宝使用页面标题作为默认主题
+        // 元宝使用页面标题作为Default主题
         return document.title || '';
     }
     

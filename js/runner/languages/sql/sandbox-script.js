@@ -115,11 +115,11 @@
                         } else if (upperStmt.startsWith('UPDATE')) {
                             postOutput('info', `✓ 更新成功，影响 ${changes} 行`);
                         } else if (upperStmt.startsWith('DELETE')) {
-                            postOutput('info', `✓ 删除成功，影响 ${changes} 行`);
+                            postOutput('info', `✓ Delete succeeded, affected ${changes} 行`);
                         } else if (upperStmt.startsWith('CREATE')) {
                             postOutput('info', `✓ 创建成功`);
                         } else if (upperStmt.startsWith('DROP')) {
-                            postOutput('info', `✓ 删除成功`);
+                            postOutput('info', `✓ Delete succeeded`);
                         } else if (upperStmt.startsWith('ALTER')) {
                             postOutput('info', `✓ 修改成功`);
                         }

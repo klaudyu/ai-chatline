@@ -5,7 +5,7 @@
   <link rel="icon" type="image/png" href="assets/chatline-logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ChatLine — AI 对话增强插件</title>
-  <meta name="description" content="免费开源的 AI 对话增强浏览器插件，对话时间轴导航、收藏管理、提示词库、代码运行等 20+ 功能。" />
+  <meta name="description" content="免费开源的 AI 对话增强浏览器插件，对话Timeline导航、收藏管理、Prompt库、代码Run等 20+ 功能。" />
   <link rel="stylesheet" href="assets/index-S5NExKiK.css">
   <style>
     /* Override logo styles */
@@ -29,8 +29,8 @@
           <span class="logo-text">ChatLine</span>
         </a>
         <div class="nav-actions">
-          <a href="guide.html" class="nav-guide-link">使用指南</a>
-          <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">
+          <a href="guide.html" class="nav-guide-link">User guide</a>
+          <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
             <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
             <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           </button>
@@ -50,16 +50,16 @@
         </span> 对话增强插件
       </h1>
       <p class="hero-subtitle">
-        在你已经使用的 AI 对话页面中加入时间轴、文件夹、提示词、高亮、公式复制和导出，让长对话更容易浏览、整理和归档。
+        在你已经使用的 AI 对话页面中加入Timeline、文件夹、Prompt、高亮、公式Copy和导出，让长对话更容易浏览、整理和归档。
       </p>
       <div class="hero-actions">
         <button class="btn-browser btn-chrome" onclick="window.open('https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen','_blank')">
           <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          添加到 Chrome
+          Add到 Chrome
         </button>
         <button class="btn-browser btn-edge" onclick="window.open('https://chromewebstore.google.com/detail/chatline-ai-chat-enhanced/oiifmbmllkahpcagifgoedoiinohnfen','_blank')">
           <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#0078D4" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-          添加到 Edge
+          Add到 Edge
         </button>
         <button class="btn-browser btn-firefox" onclick="window.open('https://github.com/miguchn/ai-chatline#firefox-local','_blank')">
           <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#FF9500" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
@@ -74,33 +74,33 @@
       <div class="section-header">
         <span class="section-label">✨ 功能特性</span>
         <h2 class="section-title">功能介绍</h2>
-        <p class="section-desc">围绕对话导航、内容整理、提示词复用和数据归档提供实用增强。</p>
+        <p class="section-desc">围绕对话导航、内容整理、Prompt复用和数据归档提供实用增强。</p>
       </div>
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">📅</span></div>
           <h3 class="feature-title">对话时间线</h3>
-          <p class="feature-desc">把你跟 AI 的对话整理成可交互时间轴，跳转对话，收藏对话。</p>
+          <p class="feature-desc">把你跟 AI 的对话整理成可交互Timeline，跳转对话，收藏对话。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">📐</span></div>
-          <h3 class="feature-title">LaTeX 公式复制</h3>
-          <p class="feature-desc">智能识别任意网页上的公式，点击即可复制它的 LaTeX 格式。</p>
+          <h3 class="feature-title">LaTeX 公式Copy</h3>
+          <p class="feature-desc">智能识别任意网页上的公式，点击即可Copy它的 LaTeX 格式。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">🖍️</span></div>
-          <h3 class="feature-title">文本高亮与笔记</h3>
-          <p class="feature-desc">在 AI 回复中标出重点、添加颜色和备注，并保留原始上下文。</p>
+          <h3 class="feature-title">Text highlighting与笔记</h3>
+          <p class="feature-desc">在 AI 回复中标出重点、Add颜色和备注，并保留原始上下文。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">💬</span></div>
-          <h3 class="feature-title">提示词管理</h3>
-          <p class="feature-desc">快速打开提示词面板，一键调取常用提示词。</p>
+          <h3 class="feature-title">Prompt管理</h3>
+          <p class="feature-desc">快速打开Prompt面板，一键调取常用Prompt。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">▶️</span></div>
-          <h3 class="feature-title">代码运行器</h3>
-          <p class="feature-desc">在网页上运行或预览代码块，支持 JavaScript、TypeScript、HTML、SQL、JSON、Markdown 与 Mermaid。</p>
+          <h3 class="feature-title">代码Run器</h3>
+          <p class="feature-desc">在网页上Run或预览代码块，支持 JavaScript、TypeScript、HTML、SQL、JSON、Markdown 与 Mermaid。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">📁</span></div>
@@ -115,12 +115,12 @@
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">🔗</span></div>
           <h3 class="feature-title">URL 快速跳转</h3>
-          <p class="feature-desc">自动检测纯文本 URL，添加可点击的快捷按钮。</p>
+          <p class="feature-desc">自动检测纯文本 URL，Add可点击的快捷按钮。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">📤</span></div>
           <h3 class="feature-title">对话导出</h3>
-          <p class="feature-desc">一键导出当前对话为 Markdown 或 JSON 格式，归档、分享、二次编辑，对话不再被困在浏览器里。</p>
+          <p class="feature-desc">一键导出当前对话为 Markdown 或 JSON 格式，归档、分享、二次Edit，对话不再被困在浏览器里。</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon-wrapper"><span class="feature-icon">💾</span></div>
@@ -134,16 +134,16 @@
     <section class="feature-showcase">
       <div class="showcase-row">
         <div class="showcase-text">
-          <span class="showcase-tag" style="border-color:#6366f1;color:#6366f1;">📅 对话时间轴</span>
-          <h3 class="showcase-title">对话时间轴</h3>
+          <span class="showcase-tag" style="border-color:#6366f1;color:#6366f1;">📅 对话Timeline</span>
+          <h3 class="showcase-title">对话Timeline</h3>
           <ul class="showcase-points">
-            <li><span class="showcase-bullet" style="background:#6366f1;"></span>在 AI 对话页面右侧自动生成时间轴，每条提问对应一个节点</li>
+            <li><span class="showcase-bullet" style="background:#6366f1;"></span>在 AI 对话页面右侧自动生成Timeline，每条提问对应一个节点</li>
             <li><span class="showcase-bullet" style="background:#6366f1;"></span>几十轮对话也能一眼总览，点击节点秒跳，告别疯狂滚轮</li>
           </ul>
         </div>
         <div class="showcase-visual">
           <div class="showcase-img-wrapper">
-            <img class="showcase-img" src="assets/timeline-4SRzjSBU.png" alt="对话时间轴" />
+            <img class="showcase-img" src="assets/timeline-4SRzjSBU.png" alt="对话Timeline" />
           </div>
         </div>
       </div>
@@ -153,7 +153,7 @@
           <span class="showcase-tag" style="border-color:#8b5cf6;color:#8b5cf6;">📁 文件夹</span>
           <h3 class="showcase-title">文件夹</h3>
           <ul class="showcase-points">
-            <li><span class="showcase-bullet" style="background:#8b5cf6;"></span>把单条问答或整页对话收藏到文件夹中，支持多层级、拖拽排序、置顶、备注</li>
+            <li><span class="showcase-bullet" style="background:#8b5cf6;"></span>把单条问答或整页对话收藏到文件夹中，支持多层级、拖拽排序、Pin、备注</li>
             <li><span class="showcase-bullet" style="background:#8b5cf6;"></span>AI 给的好答案、关键代码永久留存，下次轻松找到，再也不丢失在对话海里</li>
           </ul>
         </div>
@@ -166,15 +166,15 @@
 
       <div class="showcase-row">
         <div class="showcase-text">
-          <span class="showcase-tag" style="border-color:#ec4899;color:#ec4899;">💬 提示词</span>
-          <h3 class="showcase-title">自定义提示词库</h3>
+          <span class="showcase-tag" style="border-color:#ec4899;color:#ec4899;">💬 Prompt</span>
+          <h3 class="showcase-title">自定义Prompt库</h3>
           <ul class="showcase-points">
-            <li><span class="showcase-bullet" style="background:#ec4899;"></span>把常用提示词保存起来，对话框左侧一键插入</li>
+            <li><span class="showcase-bullet" style="background:#ec4899;"></span>把常用PromptSave起来，对话框左侧一键插入</li>
           </ul>
         </div>
         <div class="showcase-visual">
           <div class="showcase-img-wrapper">
-            <img class="showcase-img" src="assets/prompts-DGp-QSDW.png" alt="提示词库" />
+            <img class="showcase-img" src="assets/prompts-DGp-QSDW.png" alt="Prompt库" />
           </div>
         </div>
       </div>
@@ -182,15 +182,15 @@
       <div class="showcase-row showcase-row--reversed">
         <div class="showcase-text">
           <span class="showcase-tag" style="border-color:#14b8a6;color:#14b8a6;">📐 公式</span>
-          <h3 class="showcase-title">公式复制</h3>
+          <h3 class="showcase-title">公式Copy</h3>
           <ul class="showcase-points">
-            <li><span class="showcase-bullet" style="background:#14b8a6;"></span>点击页面上任何数学公式，直接复制为 LaTeX 或 MathML 格式</li>
-            <li><span class="showcase-bullet" style="background:#14b8a6;"></span>写论文、做笔记时不用截图重打，一键复制 LaTeX 或 MathML 格式</li>
+            <li><span class="showcase-bullet" style="background:#14b8a6;"></span>点击页面上任何数学公式，直接Copy为 LaTeX 或 MathML 格式</li>
+            <li><span class="showcase-bullet" style="background:#14b8a6;"></span>写论文、做笔记时不用截图重打，一键Copy LaTeX 或 MathML 格式</li>
           </ul>
         </div>
         <div class="showcase-visual">
           <div class="showcase-img-wrapper">
-            <img class="showcase-img" src="assets/gongshi-v6lxYg3L.png" alt="公式复制" />
+            <img class="showcase-img" src="assets/gongshi-v6lxYg3L.png" alt="公式Copy" />
           </div>
         </div>
       </div>
@@ -198,15 +198,15 @@
       <div class="showcase-row">
         <div class="showcase-text">
           <span class="showcase-tag" style="border-color:#f59e0b;color:#f59e0b;">🖍️ 高亮</span>
-          <h3 class="showcase-title">文本高亮</h3>
+          <h3 class="showcase-title">Text highlighting</h3>
           <ul class="showcase-points">
-            <li><span class="showcase-bullet" style="background:#f59e0b;"></span>选中网页任意文字进行荧光笔标注，4 种样式 + 15 种颜色 + 想法注释</li>
+            <li><span class="showcase-bullet" style="background:#f59e0b;"></span>选中网页任意文字进行荧光笔Highlight，4 种样式 + 15 种颜色 + 想法注释</li>
             <li><span class="showcase-bullet" style="background:#f59e0b;"></span>像读纸质书一样圈重点 + 做笔记，重点信息视觉上一眼锁定</li>
           </ul>
         </div>
         <div class="showcase-visual">
           <div class="showcase-img-wrapper">
-            <img class="showcase-img" src="assets/gaoliang1-LFYONPlQ.png" alt="文本高亮" />
+            <img class="showcase-img" src="assets/gaoliang1-LFYONPlQ.png" alt="Text highlighting" />
           </div>
         </div>
       </div>
@@ -232,7 +232,7 @@
           <span class="showcase-tag" style="border-color:#0ea5e9;color:#0ea5e9;">📤 导出</span>
           <h3 class="showcase-title">对话导出</h3>
           <ul class="showcase-points">
-            <li><span class="showcase-bullet" style="background:#0ea5e9;"></span>一键把当前对话导出为 Markdown 或 JSON 文件，方便归档、分享、二次编辑</li>
+            <li><span class="showcase-bullet" style="background:#0ea5e9;"></span>一键把当前对话导出为 Markdown 或 JSON 文件，方便归档、分享、二次Edit</li>
             <li><span class="showcase-bullet" style="background:#0ea5e9;"></span>AI 给的优质回答不再被困在浏览器里，沉淀到你自己的笔记、文档、知识库中</li>
           </ul>
         </div>
@@ -263,7 +263,7 @@
     <!-- Supported Platforms -->
     <section class="platforms-section">
       <h2 class="section-title">支持 13 个主流 AI 平台</h2>
-      <p class="platforms-desc">安装后自动适配，无需额外设置</p>
+      <p class="platforms-desc">Install后自动适配，无需额外Settings</p>
       <div class="platforms-grid">
         <span class="platform-tag">ChatGPT</span>
         <span class="platform-tag">Claude</span>
@@ -285,7 +285,7 @@
     <footer class="footer">
       <div class="footer-links">
         <a class="footer-link" href="#" onclick="showContactModal();return false;">联系开发者</a>
-        <a class="footer-link" href="guide.html">使用指南</a>
+        <a class="footer-link" href="guide.html">User guide</a>
       </div>
       <p>&copy; 2026 ChatLine. 保留所有权利。</p>
     </footer>

@@ -1,5 +1,5 @@
 /**
- * NotepadManager - 闪记管理器（多笔记模式）
+ * NotepadManager - Quick note管理器（多笔记模式）
  * 按平台/会话隔离，持久化到 chrome.storage，纯文本
  * 拖拽 / 调整大小交互逻辑与 FloatingRunnerContainer 保持一致
  */
@@ -31,7 +31,7 @@ class NotepadManager {
         this.NOTES_KEY = this._getScopedNotesKey();
         this.STATE_KEY = 'aitNotepadState';
 
-        // 默认尺寸
+        // Default尺寸
         this.DEFAULT_WIDTH = 260;
         this.DEFAULT_HEIGHT = 370;
         this.MIN_WIDTH = 240;
@@ -90,7 +90,7 @@ class NotepadManager {
                         <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
                         <path d="m15 5 4 4"/>
                     </svg>
-                    ${chrome.i18n.getMessage('notepadTitle') || '闪记'}
+                    ${chrome.i18n.getMessage('notepadTitle') || 'Quick note'}
                 </span>
                 <div class="ait-notepad-header-right">
                     <button class="ait-notepad-list-btn" title="${chrome.i18n.getMessage('notepadAllNotes') || '全部笔记'}">
@@ -113,7 +113,7 @@ class NotepadManager {
                             <line x1="5" y1="12" x2="19" y2="12"/>
                         </svg>
                     </button>
-                    <button class="ait-notepad-close-btn" title="${chrome.i18n.getMessage('notepadClose') || '关闭'}">
+                    <button class="ait-notepad-close-btn" title="${chrome.i18n.getMessage('notepadClose') || 'Close'}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             width="14" height="14">
@@ -134,7 +134,7 @@ class NotepadManager {
                         width="13" height="13">
                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
                     </svg>
-                    <span class="ait-notepad-location-text ait-notepad-location-empty">${chrome.i18n.getMessage('notepadSaveToFolder') || '保存到文件夹'}</span>
+                    <span class="ait-notepad-location-text ait-notepad-location-empty">${chrome.i18n.getMessage('notepadSaveToFolder') || 'Save到文件夹'}</span>
                 </div>
             </div>
             <div class="ait-notepad-resize-handle" data-direction="se"></div>
@@ -362,7 +362,7 @@ class NotepadManager {
                             <span class="ait-notepad-item-time">${time}</span>
                         </div>
                     </div>
-                    <button class="ait-notepad-item-delete" title="${chrome.i18n.getMessage('mzxvkp') || '删除'}">
+                    <button class="ait-notepad-item-delete" title="${chrome.i18n.getMessage('mzxvkp') || 'Delete'}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             width="14" height="14">
@@ -417,10 +417,10 @@ class NotepadManager {
 
     async deleteNote(id) {
         const confirmed = await window.globalPopconfirmManager?.show({
-            title: chrome.i18n.getMessage('notepadConfirmDeleteTitle') || '确认删除',
-            content: chrome.i18n.getMessage('notepadConfirmDeleteContent') || '删除后将无法恢复，确定要继续吗？',
-            confirmText: chrome.i18n.getMessage('mzxvkp') || '删除',
-            cancelText: chrome.i18n.getMessage('pxvkmz') || '取消'
+            title: chrome.i18n.getMessage('notepadConfirmDeleteTitle') || '确认Delete',
+            content: chrome.i18n.getMessage('notepadConfirmDeleteContent') || 'Delete后将无法恢复，Confirm要继续吗？',
+            confirmText: chrome.i18n.getMessage('mzxvkp') || 'Delete',
+            cancelText: chrome.i18n.getMessage('pxvkmz') || 'Cancel'
         });
         if (!confirmed) return;
 
@@ -510,7 +510,7 @@ class NotepadManager {
     async _updateLocationDisplay() {
         if (!this.locationTextEl || !this.activeNoteId) return;
 
-        const emptyText = chrome.i18n.getMessage('notepadSaveToFolder') || '保存到文件夹';
+        const emptyText = chrome.i18n.getMessage('notepadSaveToFolder') || 'Save到文件夹';
         const starRecord = await StarStorageManager.findByKey(this._getNoteStarKey(this.activeNoteId));
 
         if (!starRecord?.folderId || !this.folderManager) {

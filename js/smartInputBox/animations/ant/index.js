@@ -1,6 +1,6 @@
 /**
  * Ant Animation — 养成版
- * 默认 1 只大蚂蚁，消息达标后新增小蚂蚁跟班，最多 6 只
+ * Default 1 只大蚂蚁，消息达标后新增小蚂蚁跟班，最多 6 只
  */
 class AntAnimation {
     constructor() {

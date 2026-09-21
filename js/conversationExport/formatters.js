@@ -14,7 +14,7 @@ const ConversationExportFormatters = {
             case 'json':
                 return this.json(payload);
             default:
-                throw new Error('不支持的导出格式');
+                throw new Error('Unsupported export format');
         }
     },
 

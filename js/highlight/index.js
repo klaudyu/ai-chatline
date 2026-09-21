@@ -1,15 +1,15 @@
 /**
  * Highlight - 主入口
  *
- * AI 对话页面文字标注功能。
+ * AI 对话页面文字Highlight功能。
  *
  * 按钮显示策略：
- *   AI 网站 + 追问 ON  → 标注按钮嵌入追问工具栏（由 QuickAsk 负责渲染）
- *   AI 网站 + 追问 OFF → 独立标注按钮
+ *   AI 网站 + Follow up ON  → Highlight按钮嵌入Follow up工具栏（由 QuickAsk 负责渲染）
+ *   AI 网站 + Follow up OFF → 独立Highlight按钮
  *
- * 点击标注按钮 → 弹出浮窗（标注文字 + 风格 + 颜色 + 确认）
+ * 点击Highlight按钮 → 弹出浮窗（Highlight文字 + 风格 + 颜色 + 确认）
  *
- * 开关：highlightEnabled（独立于追问开关）
+ * Toggle：highlightEnabled（独立于Follow upToggle）
  */
 
 (function () {
@@ -73,7 +73,7 @@
         popoverEl.innerHTML = `
             <div class="ait-hl-pop-header">
                 <div class="ait-hl-pop-colors">${colorButtons}</div>
-                <button class="ait-hl-pop-settings" title="${_msg('highlightSettings', '设置')}">${settingsIcon}</button>
+                <button class="ait-hl-pop-settings" title="${_msg('highlightSettings', 'Settings')}">${settingsIcon}</button>
             </div>
             <div class="ait-hl-pop-styles">
                 <button class="ait-hl-pop-style-btn" data-style="solid"><span class="ait-hl-pop-style-preview">AaBb</span></button>
@@ -82,11 +82,11 @@
                 <button class="ait-hl-pop-style-btn" data-style="textOnly"><span class="ait-hl-pop-style-preview">AaBb</span></button>
             </div>
             <div class="ait-hl-pop-note">
-                <textarea class="ait-hl-pop-input" rows="1" maxlength="140" placeholder="${_msg('highlightAnnotationPlaceholder', '想法…')}"></textarea>
-                <button class="ait-hl-pop-confirm" title="${_msg('highlightConfirm', '确定')}">
+                <textarea class="ait-hl-pop-input" rows="1" maxlength="140" placeholder="${_msg('highlightAnnotationPlaceholder', 'Thoughts…')}"></textarea>
+                <button class="ait-hl-pop-confirm" title="${_msg('highlightConfirm', 'Confirm')}">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </button>
-                <button class="ait-hl-pop-delete ait-hl-pop-edit-only" title="${_msg('highlightRemoveYes', '删除')}">${deleteIcon}</button>
+                <button class="ait-hl-pop-delete ait-hl-pop-edit-only" title="${_msg('highlightRemoveYes', 'Delete')}">${deleteIcon}</button>
             </div>
         `;
 
@@ -203,9 +203,15 @@
         const margin = 10;
 
         let left = anchorRect.left + (anchorRect.width - popW) / 2;
-        let top = anchorRect.top - popH - gap;
+        // ChatGPT and several other AI sites show their own selection toolbar
+        // above the selected text. Prefer the space below the selection so the
+        // highlight controls do not cover that toolbar.
+        let top = anchorRect.bottom + gap;
 
-        if (top < margin) top = anchorRect.bottom + gap;
+        // If there is not enough room below, fall back to the space above.
+        if (top + popH > window.innerHeight - margin) {
+            top = anchorRect.top - popH - gap;
+        }
         if (left < margin) left = margin;
         if (left + popW > window.innerWidth - margin) left = window.innerWidth - popW - margin;
 
@@ -359,7 +365,7 @@
         });
     }
 
-    // ==================== 浮窗开关 ====================
+    // ==================== 浮窗Toggle ====================
 
     function hidePopover() {
         if (!popoverEl) return;
@@ -468,7 +474,7 @@
         });
     }
 
-    // ==================== 独立按钮（非 AI 网站或追问关闭时） ====================
+    // ==================== 独立按钮（非 AI 网站或Follow upClose时） ====================
 
     const COPY_BTN_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 14H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"/></svg>';
 
@@ -508,8 +514,8 @@
     }
 
     /**
-     * 同步独立工具栏的按钮组成（标注 / 复制）
-     * 采用「清空 → 重建」策略，规范结构为：[标注] [divider] [复制]
+     * 同步独立工具栏的按钮组成（Highlight / Copy）
+     * 采用「Clear → 重建」策略，规范结构为：[Highlight] [divider] [Copy]
      * 选区变化频率低，重建成本可忽略；好处是避免中间态错位（如分隔线遗留在首位）。
      * @param {{ showHighlight: boolean, showCopy: boolean }} opts
      */
@@ -521,7 +527,7 @@
         if (opts.showHighlight) {
             const hlBtn = document.createElement('button');
             hlBtn.className = 'ait-highlight-action';
-            hlBtn.innerHTML = `${HIGHLIGHT_BTN_ICON}<span>${_msg('highlightMark', '标注')}</span>`;
+            hlBtn.innerHTML = `${HIGHLIGHT_BTN_ICON}<span>${_msg('highlightMark', 'Highlight')}</span>`;
             items.push(hlBtn);
         }
 
@@ -534,7 +540,7 @@
             }
             const copyBtn = document.createElement('button');
             copyBtn.className = 'ait-copy-action';
-            copyBtn.innerHTML = `${COPY_BTN_ICON}<span>${_msg('mvkxpz', '复制')}</span>`;
+            copyBtn.innerHTML = `${COPY_BTN_ICON}<span>${_msg('mvkxpz', 'Copy')}</span>`;
             items.push(copyBtn);
         }
 
@@ -550,7 +556,7 @@
             return;
         }
 
-        // 缓存选区，复制按钮的 click 时复用
+        // 缓存选区，Copy按钮的 click 时复用
         try { standaloneSavedRange = selection.getRangeAt(0).cloneRange(); } catch { standaloneSavedRange = null; }
 
         const range = selection.getRangeAt(0);
@@ -566,9 +572,14 @@
         const margin = 10;
 
         let left = rect.left;
-        let top = rect.top - btnHeight - gap;
+        // Keep the selection toolbar below the text so it does not overlap
+        // ChatGPT's own selection toolbar, which is normally above it.
+        let top = rect.bottom + gap;
 
-        if (top < margin) top = rect.bottom + gap;
+        // Near the bottom edge, use the space above the selection instead.
+        if (top + btnHeight > window.innerHeight - margin) {
+            top = rect.top - btnHeight - gap;
+        }
         if (left < margin) left = margin;
         if (left + btnWidth > window.innerWidth - margin) left = window.innerWidth - btnWidth - margin;
 
@@ -596,13 +607,13 @@
             const toast = window.globalToastManager;
             if (ok) {
                 toast?.success?.(
-                    _msg('xpzmvk', '已复制'),
+                    _msg('xpzmvk', 'Copied'),
                     null,
                     { duration: 1600 }
                 );
             } else {
                 toast?.error?.(
-                    _msg('kpzmvx', '复制失败'),
+                    _msg('kpzmvx', 'Copy failed'),
                     null,
                     { duration: 1600 }
                 );
@@ -610,7 +621,7 @@
         } catch (e) {
             console.error('[Highlight] copy failed:', e);
             window.globalToastManager?.error?.(
-                _msg('kpzmvx', '复制失败'),
+                _msg('kpzmvx', 'Copy failed'),
                 null,
                 { duration: 1600 }
             );
@@ -704,9 +715,9 @@
         if (!isValidHighlightSelection(selection)) { hideStandaloneButton(); return; }
 
         const range = selection.getRangeAt(0);
-        // 标注按钮：选区不在已有标注内才允许新增标注
+        // Highlight按钮：选区不在已有Highlight内才允许新增Highlight
         const showHighlight = !manager.isSelectionInsideHighlight();
-        // 复制按钮：选区中包含高亮 OR 公式
+        // Copy按钮：选区中包含高亮 OR 公式
         const copyApi = window.AIChatTimelineSelectionCopy;
         const showCopy = !!(copyApi && copyApi.hasRichContent(range));
 

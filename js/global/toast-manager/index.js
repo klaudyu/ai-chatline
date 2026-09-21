@@ -28,14 +28,14 @@ class GlobalToastManager {
                 success: {
                     color: {
                         light: {
-                            backgroundColor: '#ffffff',  // 浅色模式：白色背景
-                            textColor: '#1f2937',        // 浅色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 浅色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Light模式：白色背景
+                            textColor: '#1f2937',        // Light模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Light模式：浅灰色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     },
                     icon: '✓',
@@ -46,14 +46,14 @@ class GlobalToastManager {
                 error: {
                     color: {
                         light: {
-                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                            textColor: '#ffffff',        // 浅色模式：白色文字
-                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                            backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                            textColor: '#ffffff',        // Light模式：白色文字
+                            borderColor: '#0d0d0d'       // Light模式：黑色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     },
                     icon: '⚠',
@@ -64,14 +64,14 @@ class GlobalToastManager {
                 info: {
                     color: {
                         light: {
-                            backgroundColor: '#ffffff',  // 浅色模式：白色背景
-                            textColor: '#1f2937',        // 浅色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 浅色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Light模式：白色背景
+                            textColor: '#1f2937',        // Light模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Light模式：浅灰色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     },
                     icon: '✓',
@@ -82,14 +82,14 @@ class GlobalToastManager {
                 warning: {
                     color: {
                         light: {
-                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                            textColor: '#ffffff',        // 浅色模式：白色文字
-                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                            backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                            textColor: '#ffffff',        // Light模式：白色文字
+                            borderColor: '#0d0d0d'       // Light模式：黑色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     },
                     icon: '⚡',
@@ -118,14 +118,14 @@ class GlobalToastManager {
      * @param {string} message - 消息文本
      * @param {Object} options - 可选配置
      * @param {HTMLElement} options.target - 目标元素（相对定位）
-     * @param {number} options.duration - 显示时长（覆盖默认）
-     * @param {string} options.position - 位置（覆盖默认）
+     * @param {number} options.duration - 显示时长（OverwriteDefault）
+     * @param {string} options.position - 位置（OverwriteDefault）
      * @param {Object|false} options.color - 颜色配置对象；传 false 时跳过内联配色
      * @param {string} options.icon - 图标
      * @param {number} options.gap - 与目标元素的距离
      * @param {string} options.className - 额外 CSS 类名
      * @param {string} options.iconType - 内置图标类型（如 check，优先于 icon）
-     * @param {boolean} options.useClassStyles - 是否跳过默认视觉样式，由 CSS 类接管
+     * @param {boolean} options.useClassStyles - 是否跳过Default视觉样式，由 CSS 类接管
      */
     show(type, message, options = {}) {
         try {
@@ -140,14 +140,14 @@ class GlobalToastManager {
                 return;
             }
             
-            // 合并配置
+            // Merge配置
             const typeConfig = this.config.types[type];
             const finalConfig = { ...typeConfig, ...options };
             
             // 创建 toast 实例
             const toastInstance = this._createToast(message, finalConfig);
             
-            // 添加到队列
+            // Add到队列
             this.queue.push(toastInstance);
             
             // 更新所有 toast 位置
@@ -210,7 +210,7 @@ class GlobalToastManager {
     forceHideAll() {
         this._log('Force hide all toasts');
         
-        // 复制队列（避免在遍历时修改）
+        // Copy队列（避免在遍历时修改）
         const toasts = [...this.queue];
         
         toasts.forEach(toast => {
@@ -271,7 +271,7 @@ class GlobalToastManager {
         
         // 应用配置的颜色（根据当前主题模式）
         if (config.color) {
-            // 检测当前是浅色还是深色模式
+            // 检测当前是Light还是Dark模式
             const isDarkMode = document.documentElement.classList.contains('dark');
             const themeColors = isDarkMode ? config.color.dark : config.color.light;
             
@@ -286,7 +286,7 @@ class GlobalToastManager {
             }
         }
         
-        // 添加图标（如果有）
+        // Add图标（如果有）
         if (config.iconType) {
             const iconSpan = this._createIconElement(config.iconType);
             if (iconSpan) element.appendChild(iconSpan);
@@ -298,12 +298,12 @@ class GlobalToastManager {
             element.appendChild(iconSpan);
         }
         
-        // 添加消息文本
+        // Add消息文本
         const textSpan = document.createElement('span');
         textSpan.textContent = message;
         element.appendChild(textSpan);
         
-        // 添加到 body
+        // Add到 body
         document.body.appendChild(element);
         
         // 返回实例对象
@@ -548,6 +548,6 @@ if (!document.getElementById('global-toast-styles')) {
 // 创建全局实例（只在第一次加载时）
 if (typeof window.globalToastManager === 'undefined') {
     window.globalToastManager = new GlobalToastManager({
-        debug: false  // 生产环境关闭，调试时可设为 true
+        debug: false  // 生产环境Close，调试时可设为 true
     });
 }

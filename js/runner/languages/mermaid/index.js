@@ -36,7 +36,7 @@ class MermaidRunner extends BaseRunner {
 
     /**
      * 配置 mermaid 实例
-     * 固定使用浅色主题，因为 Runner 输出面板中的预览容器始终是白底
+     * 固定使用Light主题，因为 Runner 输出面板中的预览容器始终是白底
      */
     _configure() {
         if (typeof mermaid === 'undefined') return false;

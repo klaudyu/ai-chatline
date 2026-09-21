@@ -6,7 +6,7 @@ if (typeof globalThis.chrome === 'undefined' && typeof globalThis.browser !== 'u
  * 包含所有 AI 平台的基础信息，供多个模块使用
  * 
  * 使用模块：
- * - Timeline（时间轴）
+ * - Timeline（Timeline）
  * - StarredTab（收藏列表）
  * - SmartEnter（智能输入）
  */
@@ -14,7 +14,7 @@ if (typeof globalThis.chrome === 'undefined' && typeof globalThis.browser !== 'u
 // ==================== 全局配置 ====================
 
 /**
- * 全局调试开关
+ * 全局调试Toggle
  * 控制所有模块的调试日志输出
  */
 const GLOBAL_DEBUG = false;
@@ -37,7 +37,7 @@ const SITE_INFO = [
             inputAnimation: true,
             quickAsk: true,
             conversationExport: true,
-            quickAskPosition: 'bottomLeft',  // 追问按钮位置
+            quickAskPosition: 'bottomLeft',  // Follow up按钮位置
             chatTimes: true,  // 提问时间记录
             stableNodeId: true,  // 使用稳定的节点 ID（data-message-id），需等待 id 分配后记录
             sidebarStarred: true,  // 侧边栏收藏列表
@@ -400,7 +400,7 @@ function getSiteInfoByUrl(url) {
             }
         }
         
-        // 未匹配到任何平台，返回默认值
+        // 未匹配到任何平台，返回Default值
         return { id: null, name: hostname, logo: null };
     } catch (e) {
         return { id: null, name: 'Unknown', logo: null };
@@ -490,11 +490,11 @@ function platformSupportsFeature(platformId, feature) {
     return platform?.features?.[feature] === true;
 }
 
-// ==================== 时间轴激活节点颜色配置 ====================
+// ==================== Timeline激活节点颜色配置 ====================
 
 /**
- * 时间轴激活节点颜色选项
- * 存储时只保存 color id，实际颜色从这里解析，避免散落十六进制颜色值。
+ * Timeline激活节点颜色选项
+ * 存储时只Save color id，实际颜色从这里解析，避免散落十六进制颜色值。
  */
 const TIMELINE_ACTIVE_COLOR_OPTIONS = [
     { id: 'black', color: '#0d0d0d' },
@@ -504,8 +504,8 @@ const TIMELINE_ACTIVE_COLOR_OPTIONS = [
 ];
 
 /**
- * 不同平台的默认激活色。
- * 用户未选择时使用这里的默认值；用户选择默认色时不写入 storage。
+ * 不同平台的Default激活色。
+ * 用户未选择时使用这里的Default值；用户选择Default色时不写入 storage。
  */
 const TIMELINE_ACTIVE_COLOR_DEFAULT_BY_PLATFORM = {
     chatgpt: 'black',
@@ -546,16 +546,16 @@ function resolveTimelineActiveColor(platformId, activeColorSettings = {}) {
         '#6128FF';
 }
 
-// ==================== 代码运行器语言配置 ====================
+// ==================== 代码Run器语言配置 ====================
 
 /**
  * 支持的编程语言配置
- * 用于代码运行器（Runner）模块
+ * 用于代码Run器（Runner）模块
  * 
  * @property {string} id - 语言标识符
  * @property {string} name - 显示名称
  * @property {string} mode - CodeMirror 语法模式
- * @property {string} storageKey - 存储开关状态的 key
+ * @property {string} storageKey - 存储Toggle状态的 key
  */
 const RUNNER_LANGUAGES = [
     { id: 'javascript', name: 'JavaScript', mode: 'javascript', storageKey: 'runnerJsEnabled', runnerClass: 'JavaScriptRunner', hljsLang: 'javascript' },
@@ -612,18 +612,18 @@ function getRunnerLanguageName(langId) {
     return lang ? lang.name : langId;
 }
 
-// ==================== 文本高亮默认颜色 ====================
+// ==================== Text highlightingDefault颜色 ====================
 
 /**
- * 文本高亮功能的默认颜色列表
- * 用于 HighlightTab（设置面板）、Highlight Popover（浮窗）、HighlightManager（标注引擎）
+ * Text highlighting功能的Default颜色列表
+ * 用于 HighlightTab（Settings面板）、Highlight Popover（浮窗）、HighlightManager（Highlight引擎）
  */
 const HIGHLIGHT_DEFAULT_COLORS = ['#F6E26B', '#FC7D9F', '#6BD66B', '#68B5FB', '#C59CF6'];
 
 // ==================== LaTeX 公式格式配置 ====================
 
 /**
- * LaTeX 公式复制格式配置
+ * LaTeX 公式Copy格式配置
  * 用于 Formula Tab 模块
  * 
  * @property {string} id - 格式标识符（用于存储）
@@ -642,17 +642,17 @@ const FORMULA_FORMATS = [
     { id: 'alignStar', label: '\\begin{align*} ... \\end{align*}', template: '\\begin{align*}%s\\end{align*}' }
 ];
 
-// ==================== 深色模式检测 ====================
+// ==================== Dark模式检测 ====================
 
 /**
- * 检测当前页面是否为深色模式
+ * 检测当前页面是否为Dark模式
  * 整合了所有 AI 平台的 dark mode 检测逻辑
  * 
- * @returns {boolean} true 表示深色模式
+ * @returns {boolean} true 表示Dark模式
  */
 function detectDarkMode() {
     try {
-        // 1. 检查 html 元素的 dark 类（Kimi、Grok 等平台原生添加）
+        // 1. 检查 html 元素的 dark 类（Kimi、Grok 等平台原生Add）
         if (document.documentElement?.classList?.contains('dark')) {
             return true;
         }
@@ -693,7 +693,7 @@ function detectDarkMode() {
         
         return false;
     } catch (error) {
-        // 发生任何错误时，返回 false（默认浅色模式）
+        // 发生任何错误时，返回 false（DefaultLight模式）
         console.warn('[detectDarkMode] error:', error);
         return false;
     }

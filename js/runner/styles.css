@@ -1,5 +1,5 @@
 /**
- * Runner Styles - 代码块运行器样式
+ * Runner Styles - 代码块Run器样式
  */
 
 /* ===== 颜色变量 - GitHub Dark ===== */
@@ -17,7 +17,7 @@
     --runner-success: #3fb950;
 }
 
-/* ===== 运行按钮（absolute 定位） ===== */
+/* ===== Run按钮（absolute 定位） ===== */
 .runner-code-run-btn {
     position: absolute !important;
     top: 60px;
@@ -48,7 +48,7 @@
     transition: all 0.15s ease !important;
 }
 
-/* Gemini code-block 容器内按钮单独设置偏移 */
+/* Gemini code-block 容器内按钮单独Settings偏移 */
 code-block .runner-code-run-btn {
     top: 80px;
 }
@@ -154,7 +154,7 @@ code-block .runner-code-run-btn {
     gap: 6px;
 }
 
-/* Icon 按钮（设置、复制、弹出、关闭、清空） */
+/* Icon 按钮（Settings、Copy、弹出、Close、Clear） */
 .runner-action-settings,
 .runner-action-copy,
 .runner-output-copy,
@@ -289,7 +289,7 @@ code-block .runner-code-run-btn {
     flex-shrink: 0;
 }
 
-/* ===== 编辑器区域 ===== */
+/* ===== Edit器区域 ===== */
 .runner-editor-section {
     flex: 1;
     display: flex;

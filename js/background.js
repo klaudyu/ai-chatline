@@ -3,7 +3,7 @@
  * 
  * 职责：
  * 1. Google Drive 云同步（OAuth2 认证 + 文件读写）
- * 2. 按需注入高级功能运行时
+ * 2. 按需注入高级功能Run时
  */
 
 // ============================================
@@ -318,7 +318,7 @@ async function uploadToDrive(token, data) {
  */
 async function downloadFromDrive(token) {
     const folderId = await findFile(token, GDRIVE_FOLDER_NAME, 'application/vnd.google-apps.folder');
-    if (!folderId) return null; // 文件夹不存在，说明从未上传过
+    if (!folderId) return null; // Folder not found，说明从未上传过
     
     const fileId = await findFile(token, GDRIVE_DATA_FILE, null, folderId);
     if (!fileId) return null; // 文件不存在

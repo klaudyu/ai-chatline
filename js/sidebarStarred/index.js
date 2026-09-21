@@ -71,7 +71,7 @@
         }, RETRY_DELAYS[retryIndex]);
     }
 
-    // ==================== 监听开关变化 ====================
+    // ==================== 监听Toggle变化 ====================
 
     StorageAdapter.addChangeListener((changes, areaName) => {
         if (areaName !== 'local' || !changes.sidebarStarredPlatformSettings) return;

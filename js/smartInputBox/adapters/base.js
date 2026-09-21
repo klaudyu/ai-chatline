@@ -30,7 +30,7 @@ class BaseSmartEnterAdapter {
     canSend(inputElement) {
         if (!inputElement) return false;
         
-        // 默认实现：检查是否有非空文本
+        // Default实现：检查是否有非空文本
         const isContentEditable = inputElement.contentEditable === 'true';
         let text = '';
         
@@ -52,7 +52,7 @@ class BaseSmartEnterAdapter {
     }
     
     /**
-     * 获取提示词按钮位置偏移量
+     * 获取Prompt按钮位置偏移量
      * 用于微调按钮相对于输入框左上角的位置
      * @returns {{ top: number, left: number }}
      */

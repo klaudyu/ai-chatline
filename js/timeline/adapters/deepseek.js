@@ -216,7 +216,7 @@ class DeepSeekAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // DeepSeek 使用页面标题作为默认主题，并过滤尾部的 " - DeepSeek"
+        // DeepSeek 使用页面标题作为Default主题，并过滤尾部的 " - DeepSeek"
         const title = document.title || '';
         return title.replace(/\s*-\s*DeepSeek\s*$/i, '').trim();
     }

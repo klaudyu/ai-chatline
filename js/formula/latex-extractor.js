@@ -2,7 +2,7 @@
  * FormulaSourceParser - 公式源码解析器
  * 支持多种平台的公式格式，完全独立的提取逻辑
  * 
- * 支持的平台：
+ * Supported platforms：
  * - ChatGPT (KaTeX + annotation)
  * - Gemini (KaTeX + data-math)
  * - DeepSeek (KaTeX + annotation)

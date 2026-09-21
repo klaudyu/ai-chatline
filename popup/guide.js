@@ -6,10 +6,10 @@ const PLATFORMS = [
     { name: 'Kimi', url: 'https://kimi.com', logo: 'images/logo/kimi.webp' },
     { name: 'Grok', url: 'https://grok.com', logo: 'images/logo/grok.webp' },
     { name: 'Perplexity', url: 'https://perplexity.ai', logo: 'images/logo/perplexity.webp' },
-    { name: '豆包', url: 'https://doubao.com', logo: 'images/logo/doubao.webp' },
-    { name: '千问', url: 'https://qianwen.com', logo: 'images/logo/tongyi.webp' },
-    { name: '千问国际版', url: 'https://chat.qwen.ai', logo: 'images/logo/tongyi.webp' },
-    { name: '元宝', url: 'https://yuanbao.tencent.com', logo: 'images/logo/yuanbao.webp' },
+    { name: 'Doubao', url: 'https://doubao.com', logo: 'images/logo/doubao.webp' },
+    { name: 'Qwen', url: 'https://qianwen.com', logo: 'images/logo/tongyi.webp' },
+    { name: 'Qwen International', url: 'https://chat.qwen.ai', logo: 'images/logo/tongyi.webp' },
+    { name: 'Yuanbao', url: 'https://yuanbao.tencent.com', logo: 'images/logo/yuanbao.webp' },
     { name: 'NotebookLM', url: 'https://notebooklm.google.com', logo: 'images/logo/notebooklm.svg' }
 ];
 

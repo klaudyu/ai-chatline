@@ -42,7 +42,7 @@ class BaseTab {
     }
     
     /**
-     * 定义初始状态（子类可选覆盖）
+     * 定义初始状态（子类可选Overwrite）
      * 
      * @returns {Object} 初始状态配置
      * @example
@@ -67,7 +67,7 @@ class BaseTab {
     }
     
     /**
-     * 初始化状态（内部调用，子类不应覆盖）
+     * 初始化状态（内部调用，子类不应Overwrite）
      * @private
      */
     _initializeState() {
@@ -93,7 +93,7 @@ class BaseTab {
     }
     
     /**
-     * 设置临时状态
+     * Settings临时状态
      * @param {string} key - 状态键
      * @param {*} value - 状态值
      */
@@ -111,7 +111,7 @@ class BaseTab {
     }
     
     /**
-     * 设置持久状态
+     * Settings持久状态
      * @param {string} key - 状态键
      * @param {*} value - 状态值
      */
@@ -120,7 +120,7 @@ class BaseTab {
     }
     
     /**
-     * 保存 DOM 引用
+     * Save DOM 引用
      * @param {string} key - 引用键
      * @param {HTMLElement} element - DOM 元素
      */
@@ -138,7 +138,7 @@ class BaseTab {
     }
     
     /**
-     * 添加事件监听器（自动管理，unmounted 时自动移除）
+     * Add事件监听器（自动管理，unmounted 时自动移除）
      * @param {HTMLElement} element - DOM 元素
      * @param {string} event - 事件名
      * @param {Function} handler - 处理函数
@@ -155,7 +155,7 @@ class BaseTab {
     }
     
     /**
-     * 添加 Storage 监听器（自动管理，unmounted 时自动移除）
+     * Add Storage 监听器（自动管理，unmounted 时自动移除）
      * @param {Function} handler - 处理函数
      * 
      * @example
@@ -177,12 +177,12 @@ class BaseTab {
      * @returns {HTMLElement} 返回要显示的 DOM 元素
      */
     render() {
-        throw new Error('子类必须实现 render() 方法');
+        throw new Error('Subclasses must implement render().');
     }
     
     /**
-     * Tab 被激活时调用（子类可选覆盖）
-     * ⚠️ 如果覆盖，必须先调用 super.mounted()
+     * Tab 被激活时调用（子类可选Overwrite）
+     * ⚠️ 如果Overwrite，必须先调用 super.mounted()
      * 
      * @example
      * mounted() {
@@ -196,8 +196,8 @@ class BaseTab {
     }
     
     /**
-     * Tab 被卸载时调用（子类可选覆盖）
-     * ⚠️ 如果覆盖，必须调用 super.unmounted()
+     * Tab 被卸载时调用（子类可选Overwrite）
+     * ⚠️ 如果Overwrite，必须调用 super.unmounted()
      * 
      * @example
      * unmounted() {

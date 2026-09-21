@@ -1,22 +1,22 @@
 /**
  * Star Input Modal - 收藏输入对话框（带文件夹选择器）
  * 
- * 专门用于时间轴收藏功能的输入对话框
+ * 专门用于Timeline收藏功能的输入对话框
  * 
  * 特性：
  * - 输入收藏标题
  * - 选择文件夹（支持一级+二级文件夹）
- * - 键盘交互（ESC取消、Enter确认）
- * - 点击遮罩层取消
- * - 深色模式自适应
+ * - 键盘交互（ESCCancel、Enter确认）
+ * - 点击遮罩层Cancel
+ * - Dark模式自适应
  * - Promise 异步返回
  * - 自动聚焦和光标定位
- * - ✨ 组件自治：URL 变化时自动关闭并清理 DOM
+ * - ✨ 组件自治：URL 变化时自动Close并清理 DOM
  * 
  * @example
  * const result = await window.starInputModal.show({
  *     title: '请输入收藏标题',
- *     defaultValue: '默认标题',
+ *     defaultValue: 'Default标题',
  *     folderManager: folderManagerInstance,
  *     defaultFolderId: null
  * });
@@ -44,7 +44,7 @@ class StarInputModal {
             currentUrl: location.href
         };
         
-        // ✅ 监听 URL 变化，自动关闭 modal
+        // ✅ 监听 URL 变化，自动Close modal
         this._boundHandleUrlChange = this._handleUrlChange.bind(this);
         this._attachUrlListeners();
         
@@ -55,15 +55,15 @@ class StarInputModal {
      * 显示收藏输入对话框
      * @param {Object} options - 配置选项
      * @param {string} options.title - 对话框标题（必填）
-     * @param {string} options.defaultValue - 默认输入值
+     * @param {string} options.defaultValue - Default输入值
      * @param {string} options.placeholder - 输入框占位符
-     * @param {boolean} options.required - 是否必填（默认 true）
+     * @param {boolean} options.required - 是否必填（Default true）
      * @param {string} options.requiredMessage - 必填验证失败消息
-     * @param {number} options.maxLength - 最大长度（默认 100）
+     * @param {number} options.maxLength - 最大长度（Default 100）
      * @param {string} options.confirmText - 确认按钮文本
-     * @param {string} options.cancelText - 取消按钮文本
+     * @param {string} options.cancelText - Cancel按钮文本
      * @param {Object} options.folderManager - FolderManager 实例（必需）
-     * @param {string|null} options.defaultFolderId - 默认选中的文件夹 ID
+     * @param {string|null} options.defaultFolderId - Default选中的文件夹 ID
      * @returns {Promise<Object|null>} 返回 { value: string, folderId: string|null } 或 null
      */
     async show(options = {}) {
@@ -85,7 +85,7 @@ class StarInputModal {
                 return null;
             }
             
-            // 合并配置
+            // Merge配置
             const config = {
                 title: options.title,
                 defaultValue: options.defaultValue || '',
@@ -108,7 +108,7 @@ class StarInputModal {
     }
     
     /**
-     * 强制关闭当前显示的 modal
+     * 强制Close当前显示的 modal
      */
     forceClose() {
         if (this.state.isShowing && this.state.currentResolve) {
@@ -200,7 +200,7 @@ class StarInputModal {
             let selectedFolderId = config.defaultFolderId || null;
             let selectedFolderPath = '';
             
-            // 如果有默认文件夹，显示其路径
+            // 如果有Default文件夹，显示其路径
             if (selectedFolderId && config.folderManager) {
                 selectedFolderPath = await config.folderManager.getFolderPath(selectedFolderId);
                 if (selectedFolderPath) {
@@ -245,7 +245,7 @@ class StarInputModal {
                     // 构建子菜单
                     const subItems = [];
                     
-                    // 添加子文件夹
+                    // Add子文件夹
                     childFolders.forEach(childFolder => {
                         subItems.push({
                             label: childFolder.name,
@@ -261,8 +261,8 @@ class StarInputModal {
                         });
                     });
                     
-                    // 添加"新建子文件夹"选项
-                    // 只有当有子文件夹时才添加分隔线
+                    // Add"新建子文件夹"选项
+                    // 只有当有子文件夹时才Add分隔线
                     if (childFolders.length > 0) {
                         subItems.push({ type: 'divider' });
                     }
@@ -285,13 +285,13 @@ class StarInputModal {
                         }
                     });
                     
-                    // 添加子菜单
+                    // Add子菜单
                     folderItem.children = subItems;
                     
                     items.push(folderItem);
                 }
                 
-                // 添加"新建一级文件夹"选项
+                // Add"新建一级文件夹"选项
                 items.push({ type: 'divider' });
                 items.push({
                     label: chrome.i18n.getMessage('kxvpmz'),
@@ -331,7 +331,7 @@ class StarInputModal {
                 overlay.classList.add('visible');
                 input.focus();
                 
-                // 如果有默认值，将光标定位到末尾
+                // 如果有Default值，将光标定位到末尾
                 if (config.defaultValue) {
                     setTimeout(() => {
                         const length = input.value.length;
@@ -382,19 +382,19 @@ class StarInputModal {
                 resolve(value ? { value, folderId: selectedFolderId } : null);
             };
             
-            // 取消输入
+            // Cancel输入
             const cancelInput = () => {
                 this._cleanup();
                 resolve(null);
             };
             
-            // 确定按钮
+            // Confirm按钮
             confirmBtn.addEventListener('click', submitInput);
             
-            // 取消按钮
+            // Cancel按钮
             cancelBtn.addEventListener('click', cancelInput);
             
-            // ESC 键取消，Ctrl/Cmd+Enter 键确认
+            // ESC 键Cancel，Ctrl/Cmd+Enter 键确认
             const handleKeyDown = (e) => {
                 if (e.key === 'Escape') {
                     cancelInput();
@@ -407,7 +407,7 @@ class StarInputModal {
             };
             document.addEventListener('keydown', handleKeyDown);
             
-            // 点击遮罩层取消
+            // 点击遮罩层Cancel
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) {
                     cancelInput();

@@ -29,7 +29,7 @@ class AnimationTab extends BaseTab {
 
         const desc = document.createElement('div');
         desc.className = 'anim-tab-desc';
-        desc.textContent = chrome.i18n.getMessage('animLightweightHint') || '默认关闭。选择一种宠物后，它会在 AI 回复时显示；再次关闭即可停用。';
+        desc.textContent = chrome.i18n.getMessage('animLightweightHint') || 'DefaultClose。选择一种宠物后，它会在 AI 回复时显示；再次Close即可停用。';
         container.appendChild(desc);
 
         const list = document.createElement('div');

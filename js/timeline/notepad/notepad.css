@@ -1,5 +1,5 @@
 /* ============================================
-   闪记面板 & 入口按钮（固定浅色主题）
+   Quick note面板 & 入口按钮（固定Light主题）
    ============================================ */
 
 /* ── 面板容器 ── */
@@ -82,7 +82,7 @@
     color: #6128FF;
 }
 
-/* ── 头部按钮（关闭 / 列表 / 新增） ── */
+/* ── 头部按钮（Close / 列表 / 新增） ── */
 .ait-notepad-close-btn,
 .ait-notepad-list-btn,
 .ait-notepad-add-btn {
@@ -229,7 +229,7 @@
     min-width: 0;
 }
 
-/* ── 列表项删除按钮 ── */
+/* ── 列表项Delete按钮 ── */
 .ait-notepad-item-delete {
     width: 26px;
     height: 26px;
@@ -260,7 +260,7 @@
     background: rgba(220, 50, 50, 0.15);
 }
 
-/* ── 编辑器 ── */
+/* ── Edit器 ── */
 .ait-notepad-editor {
     flex: 1;
     width: 100%;
@@ -428,7 +428,7 @@
     cursor: ns-resize;
 }
 
-/* ── 时间轴上的入口按钮 ── */
+/* ── Timeline上的入口按钮 ── */
 .ait-notepad-btn {
     position: relative;
     width: 28px;

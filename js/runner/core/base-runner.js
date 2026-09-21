@@ -1,7 +1,7 @@
 /**
- * BaseRunner - 语言运行器基类
+ * BaseRunner - 语言Run器基类
  * 
- * 所有语言运行器必须继承此类并实现相关方法
+ * 所有语言Run器必须继承此类并实现相关方法
  */
 
 class BaseRunner {
@@ -14,8 +14,8 @@ class BaseRunner {
     }
 
     /**
-     * 初始化运行器
-     * 子类可以覆盖此方法进行异步初始化（如加载 WASM）
+     * 初始化Run器
+     * 子类可以Overwrite此方法进行异步初始化（如加载 WASM）
      * @returns {Promise<void>}
      */
     async initialize() {
@@ -37,7 +37,7 @@ class BaseRunner {
 
     /**
      * 验证代码语法
-     * 子类可以覆盖此方法
+     * 子类可以Overwrite此方法
      * @param {string} code - 要验证的代码
      * @returns {{valid: boolean, error?: string, line?: number}}
      */
@@ -47,7 +47,7 @@ class BaseRunner {
 
     /**
      * 获取示例代码
-     * 子类应该覆盖此方法
+     * 子类应该Overwrite此方法
      * @returns {string}
      */
     getExampleCode() {
@@ -64,7 +64,7 @@ class BaseRunner {
 
     /**
      * 清理资源
-     * 子类可以覆盖此方法
+     * 子类可以Overwrite此方法
      */
     cleanup() {
         // 子类实现
@@ -79,7 +79,7 @@ class BaseRunner {
     }
 
     /**
-     * 获取运行器信息
+     * 获取Run器信息
      * @returns {Object}
      */
     getInfo() {

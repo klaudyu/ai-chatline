@@ -240,7 +240,7 @@ const StorageAdapter = {
      * - chatTimelineStar:xxx → chatTimelineStars 数组
      * - chatTimelinePin:xxx → chatTimelinePins 数组
      * - 其他数据原封不动迁移
-     * 迁移完成后清空 sync，下次检查时 sync 为空则跳过
+     * 迁移完成后Clear sync，下次检查时 sync 为空则跳过
      * @returns {Promise<void>}
      */
     async migrateFromSyncToLocal() {
@@ -300,7 +300,7 @@ const StorageAdapter = {
                 newLocalData.chatTimelinePins = pinItems;
             }
             
-            // 保存到 local
+            // Save到 local
             await new Promise((resolve) => {
                 chrome.storage.local.set(newLocalData, () => {
                     if (chrome.runtime.lastError) {
@@ -310,7 +310,7 @@ const StorageAdapter = {
                 });
             });
 
-            // 清空 sync（迁移完成标志）
+            // Clear sync（迁移完成标志）
             await new Promise((resolve) => {
                 chrome.storage.sync.clear(() => {
                     if (chrome.runtime.lastError) {
@@ -354,7 +354,7 @@ const StorageAdapter = {
     },
 
     /**
-     * 设置存储的值
+     * Settings存储的值
      * @param {string} key - 存储键名
      * @param {any} value - 要存储的值
      * @returns {Promise<void>}
@@ -384,7 +384,7 @@ const StorageAdapter = {
     },
 
     /**
-     * 删除存储的值
+     * Delete存储的值
      * @param {string} key - 存储键名
      * @returns {Promise<void>}
      */
@@ -489,7 +489,7 @@ const StorageAdapter = {
                         }
                     }
                 };
-                // 保存原始 handler 的引用以便后续移除
+                // Save原始 handler 的引用以便后续移除
                 callback._storageHandler = storageHandler;
                 window.addEventListener('storage', storageHandler);
             }
@@ -500,7 +500,7 @@ const StorageAdapter = {
 
     /**
      * 移除存储变化监听器
-     * @param {Function} callback - 之前添加的回调函数
+     * @param {Function} callback - 之前Add的回调函数
      */
     removeChangeListener(callback) {
         try {
@@ -548,7 +548,7 @@ const StarStorageManager = {
     },
 
     /**
-     * 添加或更新收藏
+     * Add或更新收藏
      * @param {Object} item - 收藏项（必须包含 key 字段）
      */
     async add(item) {
@@ -611,7 +611,7 @@ const StarStorageManager = {
     },
 
     /**
-     * 批量更新（用于文件夹删除等场景）
+     * 批量更新（用于文件夹Delete等场景）
      * @param {Function} updateFn - 更新函数，接收 items 数组，返回更新后的数组
      */
     async batchUpdate(updateFn) {
@@ -653,7 +653,7 @@ const PinStorageManager = {
     },
 
     /**
-     * 添加或更新 Pin
+     * Add或更新 Pin
      * @param {Object} item - Pin 项（必须包含 key 字段）
      */
     async add(item) {
@@ -710,7 +710,7 @@ const PinStorageManager = {
  * 存储键：chatTimes
  * 数据结构：{ 
  *   conversationKey: { 
- *     createTime: timestamp,    // 会话首次创建时间（只在首次设置）
+ *     createTime: timestamp,    // 会话首次创建时间（只在首次Settings）
  *     lastVisit: timestamp,     // 上次进入时间（用于清理不活跃数据）
  *     nodes: { nodeId: timestamp, ... } 
  *   }, 
@@ -794,9 +794,9 @@ const ChatTimeStorageManager = {
     },
 
     /**
-     * 设置会话的创建时间（只在新对话时调用，已有 createTime 时不覆盖）
+     * Settings会话的创建时间（只在新对话时调用，已有 createTime 时不Overwrite）
      * @param {string} conversationKey - 会话标识
-     * @param {number} timestamp - 时间戳（默认当前时间）
+     * @param {number} timestamp - 时间戳（Default当前时间）
      * @returns {Promise<boolean>} - 是否实际写入
      */
     async setCreateTime(conversationKey, timestamp = Date.now()) {
@@ -810,7 +810,7 @@ const ChatTimeStorageManager = {
             return true;
         }
         
-        // 已有 createTime 时不覆盖
+        // 已有 createTime 时不Overwrite
         if (all[conversationKey].createTime) {
             return false;
         }
@@ -821,7 +821,7 @@ const ChatTimeStorageManager = {
     },
 
     /**
-     * 批量设置节点时间（只添加新的，同时更新 lastVisit）
+     * 批量Settings节点时间（只Add新的，同时更新 lastVisit）
      * @param {string} conversationKey - 会话标识
      * @param {Array<{nodeId: string, timestamp?: number}>} nodes - 节点数组
      * @returns {Promise<number>} - 实际新增的数量
@@ -890,7 +890,7 @@ const ChatTimeStorageManager = {
 
     /**
      * 清理不活跃的会话数据
-     * @param {number} maxInactiveDays - 最大不活跃天数（默认30天）
+     * @param {number} maxInactiveDays - 最大不活跃天数（Default30天）
      * @returns {Promise<number>} - 清理的会话数量
      */
     async cleanup(maxInactiveDays = 30) {
@@ -900,7 +900,7 @@ const ChatTimeStorageManager = {
         let cleanedCount = 0;
         
         for (const [convKey, data] of Object.entries(all)) {
-            // 如果没有 lastVisit 或 lastVisit 已过期，删除该会话
+            // 如果没有 lastVisit 或 lastVisit 已过期，Delete该会话
             if (!data.lastVisit || (now - data.lastVisit > maxAge)) {
                 delete all[convKey];
                 cleanedCount++;

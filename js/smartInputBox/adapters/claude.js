@@ -14,7 +14,7 @@ class ClaudeSmartEnterAdapter extends BaseSmartEnterAdapter {
     
     /**
      * 获取输入框选择器
-     * Claude 使用 ProseMirror 编辑器，contenteditable="true"
+     * Claude 使用 ProseMirror Edit器，contenteditable="true"
      */
     getInputSelector() {
         return '.ProseMirror[contenteditable="true"]';
@@ -30,7 +30,7 @@ class ClaudeSmartEnterAdapter extends BaseSmartEnterAdapter {
     }
     
     /**
-     * 获取提示词按钮位置偏移量
+     * 获取Prompt按钮位置偏移量
      */
     getPromptButtonOffset() {
         return { top: 10, left: -2 };

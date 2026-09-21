@@ -1,12 +1,12 @@
 /**
- * About Tab - 关于插件
+ * About Tab - About the extension
  */
 
 class AboutTab extends BaseTab {
     constructor() {
         super();
         this.id = 'about';
-        this.name = chrome.i18n.getMessage('aboutTabName') || '关于插件';
+        this.name = chrome.i18n.getMessage('aboutTabName') || 'About the extension';
         this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <line x1="12" y1="8" x2="12" y2="8" stroke-width="3" stroke-linecap="round"/>
@@ -27,8 +27,8 @@ class AboutTab extends BaseTab {
                     </svg>
                 </div>
                 <div class="about-section-body">
-                    <div class="about-section-title">${chrome.i18n.getMessage('aboutPluginTitle') || '插件简介'}</div>
-                    <div class="about-section-content">${chrome.i18n.getMessage('aboutPluginContent') || 'ChatLine 是一款面向 AI 对话页面的浏览器增强插件，基于开源项目 Timeline 二次开发，主要提供时间线导航、历史定位、对话浏览增强和对话数据归档能力。支持 ChatGPT、Gemini、DeepSeek、Kimi、千问、Claude、元宝、NotebookLM 等主流 AI 对话平台。'}</div>
+                    <div class="about-section-title">${chrome.i18n.getMessage('aboutPluginTitle') || 'About this extension'}</div>
+                    <div class="about-section-content">${chrome.i18n.getMessage('aboutPluginContent') || 'ChatLine 是一款面向 AI 对话页面的浏览器增强插件，基于开源项目 Timeline 二次开发，主要提供时间线导航、历史定位、对话浏览增强和对话数据归档能力。支持 ChatGPT、Gemini、DeepSeek、Kimi、Qwen、Claude、Yuanbao、NotebookLM 等主流 AI 对话平台。'}</div>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@ class AboutTab extends BaseTab {
                     </svg>
                 </div>
                 <div class="about-section-body">
-                    <div class="about-section-title">${chrome.i18n.getMessage('aboutDataSecurityTitle') || '数据安全'}</div>
+                    <div class="about-section-title">${chrome.i18n.getMessage('aboutDataSecurityTitle') || 'Data security'}</div>
                     <div class="about-section-content">${chrome.i18n.getMessage('aboutDataSecurityContent') || '你的所有数据都存储在浏览器本地或你的 Google Drive 中，插件不会收集、上传或分享你的任何对话内容和个人信息，本项目已在 GitHub 开源，可随时审查代码。'}</div>
                 </div>
             </div>

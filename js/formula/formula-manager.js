@@ -4,9 +4,9 @@
  * 负责处理 AI 回复中的数学公式（KaTeX）交互
  * 功能：
  * - Hover 高亮效果
- * - Tooltip 提示（显示"复制公式"）
- * - 点击复制 LaTeX 源码（纯文本，不包装 Markdown）
- * - 复制成功反馈
+ * - Tooltip 提示（显示"Copy formula"）
+ * - 点击Copy LaTeX 源码（纯文本，不包装 Markdown）
+ * - Copied successfully反馈
  * - 动态监听新增公式
  * - ✨ 组件自治：URL 变化时自动清理公式交互标记（无需外部管理）
  */
@@ -36,7 +36,7 @@ class FormulaManager {
         this.feedbackTimer = null;
         this.isEnabled = false;
         
-        // DOMObserverManager 取消订阅函数
+        // DOMObserverManager Cancel订阅函数
         this._unsubscribeObserver = null;
         
         // ✅ URL 变化监听（组件自治）
@@ -45,9 +45,9 @@ class FormulaManager {
         // ✅ Storage 监听器
         this.storageListener = null;
         
-        // 缓存开关状态
+        // 缓存Toggle状态
         this._latexEnabled = true;
-        this._mathmlEnabled = false;  // 默认关闭，init() 中从 storage 读取实际值
+        this._mathmlEnabled = false;  // DefaultClose，init() 中从 storage 读取实际值
         
         // 绑定事件处理器
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -75,7 +75,7 @@ class FormulaManager {
         
         this.isEnabled = true;
 
-        // 读取开关状态
+        // 读取Toggle状态
         try {
             const r = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled']);
             this._latexEnabled = r.formulaLatexEnabled === true;
@@ -92,7 +92,7 @@ class FormulaManager {
         // 监听新增公式
         this.observeNewFormulas();
         
-        // ✅ 监听功能开关变化
+        // ✅ 监听功能Toggle变化
         this.attachStorageListener();
     }
     
@@ -107,13 +107,13 @@ class FormulaManager {
             return latexOn || mathmlOn;
         } catch (e) {
             console.error('[FormulaManager] Failed to check if enabled:', e);
-            // 出错默认开启
+            // 出错Default开启
             return true;
         }
     }
     
     /**
-     * ✅ 监听 Storage 变化（功能开关）
+     * ✅ 监听 Storage 变化（功能Toggle）
      * 注：功能禁用时会直接调用 destroy()，所以这里只做日志记录
      */
     attachStorageListener() {
@@ -151,7 +151,7 @@ class FormulaManager {
         this.tooltip.setAttribute('data-placement', 'top');
         this.tooltip.textContent = this._getTooltipText();
         
-        // 设置颜色（根据当前主题模式）
+        // Settings颜色（根据当前主题模式）
         const isDarkMode = document.documentElement.classList.contains('dark');
         const backgroundColor = isDarkMode ? '#ffffff' : '#0d0d0d';
         const textColor = isDarkMode ? '#1f2937' : '#ffffff';
@@ -160,7 +160,7 @@ class FormulaManager {
         this.tooltip.style.backgroundColor = backgroundColor;
         this.tooltip.style.color = textColor;
         this.tooltip.style.borderColor = borderColor;
-        // 设置CSS变量（用于箭头）
+        // SettingsCSS变量（用于箭头）
         this.tooltip.style.setProperty('--timeline-tooltip-bg', backgroundColor);
         this.tooltip.style.setProperty('--timeline-tooltip-text', textColor);
         this.tooltip.style.setProperty('--timeline-tooltip-border', borderColor);
@@ -169,22 +169,22 @@ class FormulaManager {
     }
 
     /**
-     * 创建复制成功反馈元素
+     * 创建Copied successfully反馈元素
      */
     createCopyFeedback() {
         if (this.copyFeedback) return;
         
         this.copyFeedback = document.createElement('div');
         this.copyFeedback.className = 'timeline-copy-feedback';
-        this.copyFeedback.textContent = '✓ 已复制';
+        this.copyFeedback.textContent = '✓ Copied';
         document.body.appendChild(this.copyFeedback);
     }
 
     /**
-     * 为公式元素添加事件监听
+     * 为公式元素Add事件监听
      */
     attachFormulaListeners(formulaElement) {
-        // 避免重复添加
+        // 避免重复Add
         if (formulaElement.hasAttribute('data-latex-source')) return;
         
         // 检查元素是否在 DOM 中且可见
@@ -204,7 +204,7 @@ class FormulaManager {
         
         // 特殊处理：如果是维基百科的 mwe-math-element，清理格式
         if (formulaElement.classList.contains('mwe-math-element') || formulaElement.closest('.mwe-math-element')) {
-            // 如果开头是 {\displaystyle，则删除它，同时删除结尾的 }
+            // 如果开头是 {\displaystyle，则Delete它，同时Delete结尾的 }
             if (latexCode.startsWith('{\\displaystyle')) {
                 latexCode = latexCode.replace(/^\{\\displaystyle\s*/, '').replace(/\}\s*$/, '').trim();
             }
@@ -215,12 +215,12 @@ class FormulaManager {
         
         formulaElement.addEventListener('mouseenter', this.handleMouseEnter);
         formulaElement.addEventListener('mouseleave', this.handleMouseLeave);
-        // ✅ mousedown 捕获阶段拦截，防止 canvas 编辑模式
+        // ✅ mousedown 捕获阶段拦截，防止 canvas Edit模式
         formulaElement.addEventListener('mousedown', this.handleMouseDown, true);
-        // ✅ click 捕获阶段处理复制逻辑
+        // ✅ click 捕获阶段处理Copy逻辑
         formulaElement.addEventListener('click', this.handleClick, true);
         
-        // 添加样式类（用于 CSS 控制）
+        // Add样式类（用于 CSS 控制）
         formulaElement.classList.add('formula-interactive');
     }
 
@@ -231,7 +231,7 @@ class FormulaManager {
         const formulaElement = e.currentTarget;
         this.currentHoverElement = formulaElement;
         
-        // 添加 hover 样式
+        // Add hover 样式
         formulaElement.classList.add('formula-hover');
         
         // 显示 tooltip - 优先使用全局管理器
@@ -265,7 +265,7 @@ class FormulaManager {
         // 移除 hover 样式
         formulaElement.classList.remove('formula-hover');
         
-        // 清空当前 hover 元素
+        // Clear当前 hover 元素
         if (this.currentHoverElement === formulaElement) {
             this.currentHoverElement = null;
         }
@@ -279,15 +279,15 @@ class FormulaManager {
     }
 
     /**
-     * mousedown 事件处理 - 阻止 canvas 编辑模式
+     * mousedown 事件处理 - 阻止 canvas Edit模式
      */
     handleMouseDown(e) {
-        // 只需阻止默认行为，canvas 就不会进入编辑模式
+        // 只需阻止Default行为，canvas 就不会进入Edit模式
         e.preventDefault();
     }
 
     /**
-     * 点击公式复制（根据用户设置的格式复制 LaTeX 源码）
+     * 点击公式Copy（根据用户Settings的格式Copy LaTeX 源码）
      */
     async handleClick(e) {
         const formulaElement = e.currentTarget;
@@ -307,19 +307,19 @@ class FormulaManager {
         const items = [];
         if (hasLatex && this._latexEnabled) {
             items.push({
-                label: chrome.i18n.getMessage('mvxkpz') || '复制 LaTeX 公式',
+                label: chrome.i18n.getMessage('mvxkpz') || 'Copy LaTeX formula',
                 icon: '📐',
                 onClick: () => this._copyAsLatex(formulaElement)
             });
         }
         if (this._mathmlEnabled) {
             items.push({
-                label: chrome.i18n.getMessage('formulaCopyMathML') || '复制 MathML 公式',
+                label: chrome.i18n.getMessage('formulaCopyMathML') || 'Copy MathML formula',
                 icon: '📊',
                 onClick: () => this._copyAsMathML(formulaElement)
             });
             items.push({
-                label: chrome.i18n.getMessage('formulaCopyMathMLWord') || '复制 MathML 公式（Word 版）',
+                label: chrome.i18n.getMessage('formulaCopyMathMLWord') || 'Copy MathML formula（Word 版）',
                 icon: '📝',
                 onClick: () => this._copyAsMathMLForWord(formulaElement)
             });
@@ -352,13 +352,13 @@ class FormulaManager {
     }
 
     /**
-     * 复制为 LaTeX
+     * Copy为 LaTeX
      */
     async _copyAsLatex(formulaElement) {
         try {
             const latexCode = formulaElement.getAttribute('data-latex-source');
             if (!latexCode) {
-                this.showCopyFeedback('⚠ 无法获取公式', formulaElement, true);
+                this.showCopyFeedback('⚠ Unable to read formula', formulaElement, true);
                 return;
             }
             const result = await chrome.storage.local.get('formulaFormat');
@@ -367,13 +367,13 @@ class FormulaManager {
             await navigator.clipboard.writeText(formatted);
             this.showCopyFeedback(chrome.i18n.getMessage('xpzmvk'), formulaElement, false);
         } catch (err) {
-            console.error('复制 LaTeX 失败:', err);
-            this.showCopyFeedback('⚠ 复制失败', formulaElement, true);
+            console.error('Copy LaTeX 失败:', err);
+            this.showCopyFeedback('⚠ Copy failed', formulaElement, true);
         }
     }
 
     /**
-     * 复制为 MathML
+     * Copy为 MathML
      */
     async _copyAsMathML(formulaElement) {
         try {
@@ -394,13 +394,13 @@ class FormulaManager {
             }
             this.showCopyFeedback(chrome.i18n.getMessage('xpzmvk'), formulaElement, false);
         } catch (err) {
-            console.error('复制 MathML 失败:', err);
-            this.showCopyFeedback('⚠ 复制失败', formulaElement, true);
+            console.error('Copy MathML 失败:', err);
+            this.showCopyFeedback('⚠ Copy failed', formulaElement, true);
         }
     }
 
     /**
-     * 复制为 Word 兼容的 MathML（带 mml: 命名空间前缀）
+     * Copy为 Word 兼容的 MathML（带 mml: 命名空间前缀）
      */
     async _copyAsMathMLForWord(formulaElement) {
         try {
@@ -422,25 +422,25 @@ class FormulaManager {
             }
             this.showCopyFeedback(chrome.i18n.getMessage('xpzmvk'), formulaElement, false);
         } catch (err) {
-            console.error('复制 MathML(Word) 失败:', err);
-            this.showCopyFeedback('⚠ 复制失败', formulaElement, true);
+            console.error('Copy MathML(Word) 失败:', err);
+            this.showCopyFeedback('⚠ Copy failed', formulaElement, true);
         }
     }
 
     /**
-     * 根据开关状态返回 tooltip 文案
+     * 根据Toggle状态返回 tooltip 文案
      */
     _getTooltipText() {
         if (this._latexEnabled && this._mathmlEnabled) {
-            return chrome.i18n.getMessage('formulaCopyGeneric') || '复制公式';
+            return chrome.i18n.getMessage('formulaCopyGeneric') || 'Copy formula';
         } else if (this._mathmlEnabled) {
-            return chrome.i18n.getMessage('formulaCopyMathML') || '复制 MathML 公式';
+            return chrome.i18n.getMessage('formulaCopyMathML') || 'Copy MathML formula';
         }
-        return chrome.i18n.getMessage('mvxkpz') || '复制 LaTeX 公式';
+        return chrome.i18n.getMessage('mvxkpz') || 'Copy LaTeX formula';
     }
 
     /**
-     * 构建 tooltip 内容：文字 + 设置 icon
+     * 构建 tooltip 内容：文字 + Settings icon
      */
     _buildTooltipContent() {
         const wrapper = document.createElement('div');
@@ -452,7 +452,7 @@ class FormulaManager {
 
         const settingsBtn = document.createElement('span');
         settingsBtn.className = 'formula-tooltip-settings';
-        settingsBtn.setAttribute('aria-label', chrome.i18n.getMessage('kpxvmz') || '公式设置');
+        settingsBtn.setAttribute('aria-label', chrome.i18n.getMessage('kpxvmz') || 'Formula settings');
         settingsBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
             <circle cx="12" cy="12" r="3"/>
@@ -508,7 +508,7 @@ class FormulaManager {
         
         const tooltipRect = this.tooltip.getBoundingClientRect();
         
-        // 默认显示在上方
+        // Default显示在上方
         let top = rect.top - tooltipRect.height - 12;
         let left = rect.left + rect.width / 2 - tooltipRect.width / 2;
         
@@ -527,7 +527,7 @@ class FormulaManager {
             left = window.innerWidth - tooltipRect.width - 10;
         }
 
-        // 设置位置
+        // Settings位置
         this.tooltip.style.left = `${left}px`;
         this.tooltip.style.top = `${top}px`;
         
@@ -549,7 +549,7 @@ class FormulaManager {
     }
 
     /**
-     * 显示复制反馈（使用全局 Toast 管理器）
+     * 显示Copy反馈（使用全局 Toast 管理器）
      */
     showCopyFeedback(message, formulaElement, isError = false) {
         // 检查元素是否还在 DOM 中
@@ -564,7 +564,7 @@ class FormulaManager {
             } else {
                 window.globalToastManager.success(message, formulaElement, {
                     duration: 2000
-                    // ✅ 使用默认的 ✓ 图标
+                    // ✅ 使用Default的 ✓ 图标
                 });
             }
         } else {
@@ -665,14 +665,14 @@ class FormulaManager {
             }
         });
         
-        // 扫描带 data-mathml 属性的 MathJax 公式（覆盖仅有 MathML、无 LaTeX 的场景）
+        // 扫描带 data-mathml 属性的 MathJax 公式（Overwrite仅有 MathML、无 LaTeX 的场景）
         const mathmlElements = document.querySelectorAll('[data-mathml]:not([data-latex-source])');
         mathmlElements.forEach(formula => this.attachFormulaListeners(formula));
     }
     
     /**
      * 强制重新扫描页面上的所有公式
-     * 用于功能重新开启时，识别在关闭期间生成的新公式
+     * 用于功能重新开启时，识别在Close期间生成的新公式
      */
     rescan() {
         console.log('[FormulaManager] Rescanning all formulas...');
@@ -683,13 +683,13 @@ class FormulaManager {
      * 销毁公式管理器
      */
     destroy() {
-        // ✅ 先设置为 false，阻止所有异步回调继续执行
+        // ✅ 先Settings为 false，阻止所有异步回调继续执行
         this.isEnabled = false;
         
         // ✅ 移除 Storage 监听器
         this.detachStorageListener();
 
-        // 取消 DOMObserverManager 订阅
+        // Cancel DOMObserverManager 订阅
         if (this._unsubscribeObserver) {
             this._unsubscribeObserver();
             this._unsubscribeObserver = null;

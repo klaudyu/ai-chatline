@@ -88,7 +88,7 @@
     transform: translateY(0);
 }
 
-/* 取消按钮 */
+/* Cancel按钮 */
 .popconfirm-btn-cancel {
     background: #f3f4f6;
     color: #6b7280;
@@ -99,7 +99,7 @@
     color: #374151;
 }
 
-/* 确认按钮 - 危险/删除（红色，默认） */
+/* 确认按钮 - 危险/Delete（红色，Default） */
 .popconfirm-btn-confirm,
 .popconfirm-btn-confirm.popconfirm-btn-danger {
     background: #ef4444;
@@ -131,7 +131,7 @@
     background: #16a34a;
 }
 
-/* 确认按钮 - 默认（黑色） */
+/* 确认按钮 - Default（黑色） */
 .popconfirm-btn-confirm.popconfirm-btn-default {
     background: #1a1a1a;
     color: #ffffff;

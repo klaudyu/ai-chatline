@@ -200,7 +200,7 @@ class YiyanAdapter extends SiteAdapter {
     // }
     
     // getDefaultChatTheme() {
-    //     // 文心一言使用特定元素中的文本作为默认主题
+    //     // 文心一言使用特定元素中的文本作为Default主题
     //     try {
     //         const topFixedArea = document.querySelector('[class*="topFixedArea"]');
     //         if (!topFixedArea) return '';

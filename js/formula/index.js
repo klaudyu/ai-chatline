@@ -1,9 +1,9 @@
 /**
  * Formula Module Entry Point
- * 公式复制功能的入口，自动初始化，完全独立运行
+ * 公式Copy功能的入口，自动初始化，完全独立Run
  *
  * 特性：
- * - 完全独立，不依赖时间轴功能
+ * - 完全独立，不依赖Timeline功能
  * - 自动初始化和清理
  * - 所有匹配的网站都会执行
  * - ✅ 错误隔离：防止 temml 库加载失败影响其他功能
@@ -31,7 +31,7 @@
     }
 
     /**
-     * 初始化公式复制功能
+     * 初始化公式Copy功能
      */
     async function initFormulaModule() {
         // 避免重复初始化
@@ -42,7 +42,7 @@
         // ✅ 检查 temml 库是否可用（防止加载失败）
         if (!checkTemmlAvailable()) {
             // 静默失败，不影响其他功能
-            // 这个错误通常由页面监控脚本误报，实际 temml 可能已正常加载
+            // 这个错误通常由页面监控脚本误报，实际 temml 可能已Normal加载
             return;
         }
 
@@ -69,7 +69,7 @@
     }
 
     /**
-     * 清理公式复制功能
+     * 清理公式Copy功能
      */
     function destroyFormulaModule() {
         if (globalFormulaManager) {
@@ -83,7 +83,7 @@
     }
 
     /**
-     * ✅ 监听功能开关变化，动态启用/禁用公式复制功能
+     * ✅ 监听功能Toggle变化，动态启用/禁用公式Copy功能
      */
     function setupStorageListener() {
         try {
@@ -133,7 +133,7 @@
             initFormulaModule();
         }
 
-        // ✅ 设置 Storage 监听器
+        // ✅ Settings Storage 监听器
         setupStorageListener();
 
         // 页面卸载时清理

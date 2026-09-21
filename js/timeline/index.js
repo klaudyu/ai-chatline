@@ -14,7 +14,7 @@
 let timelineManagerInstance = null;
 let currentUrl = location.href;
 let initVersion = 0; // Version number for initialization, increments on URL change
-let unsubscribePageObserver = null;  // DOMObserverManager 取消订阅函数
+let unsubscribePageObserver = null;  // DOMObserverManager Cancel订阅函数
 let routeListenersAttached = false;
 let adapterRegistry = new SiteAdapterRegistry();
 let currentAdapter = null;
@@ -48,22 +48,22 @@ function debugTimelineDetection(reason, details = {}) {
 async function isPlatformEnabled() {
     try {
         const platform = getCurrentPlatform();
-        if (!platform) return true; // 未知平台，默认启用
+        if (!platform) return true; // 未知平台，Default启用
         
-        // ✅ 首先检查平台是否支持时间轴功能
+        // ✅ 首先检查平台是否支持Timeline功能
         if (platform.features?.timeline !== true) {
             return false; // 平台不支持该功能
         }
         
         const settings = await StorageAdapter.get('timelinePlatformSettings') || {};
         
-        // 默认启用（!== false）
+        // Default启用（!== false）
         return settings[platform.id] !== false;
     } catch (e) {
         if (!TimelineUtils.isExtensionContextInvalidated(e)) {
             console.error('[Timeline] Failed to check platform enabled:', e);
         }
-        return true; // 出错默认启用
+        return true; // 出错Default启用
     }
 }
 
@@ -110,7 +110,7 @@ async function initWithRetry(version, delays, retryIndex = 0) {
         return;
     }
     
-    // ✅ 检查当前平台是否启用时间轴功能
+    // ✅ 检查当前平台是否启用Timeline功能
     const platformEnabled = await isPlatformEnabled();
     if (!platformEnabled) {
         return; // 当前平台未启用，不初始化
@@ -143,7 +143,7 @@ function detachRouteListeners() {
 }
 
 function cleanupGlobalObservers() {
-    // 取消 DOMObserverManager 订阅
+    // Cancel DOMObserverManager 订阅
     if (unsubscribePageObserver) {
         unsubscribePageObserver();
         unsubscribePageObserver = null;
@@ -172,10 +172,10 @@ function initializeTimeline() {
     // 清理所有可能残留的 UI 元素（重新初始化前确保页面干净）
     // ============================================
     
-    // 1. 清理时间轴主容器（包含整个时间轴 UI 和收藏按钮的包装器）
+    // 1. 清理Timeline主容器（包含整个Timeline UI 和收藏按钮的包装器）
     TimelineUtils.removeElementSafe(document.querySelector('.ait-chat-timeline-wrapper'));
     
-    // 2. 清理原生收藏按钮（正常文档流中的收藏按钮）
+    // 2. 清理原生收藏按钮（Normal文档流中的收藏按钮）
     TimelineUtils.removeElementSafe(document.querySelector('.ait-timeline-star-chat-btn-native'));
     
     try {
@@ -199,7 +199,7 @@ async function handleUrlChange() {
     currentUrl = location.href;
     initVersion++;
 
-    // URL 变化了，先清理旧时间轴实例（内部会销毁 ChatTimeRecorder）
+    // URL 变化了，先清理旧Timeline实例（内部会销毁 ChatTimeRecorder）
     if (timelineManagerInstance) {
         try { timelineManagerInstance.destroy(); } catch {}
         timelineManagerInstance = null;
@@ -211,13 +211,13 @@ async function handleUrlChange() {
     }
     
     // ============================================
-    // 清理时间轴相关的所有 UI 元素
+    // 清理Timeline相关的所有 UI 元素
     // ============================================
     
-    // 1. 清理时间轴主容器（包含整个时间轴 UI 和收藏按钮的包装器）
+    // 1. 清理Timeline主容器（包含整个Timeline UI 和收藏按钮的包装器）
     TimelineUtils.removeElementSafe(document.querySelector('.ait-chat-timeline-wrapper'));
     
-    // 2. 清理原生收藏按钮（正常文档流中的收藏按钮）
+    // 2. 清理原生收藏按钮（Normal文档流中的收藏按钮）
     TimelineUtils.removeElementSafe(document.querySelector('.ait-timeline-star-chat-btn-native'));
     
     cleanupGlobalObservers();
@@ -230,17 +230,17 @@ async function handleUrlChange() {
     // 如果不是对话 URL，只清理（上面已经做了）
 }
 
-// ✅ 监听平台设置变化，动态启用/禁用时间轴
+// ✅ 监听平台Settings变化，动态启用/禁用Timeline
 function setupPlatformSettingsListener() {
     StorageAdapter.addChangeListener((changes, areaName) => {
         if (areaName !== 'local') return;
         
-        // 监听平台设置变化
+        // 监听平台Settings变化
         if (changes.timelinePlatformSettings) {
             const platform = getCurrentPlatform();
             if (!platform) return;
             
-            // ✅ 检查平台是否支持时间轴功能
+            // ✅ 检查平台是否支持Timeline功能
             if (platform.features?.timeline !== true) {
                 return; // 平台不支持该功能，忽略
             }
@@ -254,14 +254,14 @@ function setupPlatformSettingsListener() {
             // 状态发生变化
             if (wasEnabled !== isEnabled) {
                 if (isEnabled) {
-                    // 从禁用到启用：重新初始化时间轴
+                    // 从禁用到启用：重新初始化Timeline
                     if (!timelineManagerInstance && isConversationRoute()) {
                         initVersion++;
                         const currentVersion = initVersion;
                         initWithRetry(currentVersion, TIMELINE_CONFIG.INIT_RETRY_DELAYS);
                     }
                 } else {
-                    // 从启用到禁用：销毁时间轴
+                    // 从启用到禁用：销毁Timeline
                     if (timelineManagerInstance) {
                         try { timelineManagerInstance.destroy(); } catch {}
                         timelineManagerInstance = null;
@@ -285,7 +285,7 @@ if (!adapterRegistry.isSupportedSite()) {
 } else {
     currentAdapter = adapterRegistry.detectAdapter();
     
-    // ✅ 设置平台设置监听器（监听用户在设置中切换平台开关）
+    // ✅ Settings平台Settings监听器（监听用户在Settings中切换平台Toggle）
     setupPlatformSettingsListener();
     
     // ✅ 修复：先检查DOM中是否已存在用户消息（SPA路由切换场景）
@@ -322,7 +322,7 @@ if (!adapterRegistry.isSupportedSite()) {
                 unsubscribeInitial = window.DOMObserverManager.getInstance().subscribeBody('timeline-initial', {
                     callback: () => {
                         if (checkAndInit()) {
-                            // 初始化成功，取消订阅
+                            // 初始化成功，Cancel订阅
                             if (unsubscribeInitial) {
                                 unsubscribeInitial();
                                 unsubscribeInitial = null;

@@ -1,8 +1,8 @@
 /**
- * Folder Edit Modal - 文件夹编辑弹窗（全局单例）
+ * Folder Edit Modal - 文件夹Edit弹窗（全局单例）
  *
- * 统一的文件夹创建/编辑弹窗，支持图标选择 + 名称输入。
- * 用于侧边栏的新建/编辑文件夹场景。
+ * 统一的文件夹创建/Edit弹窗，支持图标选择 + 名称输入。
+ * 用于侧边栏的新建/Edit文件夹场景。
  *
  * @example
  * const result = await window.folderEditModal.show({
@@ -108,19 +108,19 @@ class FolderEditModal {
     }
 
     /**
-     * 显示文件夹编辑弹窗
+     * 显示文件夹Edit弹窗
      * @param {Object} options
      * @param {'create'|'edit'} options.mode - 模式
      * @param {string} options.title - 弹窗标题
-     * @param {string} [options.name=''] - 默认名称（编辑时传入）
-     * @param {string} [options.icon=''] - 默认图标（编辑时传入，空字符串表示使用默认文件夹图标）
+     * @param {string} [options.name=''] - Default名称（Edit时传入）
+     * @param {string} [options.icon=''] - Default图标（Edit时传入，空字符串表示使用Default文件夹图标）
      * @param {string} [options.placeholder] - 输入框占位符
      * @param {number} [options.maxLength=20] - 最大长度
      * @param {boolean} [options.required=true] - 是否必填
      * @param {string} [options.requiredMessage] - 必填提示
      * @param {Function} [options.validator] - 自定义校验 (name) => { valid, message }
      * @param {string} [options.confirmText] - 确认按钮文本
-     * @param {string} [options.cancelText] - 取消按钮文本
+     * @param {string} [options.cancelText] - Cancel按钮文本
      * @returns {Promise<{name: string, icon: string}|null>}
      */
     async show(options = {}) {

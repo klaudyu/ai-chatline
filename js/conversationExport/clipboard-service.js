@@ -20,6 +20,6 @@ const ClipboardService = {
 
         const ok = document.execCommand('copy');
         textarea.remove();
-        if (!ok) throw new Error('复制到剪贴板失败');
+        if (!ok) throw new Error('Failed to copy to clipboard');
     }
 };

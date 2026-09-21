@@ -1,9 +1,9 @@
 /**
  * Smart Input Box Settings Tab Styles
- * 智能输入框设置样式
+ * 智能输入框Settings样式
  */
 
-/* 设置容器 */
+/* Settings容器 */
 .smart-input-box-settings {
     padding: 0;
     overflow-y: auto;
@@ -11,7 +11,7 @@
     box-sizing: border-box;
 }
 
-/* 连续的设置区块添加间距 */
+/* 连续的Settings区块Add间距 */
 .smart-input-box-settings .setting-section + .setting-section {
     margin-top: 16px;
 }

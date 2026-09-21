@@ -43,7 +43,7 @@ class GlobalTooltipManager {
         };
         
         // 观察器
-        this.targetObserver = null;  // 监听目标元素被删除
+        this.targetObserver = null;  // 监听目标元素被Delete
         this.intersectionObserver = null;  // 监听目标元素离开视口
         
         // 配置
@@ -58,17 +58,17 @@ class GlobalTooltipManager {
                     className: 'timeline-tooltip',
                     placement: 'auto',
                     gap: 12,  // ✅ 修复：与CSS变量一致 (4+6+2=12)
-                    // ✅ 支持浅色/深色模式的颜色配置
+                    // ✅ 支持Light/Dark模式的颜色配置
                     color: {
                         light: {
-                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                            textColor: '#ffffff',        // 浅色模式：白色文字
-                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                            backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                            textColor: '#ffffff',        // Light模式：白色文字
+                            borderColor: '#0d0d0d'       // Light模式：黑色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     }
                 },
@@ -82,14 +82,14 @@ class GlobalTooltipManager {
                     gap: 12,
                     color: {
                         light: {
-                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                            textColor: '#ffffff',        // 浅色模式：白色文字
-                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                            backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                            textColor: '#ffffff',        // Light模式：白色文字
+                            borderColor: '#0d0d0d'       // Light模式：黑色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     }
                 },
@@ -124,14 +124,14 @@ class GlobalTooltipManager {
                     gap: 12,
                     color: {
                         light: {
-                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                            textColor: '#ffffff',        // 浅色模式：白色文字
-                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                            backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                            textColor: '#ffffff',        // Light模式：白色文字
+                            borderColor: '#0d0d0d'       // Light模式：黑色边框
                         },
                         dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            backgroundColor: '#ffffff',  // Dark模式：白色背景
+                            textColor: '#1f2937',        // Dark模式：深灰色文字
+                            borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                         }
                     }
                 }
@@ -158,7 +158,7 @@ class GlobalTooltipManager {
      * @param {string} type - 类型：node/button/formula
      * @param {HTMLElement} target - 触发元素
      * @param {Object} content - 内容配置
-     * @param {Object} options - 可选配置（覆盖默认）
+     * @param {Object} options - 可选配置（OverwriteDefault）
      * @param {Object} options.color - 颜色配置对象 {light: {backgroundColor, textColor, borderColor}, dark: {...}}
      * @param {number} options.maxWidth - 最大宽度
      * @param {number} options.showDelay - 显示延迟
@@ -475,16 +475,16 @@ class GlobalTooltipManager {
         
         // ✅ 应用自定义颜色（根据当前主题模式）
         if (config.color) {
-            // 检测当前是浅色还是深色模式
+            // 检测当前是Light还是Dark模式
             // 使用全面的检测方法，兼容各平台的 dark 模式标记
             const isDarkMode = this._detectDarkMode();
             const themeColors = isDarkMode ? config.color.dark : config.color.light;
             
-            // ✅ 添加data属性标记tooltip主题（用于CSS选择器）
+            // ✅ Adddata属性标记tooltip主题（用于CSS选择器）
             tooltip.setAttribute('data-tooltip-theme', isDarkMode ? 'dark' : 'light');
             
             if (themeColors.backgroundColor) {
-                // 同时设置内联样式和CSS变量（CSS变量用于伪元素）
+                // 同时Settings内联样式和CSS变量（CSS变量用于伪元素）
                 tooltip.style.backgroundColor = themeColors.backgroundColor;
                 tooltip.style.setProperty('--timeline-tooltip-bg', themeColors.backgroundColor);
             }
@@ -505,7 +505,7 @@ class GlobalTooltipManager {
             tooltip.setAttribute('aria-hidden', 'false');
         });
         
-        // 如果允许 hover，添加 tooltip 事件监听
+        // 如果允许 hover，Add tooltip 事件监听
         if (config.allowHover) {
             tooltip.addEventListener('mouseenter', this._onTooltipEnter);
             tooltip.addEventListener('mouseleave', this._onTooltipLeave);
@@ -518,7 +518,7 @@ class GlobalTooltipManager {
         this.state.isVisible = true;
         this.state.isPinned = false;
         
-        // 监听目标元素被删除
+        // 监听目标元素被Delete
         this._observeTarget(target);
     }
     
@@ -530,7 +530,7 @@ class GlobalTooltipManager {
         
         this._log('Hiding immediately');
         
-        // ✅ 修复：先保存 currentType，因为后面会重置状态
+        // ✅ 修复：先Save currentType，因为后面会重置状态
         const currentType = this.state.currentType;
         const tooltip = this.instances.get(currentType);
         
@@ -539,7 +539,7 @@ class GlobalTooltipManager {
             tooltip.removeEventListener('mouseenter', this._onTooltipEnter);
             tooltip.removeEventListener('mouseleave', this._onTooltipLeave);
             
-            // ✅ 添加隐藏动画，然后销毁DOM
+            // ✅ Add隐藏动画，然后销毁DOM
             tooltip.classList.remove('visible');
             tooltip.setAttribute('aria-hidden', 'true');
             
@@ -552,7 +552,7 @@ class GlobalTooltipManager {
                 if (tooltip && tooltip.parentNode) {
                     tooltip.parentNode.removeChild(tooltip);
                 }
-                // ✅ 修复：使用保存的 currentType
+                // ✅ 修复：使用Save的 currentType
                 this.instances.delete(currentType);
             }, 200);
         }
@@ -603,10 +603,10 @@ class GlobalTooltipManager {
     }
     
     /**
-     * 设置内容
+     * Settings内容
      */
     _setContent(tooltip, content) {
-        // 清空现有内容（重要：先清空，避免事件监听器残留）
+        // Clear现有内容（重要：先Clear，避免事件监听器残留）
         tooltip.innerHTML = '';
         
         if (typeof content === 'string') {
@@ -617,7 +617,7 @@ class GlobalTooltipManager {
             // ✅ 支持 DOM 元素（保留事件监听器）
             tooltip.appendChild(content.element);
         } else {
-            // 默认当作文本
+            // Default当作文本
             tooltip.textContent = String(content);
         }
     }
@@ -642,7 +642,7 @@ class GlobalTooltipManager {
         // 计算基础位置（传入配置）
         let position = this._computePositionForPlacement(targetRect, tooltipRect, placement, config);
         
-        // 保存原始位置（用于计算箭头偏移）
+        // Save原始位置（用于计算箭头偏移）
         const originalPosition = { ...position };
         
         // 边界修正
@@ -670,7 +670,7 @@ class GlobalTooltipManager {
         const targetCenterX = targetRect.left + targetRect.width / 2;
         const targetCenterY = targetRect.top + targetRect.height / 2;
         
-        let arrowOffset = '50%';  // 默认居中
+        let arrowOffset = '50%';  // Default居中
         
         if (placement === 'top' || placement === 'bottom') {
             // 水平方向的箭头偏移
@@ -719,7 +719,7 @@ class GlobalTooltipManager {
      * 根据位置计算坐标
      */
     _computePositionForPlacement(targetRect, tooltipRect, placement, config) {
-        // ✅ 从配置中获取间距，默认 12px
+        // ✅ 从配置中获取间距，Default 12px
         const gap = config.gap || 12;
         
         let left, top;
@@ -773,10 +773,10 @@ class GlobalTooltipManager {
     }
     
     /**
-     * 监听目标元素被删除或离开视口
+     * 监听目标元素被Delete或离开视口
      */
     _observeTarget(target) {
-        // 1. MutationObserver - 监听目标元素被删除
+        // 1. MutationObserver - 监听目标元素被Delete
         if (this.targetObserver) {
             this.targetObserver.disconnect();
         }
@@ -895,7 +895,7 @@ class GlobalTooltipManager {
     // ==================== 全局事件处理 ====================
     
     /**
-     * 设置全局监听器
+     * Settings全局监听器
      */
     _setupGlobalListeners() {
         // 滚动时强制隐藏（capture 阶段，捕获所有滚动）
@@ -978,7 +978,7 @@ class GlobalTooltipManager {
         this._log('Mouse entered tooltip, pinning');
         this.state.isPinned = true;
         
-        // 取消隐藏定时器
+        // Cancel隐藏定时器
         this.timers.hideDelay = this._clearTimer(this.timers.hideDelay);
     }
     
@@ -1009,7 +1009,7 @@ class GlobalTooltipManager {
     }
     
     /**
-     * ✅ 检测当前是否为深色模式
+     * ✅ 检测当前是否为Dark模式
      * 使用全局 detectDarkMode 函数（定义在 constants.js）
      */
     _detectDarkMode() {
@@ -1069,6 +1069,6 @@ class GlobalTooltipManager {
 // 创建全局实例（只在第一次加载时）
 if (typeof window.globalTooltipManager === 'undefined') {
     window.globalTooltipManager = new GlobalTooltipManager({
-        debug: false  // 生产环境关闭，调试时可设为 true
+        debug: false  // 生产环境Close，调试时可设为 true
     });
 }

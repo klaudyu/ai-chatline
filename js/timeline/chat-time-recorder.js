@@ -15,7 +15,7 @@ class ChatTimeRecorder {
         // 状态
         this.enabled = false;
         this._pendingRecord = null;
-        this._labelVisible = true;    // 时间标签是否显示（默认显示）
+        this._labelVisible = true;    // 时间标签是否显示（Default显示）
         
         // _renderTimeLabels 并发控制：避免短时间多次调用造成重复 storage 读
         this._renderInFlight = false;
@@ -68,7 +68,7 @@ class ChatTimeRecorder {
     }
 
     /**
-     * 初始化，设置事件监听
+     * 初始化，Settings事件监听
      */
     async init() {
         // 检查当前平台是否启用 chatTimes 功能
@@ -87,7 +87,7 @@ class ChatTimeRecorder {
         window.addEventListener('timeline:nodesChange', this._boundOnTimelineNodesChange);
         
         try {
-            // 读取时间标签显示设置（默认开启）
+            // 读取时间标签显示Settings（Default开启）
             const enabled = await StorageAdapter.get('chatTimeLabelEnabled');
             this._labelVisible = enabled !== false;
             
@@ -148,8 +148,8 @@ class ChatTimeRecorder {
     }
 
     /**
-     * 时间轴节点变化兜底：多平台的发送/停止状态可能由属性变化触发，
-     * 这里在新用户消息出现时再确认一次，覆盖初始化竞态和虚拟 DOM 重建。
+     * Timeline节点变化兜底：多平台的发送/停止状态可能由属性变化触发，
+     * 这里在新用户消息出现时再确认一次，Overwrite初始化竞态和虚拟 DOM 重建。
      * @private
      */
     async _onTimelineNodesChange(event) {
@@ -233,12 +233,12 @@ class ChatTimeRecorder {
         
         if (usesStableId && isTempId) {
             // 使用稳定 ID 的平台，但还没有真正的 ID
-            // 保存待处理记录，等待 ID 变化后迁移
+            // Save待处理记录，等待 ID 变化后迁移
             this._pendingRecord = {
                 index: lastIndex,
                 tempId: lastNodeId
             };
-            // 设置轮询检查 ID 变化
+            // Settings轮询检查 ID 变化
             this._pollForRealId(adapter, lastIndex);
         }
     }
@@ -333,7 +333,7 @@ class ChatTimeRecorder {
         if (!conversationKey) return;
         
         try {
-            // 新对话时，先设置 createTime
+            // 新对话时，先Settings createTime
             if (isNewConversation) {
                 await ChatTimeStorageManager.setCreateTime(conversationKey);
             }
@@ -364,7 +364,7 @@ class ChatTimeRecorder {
      * - 通过 CSS 变量传递位置配置
      *
      * 并发控制：MutationObserver 抖动可能在短时间内多次触发本方法，
-     * 通过 in-flight + 单 trailing 回放，把 N 次并发调用合并为最多 2 次 storage 读。
+     * 通过 in-flight + 单 trailing 回放，把 N 次并发调用Merge为最多 2 次 storage 读。
      * @private
      */
     async _renderTimeLabels() {

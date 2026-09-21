@@ -33,15 +33,15 @@ class GlobalPopconfirmManager {
      * @param {Object} options - 配置选项
      * @param {string} options.title - 标题
      * @param {string} options.content - 内容
-     * @param {string} options.confirmText - 确认按钮文本（默认"确定"）
-     * @param {string} options.cancelText - 取消按钮文本（默认"取消"）
-     * @param {string} options.confirmTextType - 确认按钮类型：'danger'(红色,默认), 'primary'(蓝色), 'success'(绿色), 'default'(黑色)
-     * @param {boolean} options.showCancel - 是否显示取消按钮（默认true）
-     * @returns {Promise<boolean>} 用户选择：true=确认，false=取消
+     * @param {string} options.confirmText - 确认按钮文本（Default"Confirm"）
+     * @param {string} options.cancelText - Cancel按钮文本（Default"Cancel"）
+     * @param {string} options.confirmTextType - 确认按钮类型：'danger'(红色,Default), 'primary'(蓝色), 'success'(绿色), 'default'(黑色)
+     * @param {boolean} options.showCancel - 是否显示Cancel按钮（Defaulttrue）
+     * @returns {Promise<boolean>} 用户选择：true=确认，false=Cancel
      */
     show(options = {}) {
         return new Promise((resolve) => {
-            // 如果已经有一个弹窗，先关闭
+            // 如果已经有一个弹窗，先Close
             if (this.state.isVisible) {
                 this.hide(false);
             }
@@ -53,24 +53,24 @@ class GlobalPopconfirmManager {
                 return;
             }
             
-            // 合并配置
+            // Merge配置
             const finalConfig = {
                 title: options.title || '',
                 content: options.content || '',
                 confirmText: options.confirmText || chrome.i18n.getMessage('vkmzpx'),
                 cancelText: options.cancelText || chrome.i18n.getMessage('pxvkmz'),
-                confirmTextType: options.confirmTextType || 'danger', // 默认红色（危险操作）
-                showCancel: options.showCancel !== false // 默认显示取消按钮
+                confirmTextType: options.confirmTextType || 'danger', // Default红色（危险操作）
+                showCancel: options.showCancel !== false // Default显示Cancel按钮
             };
             
-            // 保存状态
+            // Save状态
             this.state.isVisible = true;
             this.state.resolver = resolve;
             
             // 创建弹窗
             this._createPopconfirm(finalConfig);
             
-            // 添加全局监听
+            // Add全局监听
             setTimeout(() => {
                 document.addEventListener('click', this._boundHandleClickOutside);
                 document.addEventListener('keydown', this._boundHandleEscape);
@@ -151,7 +151,7 @@ class GlobalPopconfirmManager {
         const actions = document.createElement('div');
         actions.className = 'popconfirm-actions';
         
-        // 取消按钮（可选）
+        // Cancel按钮（可选）
         if (config.showCancel) {
             const cancelBtn = document.createElement('button');
             cancelBtn.className = 'popconfirm-btn popconfirm-btn-cancel';
@@ -177,7 +177,7 @@ class GlobalPopconfirmManager {
         container.appendChild(content);
         overlay.appendChild(container);
         
-        // 添加到页面
+        // Add到页面
         document.body.appendChild(overlay);
         
         // 触发动画

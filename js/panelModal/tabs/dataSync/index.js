@@ -3,7 +3,7 @@
  * 
  * 功能：
  * - 导出：将 Storage 数据导出为 JSON 文件
- * - 导入：从 JSON 文件导入数据（支持覆盖/合并）
+ * - 导入：从 JSON 文件Import data（支持Overwrite/Merge）
  */
 
 class DataSyncTab extends BaseTab {
@@ -34,7 +34,7 @@ class DataSyncTab extends BaseTab {
     }
     
     /**
-     * 渲染设置内容
+     * 渲染Settings内容
      */
     render() {
         const container = document.createElement('div');
@@ -74,16 +74,16 @@ class DataSyncTab extends BaseTab {
                                     <input type="radio" name="import-mode" value="merge" checked>
                                     <span class="option-radio"></span>
                                     <span class="option-content">
-                                        <span class="option-label">${chrome.i18n.getMessage('importModeMerge') || '合并'}</span>
-                                        <span class="option-desc">${chrome.i18n.getMessage('importModeMergeDesc') || '保留现有数据，与导入数据合并'}</span>
+                                        <span class="option-label">${chrome.i18n.getMessage('importModeMerge') || 'Merge'}</span>
+                                        <span class="option-desc">${chrome.i18n.getMessage('importModeMergeDesc') || '保留现有数据，与Import dataMerge'}</span>
                                     </span>
                                 </label>
                                 <label class="import-option">
                                     <input type="radio" name="import-mode" value="overwrite">
                                     <span class="option-radio"></span>
                                     <span class="option-content">
-                                        <span class="option-label">${chrome.i18n.getMessage('importModeOverwrite') || '覆盖'}</span>
-                                        <span class="option-desc">${chrome.i18n.getMessage('importModeOverwriteDesc') || '清空现有数据，使用导入数据替换'}</span>
+                                        <span class="option-label">${chrome.i18n.getMessage('importModeOverwrite') || 'Overwrite'}</span>
+                                        <span class="option-desc">${chrome.i18n.getMessage('importModeOverwriteDesc') || 'Clear现有数据，使用Import data替换'}</span>
                                     </span>
                                 </label>
                             </div>
@@ -119,7 +119,7 @@ class DataSyncTab extends BaseTab {
                 <div class="sync-hint">${chrome.i18n.getMessage('gdriveOptionalHint') || 'Google identity and Drive API access are requested only when you first use cloud backup.'}</div>
                 <div class="gdrive-actions">
                     <button class="sync-btn" id="gdrive-upload-btn">${chrome.i18n.getMessage('gdriveUploadBtn') || '上传到云端'}</button>
-                    <button class="sync-btn gdrive-download-btn" id="gdrive-download-btn">${chrome.i18n.getMessage('gdriveDownloadBtn') || '从云端下载'}</button>
+                    <button class="sync-btn gdrive-download-btn" id="gdrive-download-btn">${chrome.i18n.getMessage('gdriveDownloadBtn') || 'Download from cloud'}</button>
                 </div>
             </div>
             
@@ -240,14 +240,14 @@ class DataSyncTab extends BaseTab {
                 throw new Error(chrome.i18n.getMessage('gdriveDataInvalid') || '云端数据格式无效');
             }
             
-            // 使用合并模式导入
+            // 使用Merge模式导入
             await this.mergeData(importData.data);
             
             // 提醒用户刷新
             if (window.globalPopconfirmManager) {
                 const confirmed = await window.globalPopconfirmManager.show({
-                    title: chrome.i18n.getMessage('gdriveMergeSuccess') || '云端数据已合并',
-                    content: chrome.i18n.getMessage('gdriveMergeHint') || '数据已成功从 Google Drive 下载并合并，需要刷新页面后生效',
+                    title: chrome.i18n.getMessage('gdriveMergeSuccess') || '云端数据已Merge',
+                    content: chrome.i18n.getMessage('gdriveMergeHint') || '数据已成功从 Google Drive 下载并Merge，需要刷新页面后生效',
                     confirmText: chrome.i18n.getMessage('refreshPage') || '刷新页面',
                     cancelText: chrome.i18n.getMessage('refreshLater') || '稍后刷新',
                     confirmTextType: 'default'
@@ -267,7 +267,7 @@ class DataSyncTab extends BaseTab {
                         <line x1="12" y1="12" x2="12" y2="21"/>
                         <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/>
                     </svg>
-                    ${chrome.i18n.getMessage('gdriveDownloadBtn') || '从云端下载'}`;
+                    ${chrome.i18n.getMessage('gdriveDownloadBtn') || 'Download from cloud'}`;
             }
         }
     }
@@ -277,18 +277,18 @@ class DataSyncTab extends BaseTab {
      */
     async handleExport() {
         try {
-            this.showStatus('loading', chrome.i18n.getMessage('exportingData') || '正在导出...');
+            this.showStatus('loading', chrome.i18n.getMessage('exportingData') || 'Exporting...');
             
             // 获取所有存储数据
             const data = await this.getAllStorageData();
             
-            // 添加元数据
+            // Add元数据
             const exportData = {
                 _meta: this._buildMeta(),
                 data: data
             };
             
-            // 创建并下载文件
+            // 创建并Download file
             const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -302,7 +302,7 @@ class DataSyncTab extends BaseTab {
             // 使用全局 toast 提示（颜色跟随主题）
             if (window.globalToastManager) {
                 window.globalToastManager.success(
-                    chrome.i18n.getMessage('exportSuccess') || '导出成功',
+                    chrome.i18n.getMessage('exportSuccess') || 'Export successful',
                     null,
                     { color: this.toastColors }
                 );
@@ -312,7 +312,7 @@ class DataSyncTab extends BaseTab {
             // 使用全局 toast 提示（颜色跟随主题）
             if (window.globalToastManager) {
                 window.globalToastManager.error(
-                    chrome.i18n.getMessage('exportFailed') || '导出失败',
+                    chrome.i18n.getMessage('exportFailed') || 'Export failed',
                     null,
                     { color: this.toastColors }
                 );
@@ -331,7 +331,7 @@ class DataSyncTab extends BaseTab {
         e.target.value = '';
         
         try {
-            this.showStatus('loading', chrome.i18n.getMessage('importingData') || '正在导入...');
+            this.showStatus('loading', chrome.i18n.getMessage('importingData') || 'Importing...');
             
             // 读取文件
             const text = await file.text();
@@ -347,17 +347,17 @@ class DataSyncTab extends BaseTab {
             const mode = modeRadio?.value || 'merge';
             
             if (mode === 'overwrite') {
-                // 覆盖模式：直接替换
+                // Overwrite模式：直接替换
                 await this.overwriteData(importData.data);
             } else {
-                // 合并模式：智能合并
+                // Merge模式：智能Merge
                 await this.mergeData(importData.data);
             }
             
-            // 使用 popConfirm 展示导入成功，提醒用户刷新
+            // 使用 popConfirm 展示Import successful，提醒用户刷新
             if (window.globalPopconfirmManager) {
                 const confirmed = await window.globalPopconfirmManager.show({
-                    title: chrome.i18n.getMessage('importSuccess') || '导入成功',
+                    title: chrome.i18n.getMessage('importSuccess') || 'Import successful',
                     content: chrome.i18n.getMessage('importSuccessHint') || '数据已成功导入，需要刷新页面后生效',
                     confirmText: chrome.i18n.getMessage('refreshPage') || '刷新页面',
                     cancelText: chrome.i18n.getMessage('refreshLater') || '稍后刷新',
@@ -370,7 +370,7 @@ class DataSyncTab extends BaseTab {
             }
         } catch (error) {
             console.error('[DataSyncTab] Import failed:', error);
-            this.showStatus('error', (chrome.i18n.getMessage('importFailed') || '导入失败') + ': ' + error.message);
+            this.showStatus('error', (chrome.i18n.getMessage('importFailed') || 'Import failed') + ': ' + error.message);
         }
     }
     
@@ -421,11 +421,11 @@ class DataSyncTab extends BaseTab {
     }
     
     /**
-     * 覆盖模式：清空并写入新数据
+     * Overwrite模式：Clear并写入新数据
      */
     async overwriteData(newData) {
         return new Promise((resolve, reject) => {
-            // 先清空
+            // 先Clear
             chrome.storage.local.clear(() => {
                 if (chrome.runtime.lastError) {
                     reject(chrome.runtime.lastError);
@@ -444,15 +444,15 @@ class DataSyncTab extends BaseTab {
     }
     
     /**
-     * 合并模式：智能合并数据
+     * Merge模式：智能Merge数据
      * 
-     * 合并规则：
-     * - chatTimelineStars → 按 key 字段合并，导入覆盖
-     * - chatTimelinePins → 按 key 字段合并，导入覆盖
-     * - prompts（提示词）→ 按 id 字段合并，导入覆盖
-     * - folders（文件夹）→ 按 id 字段合并，导入覆盖
-     * - *PlatformSettings → 对象按 key 合并
-     * - 其他类型 → 新值覆盖
+     * Merge规则：
+     * - chatTimelineStars → 按 key 字段Merge，导入Overwrite
+     * - chatTimelinePins → 按 key 字段Merge，导入Overwrite
+     * - prompts（Prompt）→ 按 id 字段Merge，导入Overwrite
+     * - folders（文件夹）→ 按 id 字段Merge，导入Overwrite
+     * - *PlatformSettings → 对象按 key Merge
+     * - 其他类型 → 新值Overwrite
      */
     async mergeData(newData) {
         const existingData = await this.getAllStorageData();
@@ -467,7 +467,7 @@ class DataSyncTab extends BaseTab {
                 continue;
             }
             
-            // 根据 key 类型选择合并策略
+            // 根据 key 类型选择Merge策略
             mergedData[key] = this.mergeByKey(key, existingValue, newValue);
         }
         
@@ -483,44 +483,44 @@ class DataSyncTab extends BaseTab {
     }
     
     /**
-     * 根据 key 类型选择合并策略
+     * 根据 key 类型选择Merge策略
      */
     mergeByKey(key, existing, newValue) {
-        // chatTimelineStars - 按 key 字段合并
+        // chatTimelineStars - 按 key 字段Merge
         if (key === 'chatTimelineStars') {
             return this.mergeArrayByField(existing, newValue, 'key');
         }
         
-        // chatTimelinePins - 按 key 字段合并
+        // chatTimelinePins - 按 key 字段Merge
         if (key === 'chatTimelinePins') {
             return this.mergeArrayByField(existing, newValue, 'key');
         }
         
-        // prompts（提示词）- 按 id 字段合并
+        // prompts（Prompt）- 按 id 字段Merge
         if (key === 'prompts') {
             return this.mergeArrayByField(existing, newValue, 'id');
         }
         
-        // folders（文件夹）- 按 id 字段合并
+        // folders（文件夹）- 按 id 字段Merge
         if (key === 'folders') {
             return this.mergeArrayByField(existing, newValue, 'id');
         }
         
-        // *PlatformSettings - 对象按 key 合并
+        // *PlatformSettings - 对象按 key Merge
         if (key.endsWith('PlatformSettings')) {
             return { ...existing, ...newValue };
         }
         
-        // 其他类型 - 新值覆盖
+        // 其他类型 - 新值Overwrite
         return newValue;
     }
     
     /**
-     * 按指定字段合并数组（导入数据覆盖现有数据）
+     * 按指定字段Merge数组（Import dataOverwrite现有数据）
      * @param {Array} existing - 现有数据
-     * @param {Array} newArr - 导入数据
+     * @param {Array} newArr - Import data
      * @param {string} field - 唯一标识字段名
-     * @returns {Array} 合并后的数组
+     * @returns {Array} Merge后的数组
      */
     mergeArrayByField(existing, newArr, field) {
         if (!Array.isArray(existing) || !Array.isArray(newArr)) {
@@ -529,7 +529,7 @@ class DataSyncTab extends BaseTab {
         
         const map = new Map();
         
-        // 先添加现有数据
+        // 先Add现有数据
         for (const item of existing) {
             const key = item[field];
             if (key !== undefined) {
@@ -537,7 +537,7 @@ class DataSyncTab extends BaseTab {
             }
         }
         
-        // 导入数据覆盖（相同 key 的会被覆盖）
+        // Import dataOverwrite（相同 key 的会被Overwrite）
         for (const item of newArr) {
             const key = item[field];
             if (key !== undefined) {

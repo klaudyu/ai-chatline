@@ -1,14 +1,14 @@
 /**
  * Highlight Manager
  *
- * 网页文字标注功能核心模块
- * - 选中文字后创建高亮标注（<mark> 包裹）
+ * 网页文字Highlight功能核心模块
+ * - 选中文字后创建高亮Highlight（<mark> 包裹）
  * - 序列化：TextQuoteSelector (exact + prefix + suffix) + TextPositionSelector (start + end)
  * - 页面加载时恢复高亮：三级匹配（精确 → 模糊前缀锚定 → 模糊直接匹配）
  * - 使用 diff-match-patch 做模糊匹配，容忍页面渲染差异
  *
  * 存储结构（chrome.storage.local）：
- *   highlightEnabled  — boolean，功能开关
+ *   highlightEnabled  — boolean，功能Toggle
  *   highlightColor    — string，当前高亮颜色
  *   highlightData     — { [url]: [ {id, text, prefix, suffix, start, end, color, style, annotation, createdAt} ] }
  */
@@ -274,7 +274,7 @@ class HighlightManager {
         return true;
     }
 
-    // ==================== 删除高亮 ====================
+    // ==================== Delete高亮 ====================
 
     _unwrapHighlight(id) {
         const marks = document.querySelectorAll(`mark.ait-highlight[data-hl-id="${id}"]`);

@@ -17,7 +17,7 @@ class SmartEnterManager {
             debug: options.debug || SMART_ENTER_CONFIG.DEBUG
         };
         
-        // ✅ 平台设置（内存缓存）
+        // ✅ 平台Settings（内存缓存）
         this.platformSettings = {};
         
         // ✅ 发送模式（内存缓存）
@@ -27,7 +27,7 @@ class SmartEnterManager {
         this.state = {
             lastEnterTime: 0,
             enterCount: 0,
-            savedSelection: null,  // 保存的光标位置/选区
+            savedSelection: null,  // Save的光标位置/选区
             allowNextEnter: false,  // 是否允许下一次 Enter 通过（用于发送）
             isInsertingNewline: false  // 是否正在插入换行（合成事件不应被拦截）
         };
@@ -36,7 +36,7 @@ class SmartEnterManager {
         this.newlineTimer = null;
         this.debounceTimer = null;  // 防抖定时器
         
-        // DOMObserverManager 取消订阅函数
+        // DOMObserverManager Cancel订阅函数
         this._unsubscribeObserver = null;
         
         // Storage 监听器
@@ -49,7 +49,7 @@ class SmartEnterManager {
         // ✅ 健康检查定时器
         this.healthCheckInterval = null;
         
-        // ✅ 提示词按钮管理器
+        // ✅ Prompt按钮管理器
         this.promptButtonManager = null;
     }
     
@@ -57,27 +57,27 @@ class SmartEnterManager {
      * 初始化
      */
     async init() {
-        // 1. 加载平台设置
+        // 1. 加载平台Settings
         await this._loadPlatformSettings();
         
-        // 2. 监听 Storage 变化（实时响应用户开关）
+        // 2. 监听 Storage 变化（实时响应用户Toggle）
         this._attachStorageListener();
         
-        // 3. 始终附加到输入框（不管开关状态）
+        // 3. 始终附加到输入框（不管Toggle状态）
         this._attachToInputIfNeeded();
         
-        // 4. 始终启动 DOM 监听（不管开关状态）
+        // 4. 始终启动 DOM 监听（不管Toggle状态）
         this._startObserving();
         
         // 5. ✅ 启动健康检查
         this._startHealthCheck();
         
-        // 6. ✅ 初始化提示词按钮
+        // 6. ✅ 初始化Prompt按钮
         await this._initPromptButton();
     }
     
     /**
-     * ✅ 初始化提示词按钮
+     * ✅ 初始化Prompt按钮
      */
     async _initPromptButton() {
         try {
@@ -97,7 +97,7 @@ class SmartEnterManager {
     }
     
     /**
-     * ✅ 加载平台设置
+     * ✅ 加载平台Settings
      */
     async _loadPlatformSettings() {
         try {
@@ -117,7 +117,7 @@ class SmartEnterManager {
     _isPlatformEnabled() {
         try {
             const platform = getCurrentPlatform();
-            if (!platform) return true; // 未知平台，默认启用
+            if (!platform) return true; // 未知平台，Default启用
             
             // ✅ 首先检查平台是否支持智能输入功能
             if (platform.features?.smartInput !== true) {
@@ -129,10 +129,10 @@ class SmartEnterManager {
                 return false;
             }
             
-            // 从缓存中检查（默认关闭）
+            // 从缓存中检查（DefaultClose）
             return this.platformSettings[platform.id] === true;
         } catch (e) {
-            return false; // 出错默认关闭
+            return false; // 出错DefaultClose
         }
     }
     
@@ -142,7 +142,7 @@ class SmartEnterManager {
     _attachStorageListener() {
         this.storageListener = (changes, areaName) => {
             if (areaName === 'local') {
-                // ✅ 监听平台设置变化
+                // ✅ 监听平台Settings变化
                 if (changes.smartInputPlatformSettings) {
                     this.platformSettings = changes.smartInputPlatformSettings.newValue || {};
                 }
@@ -278,7 +278,7 @@ class SmartEnterManager {
         // 附加 input 监听器（检测内容变化）
         inputElement.addEventListener('input', handleInput);
         
-        // 保存事件处理器引用到 WeakMap，方便后续清理
+        // Save事件处理器引用到 WeakMap，方便后续清理
         this.attachedElements.set(inputElement, {
             handleKeyDown,
             handleInput
@@ -300,16 +300,16 @@ class SmartEnterManager {
         inputElement.removeEventListener('keydown', handlers.handleKeyDown, { capture: true });
         inputElement.removeEventListener('input', handlers.handleInput);
         
-        // 从 WeakMap 中删除
+        // 从 WeakMap 中Delete
         this.attachedElements.delete(inputElement);
     }
     
     /**
      * 处理 input 事件（内容变化）
-     * 在监听窗口期内，如果内容变化，取消当前的Enter处理
+     * 在监听窗口期内，如果内容变化，Cancel当前的Enter处理
      */
     _handleInput() {
-        // 如果有待执行的换行定时器，取消它
+        // 如果有待执行的换行定时器，Cancel它
         if (this.newlineTimer) {
             clearTimeout(this.newlineTimer);
             this.newlineTimer = null;
@@ -433,7 +433,7 @@ class SmartEnterManager {
     }
     
     /**
-     * 保存当前光标位置/选区
+     * Save当前光标位置/选区
      * @param {HTMLElement} inputElement - 输入框元素
      */
     _saveSelection(inputElement) {
@@ -441,7 +441,7 @@ class SmartEnterManager {
             const isContentEditable = inputElement.contentEditable === 'true';
             
             if (isContentEditable) {
-                // contenteditable: 保存 Range 对象
+                // contenteditable: Save Range 对象
                 const selection = window.getSelection();
                 if (selection.rangeCount > 0) {
                     this.state.savedSelection = {
@@ -450,7 +450,7 @@ class SmartEnterManager {
                     };
                 }
             } else {
-                // textarea: 保存光标位置
+                // textarea: Save光标位置
                 this.state.savedSelection = {
                     type: 'offset',
                     start: inputElement.selectionStart,
@@ -463,7 +463,7 @@ class SmartEnterManager {
     }
     
     /**
-     * 在保存的位置插入换行
+     * 在Save的位置插入换行
      * @param {HTMLElement} inputElement - 输入框元素
      */
     _insertNewlineAtSavedPosition(inputElement) {
@@ -537,14 +537,14 @@ class SmartEnterManager {
                 icon: '',  // 不显示图标
                 color: {
                     light: {
-                        backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                        textColor: '#ffffff',        // 浅色模式：白色文字
-                        borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                        backgroundColor: '#0d0d0d',  // Light模式：黑色背景
+                        textColor: '#ffffff',        // Light模式：白色文字
+                        borderColor: '#0d0d0d'       // Light模式：黑色边框
                     },
                     dark: {
-                        backgroundColor: '#ffffff',  // 深色模式：白色背景
-                        textColor: '#1f2937',        // 深色模式：深灰色文字
-                        borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        backgroundColor: '#ffffff',  // Dark模式：白色背景
+                        textColor: '#1f2937',        // Dark模式：深灰色文字
+                        borderColor: '#e5e7eb'       // Dark模式：浅灰色边框
                     }
                 }
             });
@@ -660,7 +660,7 @@ class SmartEnterManager {
                 inputElement.focus();
             }
             
-            // 设置标记，允许下一次 Enter 通过
+            // Settings标记，允许下一次 Enter 通过
             this.state.allowNextEnter = true;
             
             // 创建普通的 Enter 键事件（不带任何修饰键）
@@ -735,7 +735,7 @@ class SmartEnterManager {
             console.error('[SmartInputBox] Failed to detach listener on destroy:', e);
         }
         
-        // ✅ 销毁提示词按钮
+        // ✅ 销毁Prompt按钮
         if (this.promptButtonManager) {
             try {
                 this.promptButtonManager.destroy();

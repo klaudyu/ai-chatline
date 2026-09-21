@@ -4,7 +4,7 @@
  * 包含内容：
  * - 公式 hover 和点击效果
  * - 公式 tooltip
- * - 复制反馈样式
+ * - Copy反馈样式
  * 
  * 支持的公式渲染器：
  * - KaTeX
@@ -59,7 +59,7 @@ html[data-timeline-theme="dark"] .MathJax.formula-interactive.formula-hover {
     white-space: nowrap;
 }
 
-/* tooltip 内部布局：文字 + 设置 icon */
+/* tooltip 内部布局：文字 + Settings icon */
 .formula-tooltip-content {
     display: flex;
     align-items: center;
@@ -94,7 +94,7 @@ html[data-timeline-theme="dark"] .MathJax.formula-interactive.formula-hover {
     background: rgba(255, 255, 255, 0.25);
 }
 
-/* 深色模式 tooltip 下的设置 icon hover */
+/* Dark模式 tooltip 下的Settings icon hover */
 [data-tooltip-theme="dark"] .formula-tooltip-settings:hover {
     background: rgba(0, 0, 0, 0.08);
 }
@@ -116,9 +116,9 @@ html[data-timeline-theme="dark"] .MathJax.formula-interactive.formula-hover {
     white-space: nowrap;
 }
 
-/* 公式复制反馈样式优化 */
+/* 公式Copy反馈样式优化 */
 .timeline-copy-feedback {
-    /* 基础样式已定义，这里添加公式特定的优化 */
+    /* 基础样式已定义，这里Add公式特定的优化 */
     min-width: 80px;
     text-align: center;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;

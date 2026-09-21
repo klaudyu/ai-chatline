@@ -1,6 +1,6 @@
 /**
  * Wizard Animation — 养成版
- * 默认 1 只大巫师，消息达标后新增小巫师跟班，最多 7 只
+ * Default 1 只大巫师，消息达标后新增小巫师跟班，最多 7 只
  * 每只巫师拥有独特的配色风格
  */
 class WizardAnimation {

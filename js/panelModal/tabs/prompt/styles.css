@@ -1,9 +1,9 @@
 /**
  * Prompt Tab Styles
- * 提示词设置样式
+ * PromptSettings样式
  */
 
-/* 设置容器 */
+/* Settings容器 */
 .prompt-settings {
     padding: 0;
     height: 100%;
@@ -44,7 +44,7 @@
     margin: 20px 0;
 }
 
-/* ==================== 提示词列表管理模块 ==================== */
+/* ==================== Prompt列表管理模块 ==================== */
 
 .prompt-list-section {
     padding: 0;
@@ -70,7 +70,7 @@
     margin-bottom: 12px;
 }
 
-/* 添加按钮 */
+/* Add按钮 */
 .prompt-add-btn {
     display: flex;
     align-items: center;
@@ -99,7 +99,7 @@
     height: 14px;
 }
 
-/* 提示词列表容器 */
+/* Prompt列表容器 */
 .prompt-list-container {
     background: #f9fafb;
     border-radius: 8px;
@@ -127,7 +127,7 @@
     font-size: 13px;
 }
 
-/* 提示词项 */
+/* Prompt项 */
 .prompt-item {
     display: flex;
     flex-direction: column;
@@ -225,7 +225,7 @@
     height: 14px;
 }
 
-/* 删除按钮 hover 样式 */
+/* Delete按钮 hover 样式 */
 .prompt-delete-btn:hover {
     background: #fee2e2;
     color: #dc2626;
@@ -250,7 +250,7 @@
     object-fit: contain;
 }
 
-/* 置顶徽章 */
+/* Pin徽章 */
 .prompt-pin-badge {
     display: flex;
     align-items: center;
@@ -265,7 +265,7 @@
     stroke-width: 3;
 }
 
-/* 置顶按钮激活状态 */
+/* Pin按钮激活状态 */
 .prompt-pin-btn.active {
     color: #facc15;
 }
@@ -327,7 +327,7 @@
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* ==================== 提示词下拉菜单样式 ==================== */
+/* ==================== Prompt下拉菜单样式 ==================== */
 
 /* 遮罩层 */
 .prompt-dropdown-overlay {
@@ -546,7 +546,7 @@
     box-shadow: none;
 }
 
-/* 主行（名称 + 置顶图标） */
+/* 主行（名称 + Pin图标） */
 .prompt-dropdown-item-main {
     display: flex;
     align-items: center;
@@ -574,7 +574,7 @@
     white-space: nowrap;
 }
 
-/* 置顶图标 */
+/* Pin图标 */
 .prompt-dropdown-item-icon {
     display: flex;
     align-items: center;
@@ -655,7 +655,7 @@
     background: #9ca3af;
 }
 
-/* ==================== 提示词编辑弹窗 ==================== */
+/* ==================== PromptEdit弹窗 ==================== */
 
 .prompt-modal-overlay {
     position: fixed;

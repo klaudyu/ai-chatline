@@ -60,7 +60,7 @@ class InputBoxAnimationManager {
         }
         this._petData = await StorageAdapter.get(this._petDataKey) || {};
         const savedId = await StorageAdapter.get(this._storageKey);
-        // 默认关闭，只有用户主动选择后才启动运行时监听和恢复定时器
+        // DefaultClose，只有用户主动选择后才启动Run时监听和恢复定时器
         const activeId = savedId || '';
         if (activeId && this._animations.has(activeId)) {
             this._activate(activeId);

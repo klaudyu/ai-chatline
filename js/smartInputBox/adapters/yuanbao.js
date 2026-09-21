@@ -14,7 +14,7 @@ class YuanbaoSmartEnterAdapter extends BaseSmartEnterAdapter {
     
     /**
      * 获取输入框选择器
-     * 元宝使用 Quill 编辑器，页面 class 会随版本调整，保留多候选兜底。
+     * 元宝使用 Quill Edit器，页面 class 会随版本调整，保留多候选兜底。
      */
     getInputSelector() {
         return [
@@ -31,7 +31,7 @@ class YuanbaoSmartEnterAdapter extends BaseSmartEnterAdapter {
 
     /**
      * 获取定位参考元素
-     * 优先使用输入框外层容器，保证提示词按钮和输入框宠物有稳定宽度。
+     * 优先使用输入框外层容器，保证Prompt按钮和输入框宠物有稳定宽度。
      * @param {HTMLElement} inputElement - 输入框元素
      */
     getPositionReferenceElement(inputElement) {
@@ -49,7 +49,7 @@ class YuanbaoSmartEnterAdapter extends BaseSmartEnterAdapter {
     }
     
     /**
-     * 获取提示词按钮位置偏移量
+     * 获取Prompt按钮位置偏移量
      */
     getPromptButtonOffset() {
         return { top: 10, left: -2 };

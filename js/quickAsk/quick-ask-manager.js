@@ -22,7 +22,7 @@ class QuickAskManager {
         this.hideTimer = null;
         this.isEnabled = false;
         this._boundHandlers = null;
-        this._position = 'topLeft'; // 默认位置
+        this._position = 'topLeft'; // Default位置
         this._adapterRegistry = null; // 独立查找对话容器用，延迟初始化
     }
 
@@ -75,7 +75,7 @@ class QuickAskManager {
                 }
             }
         } catch (e) {
-            // 使用默认位置
+            // 使用Default位置
         }
     }
     
@@ -115,13 +115,13 @@ class QuickAskManager {
                     <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/>
                     <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
                 </svg>
-                <span>${QuickAskManager._i18n('quickAsk', '追问')}</span>
+                <span>${QuickAskManager._i18n('quickAsk', 'Follow up')}</span>
             </button>
         `;
         btn.style.display = 'none';
         
         // ✅ 使用事件委托（解决长时间停留后事件失效问题）
-        // 追问按钮：执行引用追问
+        // Follow up按钮：执行引用Follow up
         window.eventDelegateManager.on('click', '.ait-quick-ask-action', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -131,7 +131,7 @@ class QuickAskManager {
             e.preventDefault();
         });
 
-        // 标注按钮：集成到追问工具栏
+        // Highlight按钮：集成到Follow up工具栏
         this._highlightInjected = false;
         window.eventDelegateManager.on('click', '.ait-quick-ask-btn .ait-highlight-action', (e) => {
             e.preventDefault();
@@ -147,7 +147,7 @@ class QuickAskManager {
             this._hideButton();
         });
 
-        // 复制按钮：集成到追问工具栏（仅当选区含高亮 OR 公式时显示）
+        // Copy按钮：集成到Follow up工具栏（仅当选区含高亮 OR 公式时显示）
         window.eventDelegateManager.on('click', '.ait-quick-ask-btn .ait-copy-action', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -166,7 +166,7 @@ class QuickAskManager {
     }
 
     /**
-     * 检查并注入/移除标注按钮到追问工具栏
+     * 检查并注入/移除Highlight按钮到Follow up工具栏
      */
     _syncHighlightButton() {
         if (!this.buttonElement) return;
@@ -182,7 +182,7 @@ class QuickAskManager {
             divider.dataset.aitOwner = 'highlight';
             const hlBtn = document.createElement('button');
             hlBtn.className = 'ait-highlight-action';
-            hlBtn.innerHTML = `${icon}<span>${QuickAskManager._i18n('highlightMark', '标注')}</span>`;
+            hlBtn.innerHTML = `${icon}<span>${QuickAskManager._i18n('highlightMark', 'Highlight')}</span>`;
             this.buttonElement.appendChild(divider);
             this.buttonElement.appendChild(hlBtn);
         } else if (!hlEnabled && existing) {
@@ -193,7 +193,7 @@ class QuickAskManager {
     }
 
     /**
-     * 检查并注入/移除复制按钮到追问工具栏
+     * 检查并注入/移除Copy按钮到Follow up工具栏
      * 仅当选区中包含高亮 OR 公式时显示
      */
     _syncCopyButton() {
@@ -208,7 +208,7 @@ class QuickAskManager {
             divider.dataset.aitOwner = 'copy';
             const btn = document.createElement('button');
             btn.className = 'ait-copy-action';
-            btn.innerHTML = `${QuickAskManager._getCopyIcon()}<span>${QuickAskManager._i18n('mvkxpz', '复制')}</span>`;
+            btn.innerHTML = `${QuickAskManager._getCopyIcon()}<span>${QuickAskManager._i18n('mvkxpz', 'Copy')}</span>`;
             this.buttonElement.appendChild(divider);
             this.buttonElement.appendChild(btn);
         } else if (!need && existing) {
@@ -219,8 +219,8 @@ class QuickAskManager {
     }
 
     /**
-     * 复制按钮的 SVG 图标
-     * 视觉描边范围 y=3→21（与追问/标注图标的 bbox 高度一致），避免视觉上比其他按钮"高一截"
+     * Copy按钮的 SVG 图标
+     * 视觉描边范围 y=3→21（与Follow up/Highlight图标的 bbox 高度一致），避免视觉上比其他按钮"高一截"
      */
     static _getCopyIcon() {
         return `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 14H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"/></svg>`;
@@ -230,7 +230,7 @@ class QuickAskManager {
      * 绑定事件
      */
     _bindEvents() {
-        // 保存事件处理器引用，以便后续移除
+        // Save事件处理器引用，以便后续移除
         this._boundHandlers = {
             mouseup: (e) => {
                 // 如果点击的是按钮，不处理
@@ -308,7 +308,7 @@ class QuickAskManager {
     }
     
     /**
-     * 独立获取对话容器（不依赖时间轴模块）
+     * 独立获取对话容器（不依赖Timeline模块）
      * 优先复用 timeline 已定位的容器，否则通过 adapter 独立查找
      * @returns {Element|null}
      */
@@ -472,7 +472,7 @@ class QuickAskManager {
                 top = rect.bottom + gap;
                 break;
             default:
-                // 默认 topCenter
+                // Default topCenter
                 left = rect.left + rect.width / 2 - btnWidth / 2;
                 top = rect.top - btnHeight - gap;
         }
@@ -528,11 +528,11 @@ class QuickAskManager {
         
         // 格式化为引用格式（每行前加 > ），末尾换行由通用方法处理
         // 先处理伪换行：公式渲染（KaTeX/MathJax）会在元素边界插入单个换行符，
-        // 需要将其合并为空格，只保留双换行作为真正的段落分隔
+        // 需要将其Merge为空格，只保留双换行作为真正的段落分隔
         const normalizedText = this.currentSelection
             .replace(/\n{2,}/g, '\n\n')       // 标准化段落分隔为双换行
             .replace(/(?<!\n)\n(?!\n)/g, ' ')  // 单个换行 → 空格（公式渲染产生的伪换行）
-            .replace(/ {2,}/g, ' ');           // 合并多余空格
+            .replace(/ {2,}/g, ' ');           // Merge多余空格
         
         const quotedText = normalizedText
             .split('\n')
@@ -550,7 +550,7 @@ class QuickAskManager {
     }
 
     /**
-     * 处理复制：保留高亮样式 + 公式 LaTeX/MathML
+     * 处理Copy：保留高亮样式 + 公式 LaTeX/MathML
      * Toast 走屏幕居中顶部（不传 target）—— 因为按钮点完会立即隐藏，无可锚定元素
      */
     async _handleCopy() {
@@ -574,13 +574,13 @@ class QuickAskManager {
             const toast = window.globalToastManager;
             if (ok) {
                 toast?.success?.(
-                    QuickAskManager._i18n('xpzmvk', '已复制'),
+                    QuickAskManager._i18n('xpzmvk', 'Copied'),
                     null,
                     { duration: 1600 }
                 );
             } else {
                 toast?.error?.(
-                    QuickAskManager._i18n('kpzmvx', '复制失败'),
+                    QuickAskManager._i18n('kpzmvx', 'Copy failed'),
                     null,
                     { duration: 1600 }
                 );
@@ -588,7 +588,7 @@ class QuickAskManager {
         } catch (e) {
             console.error('[QuickAsk] copy failed:', e);
             window.globalToastManager?.error?.(
-                QuickAskManager._i18n('kpzmvx', '复制失败'),
+                QuickAskManager._i18n('kpzmvx', 'Copy failed'),
                 null,
                 { duration: 1600 }
             );
@@ -621,7 +621,7 @@ class QuickAskManager {
             const selection = window.getSelection();
             const range = document.createRange();
             
-            // 查找最后一个可编辑位置
+            // 查找最后一个可Edit位置
             let targetNode = inputElement;
             let targetOffset = 0;
             
@@ -686,7 +686,7 @@ class QuickAskManager {
             const trailing = '\n'.repeat(trailingBlankLines + 1);
             const appendText = separator + text + trailing;
             
-            // Slate.js 编辑器：使用粘贴模拟（execCommand 和 DOM 操作都无法同步 Slate 内部状态）
+            // Slate.js Edit器：使用粘贴模拟（execCommand 和 DOM 操作都无法同步 Slate 内部状态）
             const isSlateEditor = inputElement.hasAttribute('data-slate-editor');
 
             if (isSlateEditor) {
@@ -707,7 +707,7 @@ class QuickAskManager {
                     clipboardData: dt, bubbles: true, cancelable: true
                 }));
             } else {
-                // 非 Slate 编辑器：尝试 execCommand，失败则 DOM 操作
+                // 非 Slate Edit器：尝试 execCommand，失败则 DOM 操作
                 let insertSuccess = false;
                 const beforeLength = inputElement.innerText?.length || 0;
 
@@ -742,11 +742,11 @@ class QuickAskManager {
                 }
             }
             
-            // 延迟设置焦点、光标和滚动
+            // 延迟Settings焦点、光标和滚动
             setTimeout(() => {
                 inputElement.focus();
                 
-                // 设置光标到末尾（contenteditable 需要 selection 才能显示光标）
+                // Settings光标到末尾（contenteditable 需要 selection 才能显示光标）
                 const selection = window.getSelection();
                 const range = document.createRange();
                 range.selectNodeContents(inputElement);
@@ -763,7 +763,7 @@ class QuickAskManager {
             if (!existingText.trim()) {
                 finalText = text + '\n\n';
             } else {
-                // 清理末尾换行符，添加1个空行（2个换行符）作为分隔
+                // 清理末尾换行符，Add1个空行（2个换行符）作为分隔
                 const cleanedText = existingText.replace(/\n+$/, '');
                 finalText = cleanedText + '\n\n' + text + '\n\n';
             }
@@ -773,7 +773,7 @@ class QuickAskManager {
             // 触发 input 事件
             inputElement.dispatchEvent(new Event('input', { bubbles: true }));
             
-            // 延迟设置焦点和滚动
+            // 延迟Settings焦点和滚动
             setTimeout(() => {
                 inputElement.focus();
                 inputElement.selectionStart = inputElement.selectionEnd = inputElement.value.length;

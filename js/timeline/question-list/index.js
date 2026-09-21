@@ -1,7 +1,7 @@
 /**
  * Question List Panel
  *
- * 嵌入时间轴 wrapper 内，与 timeline-bar 互斥切换显示。
+ * 嵌入Timeline wrapper 内，与 timeline-bar 互斥切换显示。
  * 支持：序号、单行省略、当前激活高亮、收藏状态展示与切换、长按标记📌、点击跳转。
  */
 class QuestionListPopup {
@@ -18,7 +18,7 @@ class QuestionListPopup {
     get visible() { return this._visible; }
 
     /**
-     * 绑定时间轴 UI 引用（由 TimelineManager 调用）
+     * 绑定Timeline UI 引用（由 TimelineManager 调用）
      */
     bind(wrapper, timelineBar) {
         this._wrapper = wrapper;
@@ -102,10 +102,10 @@ class QuestionListPopup {
 
         this._visible = true;
 
-        // 监听时间轴激活节点变化
+        // 监听Timeline激活节点变化
         window.addEventListener('timeline:activeChange', this._boundOnActiveChange);
 
-        // 点击外部区域关闭
+        // 点击外部区域Close
         setTimeout(() => {
             document.addEventListener('click', this._boundOnClickOutside, true);
         }, 0);
@@ -134,7 +134,7 @@ class QuestionListPopup {
 
         this._visible = false;
 
-        // 取消按钮高亮
+        // Cancel按钮高亮
         const tm = window.timelineManager;
         if (tm && tm.ui && tm.ui.questionListBtn) {
             tm.ui.questionListBtn.classList.remove('active');
@@ -173,7 +173,7 @@ class QuestionListPopup {
             pin.className = 'ait-ql-item-pin';
             if (!isPinned) pin.classList.add('not-pinned');
             const pinTip = () => tm.pinned.has(marker.id)
-                ? TimelineUtils.i18n('unpinAction', '取消标记重点')
+                ? TimelineUtils.i18n('unpinAction', 'Remove highlight')
                 : TimelineUtils.i18n('pinAction', '标记重点');
             pin.addEventListener('click', async (e) => {
                 e.stopPropagation();
@@ -190,7 +190,7 @@ class QuestionListPopup {
             // Star icon
             const isStarred = tm.starred.has(marker.id);
             const starTip = () => tm.starred.has(marker.id)
-                ? TimelineUtils.i18n('unstarAction', '取消收藏')
+                ? TimelineUtils.i18n('unstarAction', 'Remove from starred')
                 : TimelineUtils.i18n('starAction', '收藏到文件夹');
             const star = document.createElement('span');
             star.className = 'ait-ql-item-star';

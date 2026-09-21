@@ -1,9 +1,9 @@
 /**
  * Timeline Settings Tab Styles
- * 时间轴设置样式
+ * TimelineSettings样式
  */
 
-/* 设置容器 */
+/* Settings容器 */
 .timeline-settings {
     padding: 0;
     height: 100%;
@@ -44,12 +44,12 @@
     margin: 20px 0;
 }
 
-/* 设置区块 */
+/* Settings区块 */
 .setting-section {
     margin-bottom: 0;
 }
 
-/* 设置项 */
+/* Settings项 */
 .setting-item {
     display: flex;
     align-items: flex-start;
@@ -65,7 +65,7 @@
     background: #f3f4f6;
 }
 
-/* 设置信息 */
+/* Settings信息 */
 .setting-info {
     flex: 1;
 }
@@ -320,7 +320,7 @@
     color: #1f2937;
 }
 
-/* 时间轴主题色弹窗 */
+/* Timeline主题色弹窗 */
 .starred-platform-modal.timeline-theme-color-modal {
     width: 430px;
 }
@@ -491,7 +491,7 @@ html[data-timeline-theme="dark"] .timeline-active-color-btn.selected::before {
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24), 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-/* ==================== 暗黑模式 - 设置通用元素 ==================== */
+/* ==================== 暗黑模式 - Settings通用元素 ==================== */
 
 html[data-timeline-theme="dark"] .timeline-settings .setting-item {
     background: rgba(255, 255, 255, 0.06);

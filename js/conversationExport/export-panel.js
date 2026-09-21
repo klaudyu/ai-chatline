@@ -1,7 +1,7 @@
 /**
  * Conversation Export Panel
  *
- * 轻量面板，负责选择导出方式、格式并触发复制/下载。
+ * 轻量面板，负责选择Export mode、格式并触发Copy/下载。
  */
 
 const ConversationExportPanel = {
@@ -31,29 +31,29 @@ const ConversationExportPanel = {
         const overlay = document.createElement('div');
         overlay.className = 'ait-export-panel-overlay';
         overlay.innerHTML = `
-            <div class="ait-export-panel" role="dialog" aria-modal="true" aria-label="导出对话">
+            <div class="ait-export-panel" role="dialog" aria-modal="true" aria-label="Export conversation">
                 <div class="ait-export-panel-header">
-                    <div class="ait-export-panel-title">导出对话</div>
-                    <button class="ait-export-panel-close" type="button" aria-label="关闭">×</button>
+                    <div class="ait-export-panel-title">Export conversation</div>
+                    <button class="ait-export-panel-close" type="button" aria-label="Close">×</button>
                 </div>
                 <div class="ait-export-panel-body">
-                    <div class="ait-export-section-title">导出方式</div>
-                    <div class="ait-export-mode-list" role="radiogroup" aria-label="导出方式">
-                        ${this._modeOption('full', '全量导出', '导出当前会话中的全部内容')}
-                        ${this._modeOption('selected', '选择导出', '在弹框内勾选要导出的对话')}
+                    <div class="ait-export-section-title">Export mode</div>
+                    <div class="ait-export-mode-list" role="radiogroup" aria-label="Export mode">
+                        ${this._modeOption('full', 'Export all', 'Export all content from the current conversation')}
+                        ${this._modeOption('selected', 'Select items', 'Choose the conversation items to export')}
                     </div>
                     <div class="ait-export-selection-section" hidden>
                         <div class="ait-export-selection-header">
-                            <span class="ait-export-selection-count">已选择 0 条</span>
+                            <span class="ait-export-selection-count">0 selected</span>
                             <div class="ait-export-selection-tools">
-                                <button class="ait-export-link-btn" type="button" data-selection-command="select-all">全选</button>
-                                <button class="ait-export-link-btn" type="button" data-selection-command="clear">取消全选</button>
+                                <button class="ait-export-link-btn" type="button" data-selection-command="select-all">Select all</button>
+                                <button class="ait-export-link-btn" type="button" data-selection-command="clear">CancelSelect all</button>
                             </div>
                         </div>
-                        <div class="ait-export-selection-list" role="group" aria-label="选择要导出的对话"></div>
+                        <div class="ait-export-selection-list" role="group" aria-label="Select conversations to export"></div>
                     </div>
-                    <div class="ait-export-section-title">导出格式</div>
-                    <div class="ait-export-format-list" role="radiogroup" aria-label="导出格式">
+                    <div class="ait-export-section-title">Export format</div>
+                    <div class="ait-export-format-list" role="radiogroup" aria-label="Export format">
                         ${this._formatOption('markdown', 'Markdown', '.md')}
                         ${this._formatOption('obsidian', 'Obsidian', '.md + YAML')}
                         ${this._formatOption('txt', 'TXT', '.txt')}
@@ -61,8 +61,8 @@ const ConversationExportPanel = {
                     </div>
                 </div>
                 <div class="ait-export-panel-actions">
-                    <button class="ait-export-action-btn" type="button" data-action="copy">复制到剪贴板</button>
-                    <button class="ait-export-action-btn primary" type="button" data-action="download">下载文件</button>
+                    <button class="ait-export-action-btn" type="button" data-action="copy">Copy to clipboard</button>
+                    <button class="ait-export-action-btn primary" type="button" data-action="download">Download file</button>
                 </div>
             </div>
         `;
@@ -181,7 +181,7 @@ const ConversationExportPanel = {
                 return;
             }
             if (this._selectedMessageIndexes.size === 0) {
-                this._toast('warning', '请至少选择一条对话内容', button);
+                this._toast('warning', 'Please select at least one conversation item', button);
                 return;
             }
             options.selectedMessageIndexes = Array.from(this._selectedMessageIndexes).sort((a, b) => a - b);
@@ -191,19 +191,19 @@ const ConversationExportPanel = {
         this._overlay?.querySelectorAll('[data-action]').forEach(actionButton => {
             actionButton.disabled = true;
         });
-        button.textContent = action === 'copy' ? '复制中...' : '导出中...';
+        button.textContent = action === 'copy' ? 'Copying...' : 'Exporting...';
 
         try {
             if (action === 'copy') {
                 await this._service.copy(this._selectedFormat, options);
-                this._toast('success', this._selectedMode === 'selected' ? '已复制所选内容' : '已复制到剪贴板', button);
+                this._toast('success', this._selectedMode === 'selected' ? 'Selected content copied' : 'Copied to clipboard', button);
             } else {
                 await this._service.download(this._selectedFormat, options);
-                this._toast('success', this._selectedMode === 'selected' ? '已开始下载所选内容' : '已开始下载', button);
+                this._toast('success', this._selectedMode === 'selected' ? 'Selected content download started' : 'Download started', button);
             }
             this.hide();
         } catch (error) {
-            this._toast('error', error?.message || '导出失败', button);
+            this._toast('error', error?.message || 'Export failed', button);
         } finally {
             this._exporting = false;
             if (button.isConnected) {
@@ -239,8 +239,8 @@ const ConversationExportPanel = {
     _syncActionLabels() {
         const copyBtn = this._overlay?.querySelector('[data-action="copy"]');
         const downloadBtn = this._overlay?.querySelector('[data-action="download"]');
-        if (copyBtn) copyBtn.textContent = this._selectedMode === 'selected' ? '复制所选' : '复制到剪贴板';
-        if (downloadBtn) downloadBtn.textContent = this._selectedMode === 'selected' ? '下载所选' : '下载文件';
+        if (copyBtn) copyBtn.textContent = this._selectedMode === 'selected' ? 'Copy selected' : 'Copy to clipboard';
+        if (downloadBtn) downloadBtn.textContent = this._selectedMode === 'selected' ? 'Download selected' : 'Download file';
     },
 
     async _loadPreviewMessages() {
@@ -260,7 +260,7 @@ const ConversationExportPanel = {
             this._selectedMessageIndexes.clear();
         } catch (error) {
             if (requestId !== this._previewRequestId) return;
-            this._previewError = error?.message || '未识别到可导出的会话内容';
+            this._previewError = error?.message || 'No exportable conversation content was recognized';
             this._previewMessages = [];
             this._selectedMessageIndexes.clear();
         } finally {
@@ -276,7 +276,7 @@ const ConversationExportPanel = {
         if (!list) return;
 
         if (this._loadingPreview) {
-            list.innerHTML = '<div class="ait-export-selection-state">正在识别当前页面对话...</div>';
+            list.innerHTML = '<div class="ait-export-selection-state">Detecting conversations on this page...</div>';
             this._updateSelectionSummary();
             return;
         }
@@ -288,7 +288,7 @@ const ConversationExportPanel = {
         }
 
         if (!this._previewMessages.length) {
-            list.innerHTML = '<div class="ait-export-selection-state">未识别到可导出的会话内容</div>';
+            list.innerHTML = '<div class="ait-export-selection-state">No exportable conversation content was recognized</div>';
             this._updateSelectionSummary();
             return;
         }
@@ -337,7 +337,7 @@ const ConversationExportPanel = {
         const count = this._selectedMessageIndexes.size;
         const total = this._previewMessages.length;
         const countEl = this._overlay?.querySelector('.ait-export-selection-count');
-        if (countEl) countEl.textContent = total ? `已选择 ${count} / ${total} 条` : '已选择 0 条';
+        if (countEl) countEl.textContent = total ? `${count} / ${total} selected` : '0 selected';
 
         this._overlay?.querySelectorAll('input[name="ait-export-message"]').forEach(input => {
             const checked = this._selectedMessageIndexes.has(Number(input.value));

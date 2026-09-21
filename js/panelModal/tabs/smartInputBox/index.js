@@ -1,5 +1,5 @@
 /**
- * Smart Input Box Settings Tab - 智能输入框设置
+ * Smart Input Box Settings Tab - 智能输入框Settings
  * 
  * 功能：
  * - Enter 换行 + 多种发送模式（通过内联 Dropdown 选择）
@@ -39,7 +39,7 @@ class SmartInputBoxTab extends BaseTab {
     }
     
     /**
-     * 渲染设置内容
+     * 渲染Settings内容
      */
     render() {
         const container = document.createElement('div');
@@ -48,13 +48,13 @@ class SmartInputBoxTab extends BaseTab {
         // 平台列表（过滤掉 Claude，因其 Enter 键行为无法被拦截）
         const smartInputPlatforms = getPlatformsByFeature('smartInput').filter(p => p.id !== 'claude');
         
-        // ==================== 追问功能模块 ====================
+        // ==================== Follow up功能模块 ====================
         const quickAskSection = `
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${chrome.i18n.getMessage('quickAskTitle') || '追问功能'}</div>
-                        <div class="setting-hint">${chrome.i18n.getMessage('quickAskHint') || '选中页面上的文字后，显示追问按钮，点击可快速引用到对话框中'}</div>
+                        <div class="setting-label">${chrome.i18n.getMessage('quickAskTitle') || 'Follow up功能'}</div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('quickAskHint') || '选中页面上的文字后，显示Follow up按钮，点击可快速引用到对话框中'}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="quick-ask-toggle">
@@ -64,13 +64,13 @@ class SmartInputBoxTab extends BaseTab {
             </div>
         `;
         
-        // ==================== 返回底部模块 ====================
+        // ==================== Back to bottom模块 ====================
         const scrollToBottomSection = `
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <div class="setting-label">${chrome.i18n.getMessage('scrollToBottomTitle') || '返回底部'}</div>
-                        <div class="setting-hint">${chrome.i18n.getMessage('scrollToBottomHint') || '显示返回底部的快捷按钮，方便回到最新消息'}</div>
+                        <div class="setting-label">${chrome.i18n.getMessage('scrollToBottomTitle') || 'Back to bottom'}</div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('scrollToBottomHint') || '显示Back to bottom的快捷按钮，方便回到最新消息'}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="scroll-to-bottom-toggle">
@@ -130,7 +130,7 @@ class SmartInputBoxTab extends BaseTab {
     }
     
     /**
-     * 加载追问功能设置
+     * 加载Follow up功能Settings
      */
     async loadQuickAskSettings() {
         const quickAskToggle = document.getElementById('quick-ask-toggle');
@@ -163,7 +163,7 @@ class SmartInputBoxTab extends BaseTab {
     }
     
     /**
-     * 加载返回底部设置
+     * 加载Back to bottomSettings
      */
     async loadScrollToBottomSettings() {
         const scrollToBottomToggle = document.getElementById('scroll-to-bottom-toggle');
@@ -188,7 +188,7 @@ class SmartInputBoxTab extends BaseTab {
     }
     
     /**
-     * 加载 Enter 发送模式设置 + 绑定 Dropdown
+     * 加载 Enter 发送模式Settings + 绑定 Dropdown
      */
     async loadEnterModeSettings() {
         const trigger = document.getElementById('smart-enter-mode-trigger');
@@ -199,7 +199,7 @@ class SmartInputBoxTab extends BaseTab {
             const result = await chrome.storage.local.get('smartEnterMode');
             const currentMode = result.smartEnterMode || 'doubleEnter';
             this._updateTriggerText(trigger, currentMode);
-        } catch (e) { /* 保持默认 */ }
+        } catch (e) { /* 保持Default */ }
         
         // 绑定点击事件，显示 Dropdown
         this.addEventListener(trigger, 'click', (e) => {
@@ -237,7 +237,7 @@ class SmartInputBoxTab extends BaseTab {
     }
     
     /**
-     * 加载并初始化平台设置
+     * 加载并初始化平台Settings
      */
     async loadPlatformSettings() {
         try {

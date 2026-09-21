@@ -1,16 +1,16 @@
 /**
- * Runner Tab - 代码运行器设置
+ * Runner Tab - 代码Run器Settings
  * 
  * 功能：
- * - 管理各语言代码块运行功能的开关
- * - 默认关闭，仅在用户主动开启后加载运行时
+ * - 管理各语言代码块Run功能的Toggle
+ * - DefaultClose，仅在用户主动开启后加载Run时
  */
 
 class RunnerTab extends BaseTab {
     constructor() {
         super();
         this.id = 'runner';
-        this.name = chrome.i18n.getMessage('runnerTabName') || '代码运行';
+        this.name = chrome.i18n.getMessage('runnerTabName') || '代码Run';
         this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>`;
@@ -20,13 +20,13 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 渲染设置内容
+     * 渲染Settings内容
      */
     render() {
         const container = document.createElement('div');
         container.className = 'runner-settings-tab';
         
-        // 生成各语言的开关项
+        // 生成各语言的Toggle项
         const languageItems = this.languages.map(lang => `
             <div class="platform-item" data-lang="${lang.id}">
                 <div class="platform-info-left">
@@ -41,7 +41,7 @@ class RunnerTab extends BaseTab {
         
         container.innerHTML = `
             <div class="platform-list">
-                <div class="platform-list-title">${chrome.i18n.getMessage('runnerSettingsTitle') || '代码运行功能'}</div>
+                <div class="platform-list-title">${chrome.i18n.getMessage('runnerSettingsTitle') || '代码Run功能'}</div>
                 <div class="platform-list-hint">${chrome.i18n.getMessage('runnerAdvancedHint') || '高级功能：仅在开启后加载，可能增加页面资源占用。'}</div>
                 <div class="platform-list-container">
                     ${languageItems}
@@ -58,12 +58,12 @@ class RunnerTab extends BaseTab {
     async mounted() {
         super.mounted();
         
-        // 为每个语言设置开关状态和事件
+        // 为每个语言SettingsToggle状态和事件
         for (const lang of this.languages) {
             const toggle = document.getElementById(`runner-${lang.id}-toggle`);
             if (!toggle) continue;
             
-            // 读取当前状态（默认关闭）
+            // 读取当前状态（DefaultClose）
             try {
                 const result = await chrome.storage.local.get(lang.storageKey);
                 toggle.checked = result[lang.storageKey] === true;
@@ -72,7 +72,7 @@ class RunnerTab extends BaseTab {
                 toggle.checked = false;
             }
             
-            // 监听开关变化
+            // 监听Toggle变化
             this.addEventListener(toggle, 'change', async (e) => {
                 await this._handleToggleChange(lang, e.target.checked, toggle);
             });
@@ -80,11 +80,11 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 处理开关变化
+     * 处理Toggle变化
      */
     async _handleToggleChange(lang, enabled, toggle) {
         try {
-            // 保存到 Storage
+            // Save到 Storage
             await chrome.storage.local.set({ [lang.storageKey]: enabled });
             
             if (lang.id === 'javascript') {
@@ -106,45 +106,45 @@ class RunnerTab extends BaseTab {
             console.log(`[RunnerTab] ${lang.id} runner enabled:`, enabled);
         } catch (e) {
             console.error(`[RunnerTab] Failed to save ${lang.id} state:`, e);
-            // 保存失败，恢复 checkbox 状态
+            // Save失败，恢复 checkbox 状态
             toggle.checked = !toggle.checked;
         }
     }
     
     /**
-     * 处理 JavaScript 运行器开关
+     * 处理 JavaScript Run器Toggle
      */
     _handleJavaScriptToggle(enabled) {
         if (enabled) {
             // 开启功能
             if (window.Runner) {
-                // 重新扫描页面，添加 Run 按钮
+                // 重新扫描页面，Add Run 按钮
                 window.Runner.scan();
             }
         } else {
-            // 关闭功能：移除 JavaScript 的 Run 按钮
+            // Close功能：移除 JavaScript 的 Run 按钮
             this._removeRunButtonsByLanguage('javascript');
         }
     }
     
     /**
-     * 处理 TypeScript 运行器开关
+     * 处理 TypeScript Run器Toggle
      */
     _handleTypeScriptToggle(enabled) {
         if (enabled) {
             // 开启功能
             if (window.Runner) {
-                // 重新扫描页面，添加 Run 按钮
+                // 重新扫描页面，Add Run 按钮
                 window.Runner.scan();
             }
         } else {
-            // 关闭功能：移除 TypeScript 的 Run 按钮
+            // Close功能：移除 TypeScript 的 Run 按钮
             this._removeRunButtonsByLanguage('typescript');
         }
     }
     
     /**
-     * 处理 SQL 运行器开关
+     * 处理 SQL Run器Toggle
      */
     _handleSQLToggle(enabled) {
         if (enabled) {
@@ -157,7 +157,7 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 处理 HTML 运行器开关
+     * 处理 HTML Run器Toggle
      */
     _handleHtmlToggle(enabled) {
         if (enabled) {
@@ -170,7 +170,7 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 处理 JSON 运行器开关
+     * 处理 JSON Run器Toggle
      */
     _handleJsonToggle(enabled) {
         if (enabled) {
@@ -183,7 +183,7 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 处理 Markdown 运行器开关
+     * 处理 Markdown Run器Toggle
      */
     _handleMarkdownToggle(enabled) {
         if (enabled) {
@@ -196,7 +196,7 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 处理 Mermaid 渲染器开关
+     * 处理 Mermaid 渲染器Toggle
      */
     _handleMermaidToggle(enabled) {
         if (enabled) {
@@ -205,7 +205,7 @@ class RunnerTab extends BaseTab {
                 window.Runner.scan();
             }
         }
-        // 关闭：已渲染的图表保留在页面上（刷新页面后生效）
+        // Close：已渲染的图表保留在页面上（刷新页面后生效）
     }
 
     /**
@@ -245,7 +245,7 @@ class RunnerTab extends BaseTab {
     }
     
     /**
-     * 移除页面上所有 Run 按钮（关闭功能时调用）
+     * 移除页面上所有 Run 按钮（Close功能时调用）
      */
     _removeAllRunButtons() {
         // 移除所有 Run 按钮
@@ -268,7 +268,7 @@ class RunnerTab extends BaseTab {
             container.remove();
         });
         
-        // 移除已处理标记，下次开启时可重新添加
+        // 移除已处理标记，下次开启时可重新Add
         const processedElements = document.querySelectorAll('[data-runner-initialized]');
         processedElements.forEach(el => el.removeAttribute('data-runner-initialized'));
         

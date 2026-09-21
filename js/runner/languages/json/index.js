@@ -119,8 +119,8 @@ class JsonRunner extends BaseRunner {
   "name": "AI Chat Timeline",
   "version": "4.1.0",
   "features": [
-    "代码运行",
-    "时间轴",
+    "代码Run",
+    "Timeline",
     "公式渲染"
   ],
   "languages": {

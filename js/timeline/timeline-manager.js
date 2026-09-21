@@ -38,8 +38,8 @@ class TimelineManager {
         this.intersectionObserver = null;
         this.visibleUserTurns = new Set();
         
-        // DOMObserverManager 取消订阅函数
-        this._unsubscribeDomCheck = null;  // 合并 hideState + conflicting
+        // DOMObserverManager Cancel订阅函数
+        this._unsubscribeDomCheck = null;  // Merge hideState + conflicting
         this._unsubscribeTheme = null;
         
         // Event handlers
@@ -62,17 +62,17 @@ class TimelineManager {
         this.cancelLongPress = null;
         // ✅ 键盘导航
         this.onKeyDown = null;
-        // ✅ 键盘导航功能启用状态（内存缓存，默认开启）
+        // ✅ 键盘导航功能启用状态（内存缓存，Default开启）
         this.arrowKeysNavigationEnabled = true;
-        // ✅ AI 回复完成提醒启用状态（内存缓存，默认关闭）
+        // ✅ AI Response complete notification启用状态（内存缓存，DefaultClose）
         this.aiCompleteToastEnabled = false;
-        // ✅ 对话导出启用状态（内存缓存，默认开启）
+        // ✅ 对话导出启用状态（内存缓存，Default开启）
         this.conversationExportEnabled = true;
-        // ✅ 长对话性能优化模块（默认关闭，按平台配置启用）
+        // ✅ 长对话性能优化模块（DefaultClose，按平台配置启用）
         this.longConversationOptimizer = null;
-        // ✅ 平台设置（内存缓存）
+        // ✅ 平台Settings（内存缓存）
         this.platformSettings = {};
-        // ✅ 时间轴激活节点颜色设置（内存缓存）
+        // ✅ Timeline激活节点颜色Settings（内存缓存）
         this.timelineActiveColorByPlatform = {};
         // Timers and RAF IDs
         this.scrollRafId = null;
@@ -180,7 +180,7 @@ class TimelineManager {
         const elementsFound = await this.findCriticalElements();
         if (!elementsFound) return;
         
-        // ✅ 同步深色模式状态到 html 元素
+        // ✅ 同步Dark模式状态到 html 元素
         this.syncDarkModeClass();
         
         this.injectTimelineUI();
@@ -194,13 +194,13 @@ class TimelineManager {
         await this.loadPins();
         // ✅ 加载键盘导航功能状态
         await this.loadArrowKeysNavigationState();
-        // ✅ 加载 AI 回复完成提醒状态
+        // ✅ 加载 AI Response complete notification状态
         await this.loadAICompleteToastState();
-        // ✅ 加载平台设置
+        // ✅ 加载平台Settings
         await this.loadPlatformSettings();
-        // ✅ 加载对话导出开关
+        // ✅ 加载对话导出Toggle
         await this.loadConversationExportState();
-        // ✅ 加载激活节点颜色设置
+        // ✅ 加载激活节点颜色Settings
         await this.loadTimelineActiveColorSettings();
         // ✅ 初始化长对话性能优化（公共模块，当前 ChatGPT 优先验证）
         if (typeof LongConversationOptimizer !== 'undefined') {
@@ -220,11 +220,11 @@ class TimelineManager {
             // ✅ 延迟二次计算：页面初始化后某些元素可能还没展开
             setTimeout(() => this.recalculateAndRenderMarkers(), 500);
             
-            // ✅ 等待时间轴渲染完成后，再显示收藏按钮
+            // ✅ 等待Timeline渲染完成后，再显示收藏按钮
             // 使用双重 requestAnimationFrame 确保浏览器完成绘制
             requestAnimationFrame(() => {
                 requestAnimationFrame(async () => {
-                    // 此时浏览器已经完成时间轴的渲染
+                    // 此时浏览器已经完成Timeline的渲染
                     await this.updateStarredBtnVisibility();
                 });
             });
@@ -317,14 +317,14 @@ class TimelineManager {
         this.ui.topActions = topActions;
         this.updateTimelineTopActionsVisibility();
 
-        // ✅ 添加对话导出按钮（在时间轴最上方）
+        // ✅ Add对话导出按钮（在Timeline最上方）
         let conversationExportBtn = topActions.querySelector('.ait-conversation-export-btn') ||
             wrapper.querySelector('.ait-conversation-export-btn');
         if (!conversationExportBtn) {
             conversationExportBtn = document.createElement('button');
             conversationExportBtn.className = 'ait-conversation-export-btn';
             conversationExportBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>';
-            conversationExportBtn.setAttribute('aria-label', TimelineUtils.i18n('conversationExportButton', '导出对话'));
+            conversationExportBtn.setAttribute('aria-label', TimelineUtils.i18n('conversationExportButton', 'Export conversation'));
             conversationExportBtn.style.display = 'none';
 
             conversationExportBtn.addEventListener('mouseenter', () => {
@@ -332,7 +332,7 @@ class TimelineManager {
                     'conversation-export-btn',
                     'button',
                     conversationExportBtn,
-                    TimelineUtils.i18n('conversationExportButton', '导出对话'),
+                    TimelineUtils.i18n('conversationExportButton', 'Export conversation'),
                     { placement: 'left' }
                 );
             });
@@ -418,7 +418,7 @@ class TimelineManager {
             this.cacheTooltipConfig();
         });
         
-        // ✅ 添加提问列表按钮（在收藏按钮上方）
+        // ✅ Add提问列表按钮（在收藏按钮上方）
         let questionListBtn = document.querySelector('.ait-question-list-btn');
         if (!questionListBtn) {
             questionListBtn = document.createElement('button');
@@ -449,14 +449,14 @@ class TimelineManager {
             window.questionListPopup.bind(wrapper, timelineBar);
         }
 
-        // ✅ 添加收藏按钮（在 timeline-bar 下方 10px 处，垂直居中对齐）
+        // ✅ Add收藏按钮（在 timeline-bar 下方 10px 处，垂直居中对齐）
         let starredBtn = document.querySelector('.timeline-starred-btn');
         if (!starredBtn) {
             starredBtn = document.createElement('button');
             starredBtn.className = 'timeline-starred-btn';
             starredBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
             starredBtn.setAttribute('aria-label', TimelineUtils.i18n('hkjvnr', 'Search starred'));
-            // ✅ 初始状态：隐藏，等时间轴渲染完成后再显示
+            // ✅ 初始状态：隐藏，等Timeline渲染完成后再显示
             starredBtn.style.display = 'none';
             
             // 鼠标悬停事件 - 使用全局 Tooltip 管理器
@@ -474,13 +474,13 @@ class TimelineManager {
                 window.globalTooltipManager.hide();
             });
             
-            // ✅ 将收藏按钮添加到包装容器内（时间轴的兄弟元素）
+            // ✅ 将收藏按钮Add到包装容器内（Timeline的兄弟元素）
             wrapper.appendChild(starredBtn);
         }
         // 如果按钮已存在，直接复用，保留原有事件监听器
         this.ui.starredBtn = starredBtn;
         
-        // ✅ 添加闪记按钮（在收藏按钮下方）
+        // ✅ AddQuick note按钮（在收藏按钮下方）
         let notepadBtn = document.querySelector('.ait-notepad-btn');
         if (!notepadBtn) {
             notepadBtn = document.createElement('button');
@@ -494,7 +494,7 @@ class TimelineManager {
                     'notepad-btn',
                     'button',
                     notepadBtn,
-                    TimelineUtils.i18n('notepadTitle', '闪记'),
+                    TimelineUtils.i18n('notepadTitle', 'Quick note'),
                     { placement: 'left' }
                 );
             });
@@ -511,7 +511,7 @@ class TimelineManager {
         }
         this.ui.notepadBtn = notepadBtn;
 
-        // ✅ 添加固定设置入口（保留提问列表内原设置按钮不变）
+        // ✅ Add固定Settings入口（保留提问列表内原Settings按钮不变）
         let settingsBtn = document.querySelector('.timeline-settings-btn');
         if (!settingsBtn) {
             settingsBtn = document.createElement('button');
@@ -539,7 +539,7 @@ class TimelineManager {
         
         // ✅ 收藏按钮使用相对定位，不需要动态计算位置
         
-        // ✅ 添加收藏整个聊天的按钮（插入到平台原生UI中）
+        // ✅ Add收藏整个聊天的按钮（插入到平台原生UI中）
         this.injectStarChatButton();
     }
     
@@ -548,7 +548,7 @@ class TimelineManager {
     static TOGGLE_ICON_EXPAND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>'; // << 展开
     
     /**
-     * ✅ 注入时间轴收起/展开切换按钮
+     * ✅ 注入Timeline收起/展开切换按钮
      */
     injectToggleButton() {
         // 已存在则跳过
@@ -560,7 +560,7 @@ class TimelineManager {
         if (isNewlyCreated) {
             toggleBtn = document.createElement('button');
             toggleBtn.className = 'timeline-toggle-btn';
-            toggleBtn.innerHTML = TimelineManager.TOGGLE_ICON_COLLAPSE; // 默认展开状态，显示 >> 收起按钮
+            toggleBtn.innerHTML = TimelineManager.TOGGLE_ICON_COLLAPSE; // Default展开状态，显示 >> 收起按钮
             
             // ✅ 使用事件委托（解决长时间停留后事件失效问题）
             window.eventDelegateManager.on('click', '.timeline-toggle-btn', () => {
@@ -582,7 +582,7 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 设置 wrapper hover 时显示收起按钮
+     * ✅ Settings wrapper hover 时显示收起按钮
      * 优化：显示后3秒内如果用户未 hover 到按钮上，自动隐藏
      * 
      * 使用事件委托解决页面长时间停留后事件失效的问题
@@ -609,11 +609,11 @@ class TimelineManager {
             }
         };
         
-        // 1. 鼠标进入时间轴：显示按钮，启动3秒自动隐藏
+        // 1. 鼠标进入Timeline：显示按钮，启动3秒自动隐藏
         this.ui.wrapper.addEventListener('mouseenter', () => {
             if (!this.ui.wrapper || !this.ui.toggleBtn) return;
             
-            // 只有时间轴展开时且应该显示按钮时才需要通过 hover 显示按钮
+            // 只有Timeline展开时且应该显示按钮时才需要通过 hover 显示按钮
             if (!this.ui.wrapper.classList.contains('ait-collapsed') && this.shouldShowCollapseButton()) {
                 clearAutoHideTimer();
                 this.ui.toggleBtn.classList.add('visible');
@@ -627,7 +627,7 @@ class TimelineManager {
             }
         });
         
-        // 2. 鼠标离开时间轴：延迟隐藏，避免鼠标移到按钮时闪烁
+        // 2. 鼠标离开Timeline：延迟隐藏，避免鼠标移到按钮时闪烁
         this.ui.wrapper.addEventListener('mouseleave', () => {
             if (!this.ui.toggleBtn) return;
             
@@ -639,7 +639,7 @@ class TimelineManager {
             }, 50);
         });
         
-        // 3. 鼠标进入按钮：取消自动隐藏
+        // 3. 鼠标进入按钮：Cancel自动隐藏
         this.ui.toggleBtn.addEventListener('mouseenter', () => {
             clearAutoHideTimer();
         });
@@ -674,7 +674,7 @@ class TimelineManager {
             if (!firstMsg) return true;
             
             const rect = firstMsg.getBoundingClientRect();
-            if (rect.width === 0) return true; // 不可见时默认显示
+            if (rect.width === 0) return true; // 不可见时Default显示
             
             // 计算距离浏览器右边框的距离
             const distanceToRight = window.innerWidth - rect.right;
@@ -687,7 +687,7 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 切换时间轴显示/隐藏（用户点击时调用）
+     * ✅ 切换Timeline显示/隐藏（用户点击时调用）
      */
     toggleTimelineVisibility() {
         if (!this.ui.wrapper || !this.ui.toggleBtn) return;
@@ -695,19 +695,19 @@ class TimelineManager {
         const isCollapsed = this.ui.wrapper.classList.toggle('ait-collapsed');
         this.updateToggleButtonIcon(isCollapsed);
         
-        // 收起时关闭闪记面板
+        // 收起时CloseQuick note面板
         if (isCollapsed && window.notepadManager && window.notepadManager.isOpen) {
             window.notepadManager.close();
         }
         
-        // 保存状态到 localStorage
+        // Save状态到 localStorage
         try {
             localStorage.setItem('ait-timeline-collapsed', isCollapsed ? '1' : '0');
         } catch (e) {}
     }
     
     /**
-     * ✅ 恢复时间轴显示状态（初始化时调用）
+     * ✅ 恢复Timeline显示状态（初始化时调用）
      */
     restoreTimelineVisibility() {
         try {
@@ -751,7 +751,7 @@ class TimelineManager {
                 svg.setAttribute('fill', isStarred ? 'rgb(255, 125, 3)' : 'none');
                 svg.setAttribute('stroke', isStarred ? 'rgb(255, 125, 3)' : 'currentColor');
             }
-            // 保存引用
+            // Save引用
             this.ui.starChatBtn = starChatBtn;
             return;
         }
@@ -760,7 +760,7 @@ class TimelineManager {
         starChatBtn = document.createElement('button');
         starChatBtn.className = 'ait-timeline-star-chat-btn-native';
         
-        // 4. 检查收藏状态并设置图标
+        // 4. 检查收藏状态并Settings图标
         const isStarred = await this.isChatStarred();
         starChatBtn.innerHTML = `
             <svg width="18" height="18" viewBox="0 0 24 24" fill="${isStarred ? 'rgb(255, 125, 3)' : 'none'}" stroke="${isStarred ? 'rgb(255, 125, 3)' : 'currentColor'}" stroke-width="2">
@@ -768,7 +768,7 @@ class TimelineManager {
             </svg>
         `;
         
-        // 5. 设置基础样式（适配原生UI）
+        // 5. Settings基础样式（适配原生UI）
         const isDeepSeek = this.adapter.constructor.name === 'DeepSeekAdapter';
         starChatBtn.style.cssText = `
             width: 36px;
@@ -791,7 +791,7 @@ class TimelineManager {
             
             const isStarred = await this.isChatStarred();
             const tooltipText = isStarred
-                ? TimelineUtils.i18n('bpxjkw', '取消收藏')
+                ? TimelineUtils.i18n('bpxjkw', 'Remove from starred')
                 : TimelineUtils.i18n('zmvkpx', '收藏到文件夹');
             
             window.globalTooltipManager?.show(
@@ -814,12 +814,12 @@ class TimelineManager {
         // 9. 插入按钮到原生UI
         targetElement.parentNode.insertBefore(starChatBtn, targetElement);
         
-        // 10. 保存引用
+        // 10. Save引用
         this.ui.starChatBtn = starChatBtn;
     }
     
     /**
-     * ✅ 设置收藏聊天按钮的点击事件委托
+     * ✅ Settings收藏聊天按钮的点击事件委托
      * 使用事件委托解决页面长时间停留后点击事件失效的问题
      */
     _setupStarChatBtnClickEvent() {
@@ -843,7 +843,7 @@ class TimelineManager {
                 
                 // 更新 tooltip 文本
                 const newText = nowStarred
-                    ? TimelineUtils.i18n('bpxjkw', '取消收藏')
+                    ? TimelineUtils.i18n('bpxjkw', 'Remove from starred')
                     : TimelineUtils.i18n('zmvkpx', '收藏到文件夹');
                 window.globalTooltipManager?.updateContent(newText);
                 
@@ -857,7 +857,7 @@ class TimelineManager {
                     if (result.action === 'star') {
                         window.globalToastManager.success(TimelineUtils.i18n('kxpmzv', '已收藏'), null, { color: toastColor });
                     } else if (result.action === 'unstar') {
-                        window.globalToastManager.info(TimelineUtils.i18n('pzmvkx', '已取消收藏'), null, { color: toastColor });
+                        window.globalToastManager.info(TimelineUtils.i18n('pzmvkx', '已Remove from starred'), null, { color: toastColor });
                     }
                 }
             }
@@ -865,7 +865,7 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 显示编辑对话框（使用全局 Input Modal）
+     * ✅ 显示Edit对话框（使用全局 Input Modal）
      */
     async showEditDialog(currentText) {
         if (!window.globalInputModal) {
@@ -874,9 +874,9 @@ class TimelineManager {
         }
         
         return await window.globalInputModal.show({
-            title: TimelineUtils.i18n('vkpxzm', '编辑'),
+            title: TimelineUtils.i18n('vkpxzm', 'Edit'),
             defaultValue: currentText,
-            placeholder: TimelineUtils.i18n('zmxvkp', '标题'),
+            placeholder: TimelineUtils.i18n('zmxvkp', 'Title'),
             required: true,
             requiredMessage: TimelineUtils.i18n('pzmkvx', '请输入内容'),
             maxLength: 100
@@ -906,7 +906,7 @@ class TimelineManager {
             const existingValue = await StarStorageManager.findByKey(key);
             
             if (existingValue) {
-                // 已收藏，取消收藏
+                // 已收藏，Remove from starred
                 await StarStorageManager.remove(key);
                 return { success: true, action: 'unstar' };
             } else {
@@ -916,23 +916,23 @@ class TimelineManager {
                     return { success: false, action: null };
                 }
                 
-                // 获取默认主题（通过 Adapter 提供）
+                // 获取Default主题（通过 Adapter 提供）
                 const defaultTheme = this.adapter.getDefaultChatTheme?.() || '';
                 
                 const result = await window.starInputModal.show({
                     title: TimelineUtils.i18n('zmvkpx', '收藏到文件夹'),
                     defaultValue: defaultTheme,
-                    placeholder: TimelineUtils.i18n('zmxvkp', '标题'),
+                    placeholder: TimelineUtils.i18n('zmxvkp', 'Title'),
                     folderManager: this.folderManager,
                     defaultFolderId: null
                 });
                 
                 if (!result) {
-                    // 用户取消了
+                    // 用户Cancel了
                     return { success: false, action: 'cancelled' };
                 }
                 
-                // 添加收藏
+                // Add收藏
                 // ✅ 限制收藏文字长度为前100个字符
                 const truncatedTheme = this.truncateText(result.value, 100);
                 const value = {
@@ -964,13 +964,13 @@ class TimelineManager {
             return null;
         }
         
-            // 获取默认主题（通过 Adapter 提供）
+            // 获取Default主题（通过 Adapter 提供）
             const defaultTheme = this.adapter.getDefaultChatTheme?.() || '';
             
         return await window.globalInputModal.show({
-            title: TimelineUtils.i18n('qwxpzm', '设置主题'),
+            title: TimelineUtils.i18n('qwxpzm', 'Timeline theme'),
             defaultValue: defaultTheme,
-            placeholder: TimelineUtils.i18n('zmxvkp', '标题'),
+            placeholder: TimelineUtils.i18n('zmxvkp', 'Title'),
             required: true,
             requiredMessage: TimelineUtils.i18n('mzpxvk', '请输入主题'),
             maxLength: 100
@@ -983,7 +983,7 @@ class TimelineManager {
      */
     cacheTooltipConfig() {
         try {
-            // ✅ 使用固定值（与 CSS 变量的默认值一致）
+            // ✅ 使用固定值（与 CSS 变量的Default值一致）
             this.tooltipConfigCache = {
                 arrowOut: 6,   // --timeline-tooltip-arrow-outside
                 baseGap: 12,   // --timeline-tooltip-gap-visual
@@ -994,7 +994,7 @@ class TimelineManager {
                 maxW: 288,     // --timeline-tooltip-max
             };
         } catch (e) {
-            // 使用默认值
+            // 使用Default值
             this.tooltipConfigCache = {
                 arrowOut: 6,
                 baseGap: 12,
@@ -1033,7 +1033,7 @@ class TimelineManager {
         }
         this.zeroTurnsTimer = TimelineUtils.clearTimerSafe(this.zeroTurnsTimer);
         
-        // ✅ 确定有节点要渲染，注入收起/展开切换按钮（首次调用时创建，后续调用直接跳过）
+        // ✅ Confirm有节点要渲染，注入收起/展开切换按钮（首次调用时创建，后续调用直接跳过）
         this.injectToggleButton();
 
         const elementsArray = Array.from(userTurnElements);
@@ -1075,7 +1075,7 @@ class TimelineManager {
          * 
          * ✅ 性能优化：批量读取所有 rect 后再排序
          * 原因：getBoundingClientRect() 会触发浏览器重排
-         * 批量读取可以让浏览器合并重排操作，减少布局抖动
+         * 批量读取可以让浏览器Merge重排操作，减少布局抖动
          */
         // 一次性批量读取所有 rect（利用浏览器批量优化）
         const rectsMap = new Map();
@@ -1105,7 +1105,7 @@ class TimelineManager {
          * 这些变化不会影响对话节点的数量和顺序，但会触发不必要的位置重新计算。
          * 
          * 优化策略：
-         * 通过比对节点 ID 集合，只在节点真正增加/删除时才重新计算。
+         * 通过比对节点 ID 集合，只在节点真正增加/Delete时才重新计算。
          * 这样可以减少 80%+ 的不必要计算，提升性能和稳定性。
          */
         
@@ -1202,7 +1202,7 @@ class TimelineManager {
          * 当 scrollProgress = 0.5 时，第一个 n > 0.5 的是节点2，激活节点2
          */
         
-        // ✅ 获取"干净"的滚动区域尺寸（不包含我们添加的 padding）
+        // ✅ 获取"干净"的滚动区域尺寸（不包含我们Add的 padding）
         const { scrollHeight, clientHeight, maxScrollTop: cleanMaxScrollTop } = this._getCleanScrollMetrics();
         
         // 缓存用于后续计算
@@ -1211,7 +1211,7 @@ class TimelineManager {
         // ✅ 统一使用 scrollContainer 计算所有位置
         const nodeOffsets = Array.from(userTurnElements).map(el => getOffsetTop(el, this.scrollContainer));
         
-        // 用于时间轴圆点定位（也使用 scrollContainer，保持一致）
+        // 用于Timeline圆点定位（也使用 scrollContainer，保持一致）
         const firstOffsetTop = nodeOffsets[0];
         const lastOffsetTop = nodeOffsets[nodeOffsets.length - 1];
         let contentSpan = lastOffsetTop - firstOffsetTop;
@@ -1226,7 +1226,7 @@ class TimelineManager {
          * 问题：当最后几个节点距离很近时，点击某个节点后可能激活错误的节点
          * 原因：原来的 activateAt 和 offsetTop 的映射关系不是 1:1
          * 
-         * 解决方案：添加底部 padding，确保 maxScrollTop >= lastOffsetTop
+         * 解决方案：Add底部 padding，确保 maxScrollTop >= lastOffsetTop
          * 这样可以直接用 offsetTop 判断激活，避免压缩问题
          */
         this._updateScrollPadding(lastOffsetTop, cleanMaxScrollTop);
@@ -1240,7 +1240,7 @@ class TimelineManager {
              * 
              * - offsetTop: 节点顶部距离滚动区域顶部的距离（像素）
              * - offsetBottom: 节点结束位置 = offsetTop + 节点高度（像素）
-             * - visualN: 用于时间轴圆点定位（0~1）
+             * - visualN: 用于Timeline圆点定位（0~1）
              * 
              * 激活逻辑：直接使用 offsetTop，找最后一个 (offsetTop - 提前量) <= scrollTop 的节点
              * 注意：需要配合底部空白元素使用，确保所有节点都能被滚动激活
@@ -1253,7 +1253,7 @@ class TimelineManager {
             const nodeHeight = el.offsetHeight || 0;
             const offsetBottom = offsetTop + nodeHeight;
             
-            // visualN: 用于时间轴圆点定位（0~1，保留6位小数）
+            // visualN: 用于Timeline圆点定位（0~1，保留6位小数）
             const offsetFromStart = offsetTop - firstOffsetTop;
             let visualN = offsetFromStart / contentSpan;
             visualN = Math.round(Math.max(0, Math.min(1, visualN)) * 1000000) / 1000000;
@@ -1280,7 +1280,7 @@ class TimelineManager {
             return m;
         });
         
-        // ✅ 应用收藏状态：根据 starredIndexes 设置 starred 和填充 this.starred
+        // ✅ 应用收藏状态：根据 starredIndexes Settings starred 和填充 this.starred
         // 支持 nodeId（字符串）和 index（数字），并有 fallback 逻辑
         this.starredIndexes.forEach(nodeKey => {
             let marker = null;
@@ -1289,7 +1289,7 @@ class TimelineManager {
             if (this.adapter.findMarkerByStoredIndex) {
                 marker = this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
             } else {
-                // 默认逻辑：尝试用 generateTurnIdFromIndex 构建 turnId
+                // Default逻辑：尝试用 generateTurnIdFromIndex 构建 turnId
                 if (this.adapter.generateTurnIdFromIndex) {
                     const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
                     marker = this.markerMap.get(turnId);
@@ -1306,7 +1306,7 @@ class TimelineManager {
             }
         });
         
-        // ✅ 应用标记状态：根据 pinnedIndexes 设置 pinned 和填充 this.pinned
+        // ✅ 应用标记状态：根据 pinnedIndexes Settings pinned 和填充 this.pinned
         // 与收藏状态相同的逻辑
         this.pinnedIndexes.forEach(nodeKey => {
             let marker = null;
@@ -1332,7 +1332,7 @@ class TimelineManager {
         // Bump version after markers are rebuilt to invalidate concurrent passes
         this.markersVersion++;
         
-        // ✅ 动态调整时间轴高度（根据节点数量）
+        // ✅ 动态调整Timeline高度（根据节点数量）
         this.updateTimelineHeight();
 
         // Compute geometry and virtualize render
@@ -1371,7 +1371,7 @@ class TimelineManager {
             if (this.adapter.findMarkerByStoredIndex) {
                 return this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
             }
-            // 默认逻辑
+            // Default逻辑
             if (this.adapter.generateTurnIdFromIndex) {
                 const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
                 const marker = this.markerMap.get(turnId);
@@ -1453,8 +1453,8 @@ class TimelineManager {
         });
         this.mutationObserver.observe(this.conversationContainer, { childList: true, subtree: true });
         // Resize: update long-canvas geometry and virtualization
-        // ⚠️ 注意：这里只监听时间轴自身大小变化，不需要重新计算节点位置
-        // 因为时间轴大小变化不影响对话区域节点的 offsetTop
+        // ⚠️ 注意：这里只监听Timeline自身大小变化，不需要重新计算节点位置
+        // 因为Timeline大小变化不影响对话区域节点的 offsetTop
         this.resizeObserver = new ResizeObserver(() => {
             this.updateTimelineGeometry();
             this.syncTimelineTrackToMain();
@@ -1485,33 +1485,33 @@ class TimelineManager {
 
         this.updateIntersectionObserverTargets();
         
-        // ✅ 设置 DOM 检查监听（隐藏状态 + 冲突插件检测）
+        // ✅ Settings DOM 检查监听（隐藏状态 + 冲突插件检测）
         this.setupDomCheckObserver();
     }
 
     /**
-     * ✅ 设置 DOM 检查监听器（合并：隐藏状态 + 冲突插件检测）
+     * ✅ Settings DOM 检查监听器（Merge：隐藏状态 + 冲突插件检测）
      * 
-     * 功能1：监听 DOM 变化，调用 adapter 的检测方法判断是否应该隐藏时间轴
-     * 功能2：检测并隐藏冲突的第三方时间轴插件元素
+     * 功能1：监听 DOM 变化，调用 adapter 的检测方法判断是否应该隐藏Timeline
+     * 功能2：检测并隐藏冲突的第三方Timeline插件元素
      * 
      * 使用 DOMObserverManager 统一管理，减少订阅数量
      */
     setupDomCheckObserver() {
-        // 已知的冲突时间轴选择器（包括其他插件和平台自带的时间轴）
+        // 已知的冲突Timeline选择器（包括其他插件和平台自带的Timeline）
         const conflictingSelectors = [
-            '.gemini-timeline-bar',      // Gemini 时间轴插件
-            '.chatgpt-timeline-bar',     // ChatGPT 时间轴插件
-            '[style*="--scroll-nav-page-padding"]', // DeepSeek 原生滚动导航时间轴
+            '.gemini-timeline-bar',      // Gemini Timeline插件
+            '.chatgpt-timeline-bar',     // ChatGPT Timeline插件
+            '[style*="--scroll-nav-page-padding"]', // DeepSeek 原生滚动导航Timeline
         ];
         
-        // 检查并更新时间轴可见性
+        // 检查并更新Timeline可见性
         const checkAndUpdateTimelineVisibility = () => {
             const shouldHide = this.adapter.shouldHideTimeline();
             if (this.ui.wrapper) {
                 this.ui.wrapper.style.display = shouldHide ? 'none' : 'flex';
             }
-            // ✅ 切换按钮跟随时间轴显示/隐藏
+            // ✅ 切换按钮跟随Timeline显示/隐藏
             if (this.ui.toggleBtn) {
                 this.ui.toggleBtn.style.display = shouldHide ? 'none' : 'flex';
             }
@@ -1521,7 +1521,7 @@ class TimelineManager {
         checkAndUpdateTimelineVisibility();
         this.hideConflictingElements(conflictingSelectors);
         
-        // 使用 DOMObserverManager 监听 DOM 变化（合并为 1 个订阅）
+        // 使用 DOMObserverManager 监听 DOM 变化（Merge为 1 个订阅）
         if (window.DOMObserverManager) {
             this._unsubscribeDomCheck = window.DOMObserverManager.getInstance().subscribeBody('timeline-dom-check', {
                 callback: () => {
@@ -1535,7 +1535,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 隐藏冲突的时间轴元素
+     * ✅ 隐藏冲突的Timeline元素
      * @param {string[]} selectors - 需要隐藏的元素选择器数组
      */
     hideConflictingElements(selectors) {
@@ -1687,26 +1687,26 @@ class TimelineManager {
             // 只处理上下方向键
             if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
             
-            // ✅ 检查焦点元素，避免干扰可编辑元素和表单控件
+            // ✅ 检查焦点元素，避免干扰可Edit元素和表单控件
             const activeElement = document.activeElement;
             if (activeElement) {
-                // 检查是否为可编辑元素或表单控件
+                // 检查是否为可Edit元素或表单控件
                 // 按常见程度排序，优化短路求值性能
                 const isEditableElement = 
-                    activeElement.isContentEditable ||        // 最常见：ChatGPT/富文本编辑器
+                    activeElement.isContentEditable ||        // 最常见：ChatGPT/富文本Edit器
                     activeElement.tagName === 'INPUT' ||      // 常见：普通输入框
                     activeElement.tagName === 'TEXTAREA' ||   // 常见：多行文本
                     activeElement.tagName === 'SELECT' ||     // 常见：下拉框
                     activeElement.tagName === 'IFRAME' ||     // 特殊：iframe 内可能有输入框
                     activeElement.contentEditable === 'true'; // 冗余检查，增加兼容性
                 
-                // 如果焦点在可编辑元素上，不拦截，让原生行为生效
+                // 如果焦点在可Edit元素上，不拦截，让原生行为生效
                 if (isEditableElement) return;
             }
             
             // ✅ 检查功能是否启用
             if (!this.arrowKeysNavigationEnabled) {
-                return; // 功能关闭，不处理
+                return; // 功能Close，不处理
             }
             
             // ✅ 检查当前平台是否启用
@@ -1714,7 +1714,7 @@ class TimelineManager {
                 return; // 当前平台被禁用，不处理
             }
             
-            // 阻止默认滚动行为
+            // 阻止Default滚动行为
             e.preventDefault();
             
             // 如果没有节点，不处理
@@ -1726,10 +1726,10 @@ class TimelineManager {
                 currentIndex = this.markers.findIndex(m => m.id === this.activeTurnId);
             }
             
-            // 如果没有激活节点，或激活节点已失效（索引为-1），提供智能默认行为
+            // 如果没有激活节点，或激活节点已失效（索引为-1），提供智能Default行为
             if (currentIndex === -1) {
                 // 没有激活节点或激活节点失效（DOM 替换后可能发生）
-                // 根据按键方向选择合适的默认节点
+                // 根据按键方向选择合适的Default节点
                 let defaultMarker;
                 if (e.key === 'ArrowUp') {
                     // 按上键：从最后一个节点开始（符合用户向上浏览的意图）
@@ -1767,7 +1767,7 @@ class TimelineManager {
         };
         document.addEventListener('keydown', this.onKeyDown);
         
-        // ✅ 保存为实例方法以便在 destroy 中清理
+        // ✅ Save为实例方法以便在 destroy 中清理
         this.startLongPress = (e) => {
             const dot = e.target.closest('.ait-timeline-dot');
             if (!dot) return;
@@ -1800,7 +1800,7 @@ class TimelineManager {
         this.checkLongPressMove = (e) => {
             if (!longPressTimer || !longPressStartPos) return;
             
-            // 如果移动超过5px，取消长按
+            // 如果移动超过5px，Cancel长按
             const pos = e.type.startsWith('touch') ? e.touches[0] : e;
             const dx = pos.clientX - longPressStartPos.x;
             const dy = pos.clientY - longPressStartPos.y;
@@ -1933,7 +1933,7 @@ class TimelineManager {
                     if (this.adapter.findMarkerByStoredIndex) {
                         return this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
                     }
-                    // 默认逻辑
+                    // Default逻辑
                     if (this.adapter.generateTurnIdFromIndex) {
                         const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
                         const marker = this.markerMap.get(turnId);
@@ -1951,7 +1951,7 @@ class TimelineManager {
                     // 重新加载收藏数据
                     await this.loadStars();
 
-                    // 同步收藏整个对话按钮的状态
+                    // 同步收藏Entire conversation按钮的状态
                     const starBtn = this.ui.starChatBtn || document.querySelector('.ait-timeline-star-chat-btn-native');
                     if (starBtn) {
                         const nowStarred = await this.isChatStarred();
@@ -2024,17 +2024,17 @@ class TimelineManager {
                     this.arrowKeysNavigationEnabled = changes.arrowKeysNavigationEnabled.newValue !== false;
                 }
 
-                // ✅ 监听 AI 回复完成提醒状态变化
+                // ✅ 监听 AI Response complete notification状态变化
                 if (changes.timelineAICompleteToastEnabled) {
                     this.aiCompleteToastEnabled = changes.timelineAICompleteToastEnabled.newValue === true;
                 }
                 
-                // ✅ 监听平台设置变化
+                // ✅ 监听平台Settings变化
                 if (changes.timelinePlatformSettings) {
                     this.platformSettings = changes.timelinePlatformSettings.newValue || {};
                 }
 
-                // ✅ 监听对话导出开关变化
+                // ✅ 监听对话导出Toggle变化
                 if (changes.conversationExportEnabled) {
                     this.conversationExportEnabled = changes.conversationExportEnabled.newValue !== false;
                     this.updateConversationExportButtonVisibility();
@@ -2043,7 +2043,7 @@ class TimelineManager {
                     }
                 }
 
-                // ✅ 监听时间轴激活节点颜色变化
+                // ✅ 监听Timeline激活节点颜色变化
                 if (changes.timelineActiveColorByPlatform) {
                     this.timelineActiveColorByPlatform = changes.timelineActiveColorByPlatform.newValue || {};
                     this.applyTimelineActiveColor();
@@ -2077,7 +2077,7 @@ class TimelineManager {
             }
         }));
 
-        // ✅ 固定设置入口：与提问列表里的设置按钮保持同一目标页面
+        // ✅ 固定Settings入口：与提问列表里的Settings按钮保持同一目标页面
         this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.timeline-settings-btn', () => {
             if (window.questionListPopup && window.questionListPopup.visible) {
                 window.questionListPopup.hide();
@@ -2100,14 +2100,14 @@ class TimelineManager {
             }
         }));
         
-        // ✅ 闪记按钮点击事件
+        // ✅ Quick note按钮点击事件
         this._eventDelegateUnsubs.push(window.eventDelegateManager.on('click', '.ait-notepad-btn', () => {
             if (window.notepadManager) {
                 window.notepadManager.toggle();
             }
         }));
         
-        // ✅ 优化：监听主题变化，清空缓存
+        // ✅ 优化：监听主题变化，Clear缓存
         this.setupThemeChangeListener();
         
         // ✅ 注册依赖 Timeline 的 Panel Modal tabs
@@ -2132,7 +2132,7 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 同步深色模式状态到 html 元素
+     * ✅ 同步Dark模式状态到 html 元素
      * 使用 data-timeline-theme 属性，避免与 detectDarkMode() 的检测冲突
      */
     syncDarkModeClass() {
@@ -2147,8 +2147,8 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 优化：设置主题变化监听器
-     * 当主题切换时，重新缓存 CSS 变量并清空截断缓存
+     * ✅ 优化：Timeline theme变化监听器
+     * 当主题切换时，重新缓存 CSS 变量并Clear截断缓存
      * 使用 DOMObserverManager 统一管理
      */
     setupThemeChangeListener() {
@@ -2174,7 +2174,7 @@ class TimelineManager {
                 mediaQuery.addListener(mediaQueryHandler);
             }
             
-            // 保存引用以便在 destroy 时清理
+            // Save引用以便在 destroy 时清理
             this.mediaQuery = mediaQuery;
             this.mediaQueryHandler = mediaQueryHandler;
         } catch (e) {
@@ -2187,13 +2187,13 @@ class TimelineManager {
     onThemeChange() {
         // 延迟到下一帧，确保新主题的样式已应用
         requestAnimationFrame(() => {
-            // ✅ 同步深色模式类
+            // ✅ 同步Dark模式类
             this.syncDarkModeClass();
             
             // 重新缓存 CSS 变量
             this.cacheTooltipConfig();
             
-            // 清空截断缓存（因为颜色/字体可能变化）
+            // Clear截断缓存（因为颜色/字体可能变化）
             this.truncateCache.clear();
         });
     }
@@ -2352,7 +2352,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 获取紧凑模式的默认间距
+     * ✅ 获取紧凑模式的Default间距
      */
     getCompactGap() {
         if (!this.ui.timelineBar) return 30;
@@ -2361,9 +2361,9 @@ class TimelineManager {
 
     /**
      * ✅ 判断是否应该使用紧凑模式
-     * 简单逻辑：平均空间 = 时间轴高度 / 节点数
+     * 简单逻辑：平均空间 = Timeline高度 / 节点数
      * 平均空间 < 40px → 切换到紧凑模式
-     * 平均空间 > 45px → 切换回正常模式
+     * 平均空间 > 45px → 切换回Normal模式
      * 40-45px 之间 → 保持当前模式（滞后区间）
      */
     shouldBeCompactMode() {
@@ -2509,7 +2509,7 @@ class TimelineManager {
             element: contentElement
         }, {
             placement: 'auto',
-            maxWidth: 288  // ✅ 使用固定值（与 CSS 中的默认值一致）
+            maxWidth: 288  // ✅ 使用固定值（与 CSS 中的Default值一致）
         });
     }
     
@@ -2550,7 +2550,7 @@ class TimelineManager {
         content.className = 'timeline-tooltip-content';
         content.textContent = layout.text;
         
-        // ✅ 添加点击复制功能
+        // ✅ Add点击Copy功能
         content.addEventListener('click', (e) => {
             e.stopPropagation();
             this.copyToClipboard(messageText, content);
@@ -2567,7 +2567,7 @@ class TimelineManager {
         pinSpan.dataset.targetTurnId = id;
         if (!isPinned) pinSpan.classList.add('not-pinned');
         pinSpan.dataset.tip = isPinned
-            ? TimelineUtils.i18n('unpinAction', '取消标记重点')
+            ? TimelineUtils.i18n('unpinAction', 'Remove highlight')
             : TimelineUtils.i18n('pinAction', '标记重点');
         pinSpan.addEventListener('click', async (e) => {
             e.stopPropagation();
@@ -2578,7 +2578,7 @@ class TimelineManager {
                 const nowPinned = this.pinned.has(turnId);
                 pinSpan.classList.toggle('not-pinned', !nowPinned);
                 pinSpan.dataset.tip = nowPinned
-                    ? TimelineUtils.i18n('unpinAction', '取消标记重点')
+                    ? TimelineUtils.i18n('unpinAction', 'Remove highlight')
                     : TimelineUtils.i18n('pinAction', '标记重点');
             }
         });
@@ -2595,7 +2595,7 @@ class TimelineManager {
         starSpan.dataset.targetTurnId = id;
         if (!isStarred) starSpan.classList.add('not-starred');
         starSpan.dataset.tip = isStarred
-            ? TimelineUtils.i18n('unstarAction', '取消收藏')
+            ? TimelineUtils.i18n('unstarAction', 'Remove from starred')
             : TimelineUtils.i18n('starAction', '收藏到文件夹');
         starSpan.addEventListener('click', async (e) => {
             e.stopPropagation();
@@ -2609,7 +2609,7 @@ class TimelineManager {
                 };
                 if (result.action === 'star') {
                     starSpan.classList.remove('not-starred');
-                    starSpan.dataset.tip = TimelineUtils.i18n('unstarAction', '取消收藏');
+                    starSpan.dataset.tip = TimelineUtils.i18n('unstarAction', 'Remove from starred');
                     if (window.globalToastManager) {
                         window.globalToastManager.success(TimelineUtils.i18n('kxpmzv', '已收藏'), null, { color: toastColor });
                     }
@@ -2617,7 +2617,7 @@ class TimelineManager {
                     starSpan.classList.add('not-starred');
                     starSpan.dataset.tip = TimelineUtils.i18n('starAction', '收藏到文件夹');
                     if (window.globalToastManager) {
-                        window.globalToastManager.info(TimelineUtils.i18n('pzmvkx', '已取消收藏'), null, { color: toastColor });
+                        window.globalToastManager.info(TimelineUtils.i18n('pzmvkx', '已Remove from starred'), null, { color: toastColor });
                     }
                 }
             }
@@ -2744,7 +2744,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 更新时间轴高度和包装容器位置
+     * ✅ 更新Timeline高度和包装容器位置
      */
     updateTimelineHeight() {
         if (!this.ui.timelineBar || !this.ui.wrapper) return;
@@ -2755,23 +2755,23 @@ class TimelineManager {
         const defaultTop = parseInt(position.top, 10) || 100;
         const defaultBottom = parseInt(position.bottom, 10) || 100;
         
-        // 统一使用默认高度
+        // 统一使用Default高度
         const topValue = `${defaultTop}px`;
         const bottomValue = `${defaultBottom}px`;
         
-        // 设置包装容器位置（包含时间轴和收藏按钮）
+        // Settings包装容器位置（包含Timeline和收藏按钮）
         this.ui.wrapper.style.top = topValue;
         
-        // 设置时间轴高度：矮窗口下优先不遮挡页面主体
+        // SettingsTimeline高度：矮窗口下优先不遮挡页面主体
         this.ui.timelineBar.style.height = `max(96px, min(calc(100vh - ${topValue} - ${bottomValue}), calc(100vh - ${topValue} - 24px)))`;
         
         // ✅ 收藏按钮使用相对定位，不需要动态调整位置
     }
     
     /**
-     * 更新时间轴几何布局
+     * 更新Timeline几何布局
      * 
-     * 核心逻辑：将归一化位置（n，范围 0-1）转换为时间轴上的实际像素位置
+     * 核心逻辑：将归一化位置（n，范围 0-1）转换为Timeline上的实际像素位置
      * 
      * 布局策略：
      * 1. 计算可用空间：usableC = contentHeight - 2*pad
@@ -2832,7 +2832,7 @@ class TimelineManager {
             const startY = (H - totalHeight) / 2; // 垂直居中
             adjusted = renderMarkers.map((_, i) => startY + i * actualGap);
         } else {
-            // 正常模式：原有逻辑
+            // Normal模式：原有逻辑
             const minGap = this.getMinGap();
             const desired = Math.max(H, (N > 0 ? (2 * pad + Math.max(0, N - 1) * minGap) : H));
             this.contentHeight = Math.ceil(desired);
@@ -2956,13 +2956,13 @@ class TimelineManager {
                 }
                 // Apply active state immediately if this is the active marker
                 try { dot.classList.toggle('active', marker.id === this.activeTurnId); } catch {}
-                // ✅ 添加：如果已收藏，添加 starred 类（标记点变橙金色）
+                // ✅ Add：如果已收藏，Add starred 类（标记点变橙金色）
                 try { dot.classList.toggle('starred', this.starred.has(marker.id)); } catch {}
-                // ✅ 添加：如果已标记，添加 pinned 类（CSS自动显示图钉）
+                // ✅ Add：如果已标记，Add pinned 类（CSS自动显示图钉）
                 try { 
                     dot.classList.toggle('pinned', this.pinned.has(marker.id));
                 } catch {}
-                // ✅ 添加：奇偶标识（用于紧凑模式长短交替）
+                // ✅ Add：奇偶标识（用于紧凑模式长短交替）
                 try { dot.classList.add(i % 2 === 0 ? 'line-even' : 'line-odd'); } catch {}
                 marker.dotElement = dot;
                 frag.appendChild(dot);
@@ -3042,7 +3042,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 优化：截断文本为 5 行（添加缓存 + Emoji 安全截断）
+     * ✅ 优化：截断文本为 5 行（Add缓存 + Emoji 安全截断）
      */
     truncateToFiveLines(text, targetWidth, wantLayout = false) {
         try {
@@ -3124,12 +3124,12 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 优化：添加到截断缓存（LRU 策略，限制大小）
+     * ✅ 优化：Add到截断缓存（LRU 策略，限制大小）
      */
     _addToTruncateCache(key, value) {
         const MAX_CACHE_SIZE = 100;
         
-        // 如果缓存已满，删除最旧的条目（Map 的第一个）
+        // 如果缓存已满，Delete最旧的条目（Map 的第一个）
         if (this.truncateCache.size >= MAX_CACHE_SIZE) {
             const firstKey = this.truncateCache.keys().next().value;
             this.truncateCache.delete(firstKey);
@@ -3310,7 +3310,7 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 获取"干净"的滚动区域尺寸（不包含我们添加的空白元素）
+     * ✅ 获取"干净"的滚动区域尺寸（不包含我们Add的空白元素）
      * @returns {{ scrollHeight: number, clientHeight: number, maxScrollTop: number }}
      */
     _getCleanScrollMetrics() {
@@ -3435,7 +3435,7 @@ class TimelineManager {
                 }
             }
         } else {
-            // 正常滚动：使用缓存的 offsetTop，二分查找最后一个已越过阈值的节点
+            // Normal滚动：使用缓存的 offsetTop，二分查找最后一个已越过阈值的节点
             const threshold = (this.scrollContainer.scrollTop || 0) + this.ACTIVATE_AHEAD;
             let lo = 0;
             let hi = this.markers.length - 1;
@@ -3563,7 +3563,7 @@ class TimelineManager {
         TimelineUtils.disconnectObserverSafe(this.resizeObserver);
         TimelineUtils.disconnectObserverSafe(this.intersectionObserver);
         
-        // 取消 DOMObserverManager 订阅
+        // Cancel DOMObserverManager 订阅
         if (this._unsubscribeDomCheck) {
             this._unsubscribeDomCheck();
             this._unsubscribeDomCheck = null;
@@ -3649,7 +3649,7 @@ class TimelineManager {
         this.tooltipUpdateDebounceTimer = TimelineUtils.clearTimerSafe(this.tooltipUpdateDebounceTimer);
         this.resizeIdleTimer = TimelineUtils.clearTimerSafe(this.resizeIdleTimer);
         this.resizeIdleRICId = TimelineUtils.clearIdleCallbackSafe(this.resizeIdleRICId);
-        // ✅ 移除：longPressTimer 已删除
+        // ✅ 移除：longPressTimer 已Delete
         this.zeroTurnsTimer = TimelineUtils.clearTimerSafe(this.zeroTurnsTimer);
         this.aiCompleteToastTimer = TimelineUtils.clearTimerSafe(this.aiCompleteToastTimer);
         this.showRafId = TimelineUtils.clearRafSafe(this.showRafId);
@@ -3670,7 +3670,7 @@ class TimelineManager {
             }
         } catch {}
         
-        // ✅ 清理闪记按钮，并关闭面板
+        // ✅ 清理Quick note按钮，并Close面板
         if (window.notepadManager && window.notepadManager.isOpen) {
             window.notepadManager.close();
         }
@@ -3772,19 +3772,19 @@ class TimelineManager {
     async loadArrowKeysNavigationState() {
         try {
             const enabled = await StorageAdapter.get('arrowKeysNavigationEnabled');
-            // 默认开启（!== false）
+            // Default开启（!== false）
             this.arrowKeysNavigationEnabled = enabled !== false;
         } catch (e) {
             if (!TimelineUtils.isExtensionContextInvalidated(e)) {
                 console.error('[Timeline] Failed to load arrow keys navigation state:', e);
             }
-            // 读取失败，默认开启
+            // 读取失败，Default开启
             this.arrowKeysNavigationEnabled = true;
         }
     }
 
     /**
-     * ✅ 加载 AI 回复完成提醒状态
+     * ✅ 加载 AI Response complete notification状态
      */
     async loadAICompleteToastState() {
         try {
@@ -3794,13 +3794,13 @@ class TimelineManager {
             if (!TimelineUtils.isExtensionContextInvalidated(e)) {
                 console.error('[Timeline] Failed to load AI complete toast state:', e);
             }
-            // 读取失败，默认开启
+            // 读取失败，Default开启
             this.aiCompleteToastEnabled = false;
         }
     }
 
     /**
-     * ✅ 加载平台设置
+     * ✅ 加载平台Settings
      */
     async loadPlatformSettings() {
         try {
@@ -3814,7 +3814,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 加载对话导出开关状态
+     * ✅ 加载对话导出Toggle状态
      */
     async loadConversationExportState() {
         try {
@@ -3829,7 +3829,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 加载时间轴激活节点颜色设置
+     * ✅ 加载Timeline激活节点颜色Settings
      */
     async loadTimelineActiveColorSettings() {
         try {
@@ -3843,7 +3843,7 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 应用当前平台的时间轴激活节点颜色
+     * ✅ 应用当前平台的Timeline激活节点颜色
      */
     applyTimelineActiveColor() {
         if (!this.ui.timelineBar) return;
@@ -3870,28 +3870,28 @@ class TimelineManager {
         try {
             // 获取当前平台信息
             const platform = getCurrentPlatform();
-            if (!platform) return true; // 未知平台，默认启用
+            if (!platform) return true; // 未知平台，Default启用
             
-            // ✅ 首先检查平台是否支持时间轴功能
+            // ✅ 首先检查平台是否支持Timeline功能
             if (platform.features?.timeline !== true) {
                 return false; // 平台不支持该功能
             }
             
-            // 从缓存中检查（默认启用）
+            // 从缓存中检查（Default启用）
             return this.platformSettings[platform.id] !== false;
         } catch (e) {
-            return true; // 出错默认启用
+            return true; // 出错Default启用
         }
     }
 
     /**
-     * ✅ 截断文本到指定长度，超出添加 "..."
+     * ✅ 截断文本到指定长度，超出Add "..."
      * 
      * 用途：
-     * 用于收藏和标记功能，限制保存的文本长度，保持 UI 整洁。
+     * 用于收藏和标记功能，限制Save的文本长度，保持 UI 整洁。
      * 
      * @param {string} text - 原始文本
-     * @param {number} maxLength - 最大长度（默认100字符）
+     * @param {number} maxLength - 最大长度（Default100字符）
      * @returns {string} 截断后的文本
      * 
      * @example
@@ -3925,7 +3925,7 @@ class TimelineManager {
     }
     
     /**
-     * ✅ 保存收藏项（带文件夹）
+     * ✅ Save收藏项（带文件夹）
      * @param {string|number} nodeKey - nodeId（字符串，如 Gemini）或 index（数字）
      * @param {string} question - 收藏的问题文本
      * @param {string|null} folderId - 文件夹 ID
@@ -4017,7 +4017,7 @@ class TimelineManager {
             const isTempId = tempMatch && parseInt(tempMatch[1], 10) < 1000;
             if (isTempId) {
                 if (window.globalToastManager) {
-                    window.globalToastManager.info(TimelineUtils.i18n('pleaseWait', '请稍等，节点ID正在加载...'));
+                    window.globalToastManager.info(TimelineUtils.i18n('pleaseWait', 'Please wait, the node ID is loading...'));
                 }
                 return { success: false, action: null };
             }
@@ -4040,7 +4040,7 @@ class TimelineManager {
         
         // 切换收藏状态
         if (this.starred.has(id)) {
-            // 取消收藏
+            // Remove from starred
             this.starred.delete(id);
             this.starredIndexes.delete(storageKey);
             await this.removeStarItem(storageKey);
@@ -4069,7 +4069,7 @@ class TimelineManager {
             this.updateStarredBtnVisibility();
             return { success: true, action: 'unstar' };
         } else {
-            // 添加收藏 - 显示弹窗输入主题和选择文件夹
+            // Add收藏 - 显示弹窗输入主题和选择文件夹
             if (!window.starInputModal) {
                 console.error('[TimelineManager] starInputModal not available');
                 return { success: false, action: null };
@@ -4078,19 +4078,19 @@ class TimelineManager {
             const result = await window.starInputModal.show({
                 title: TimelineUtils.i18n('zmvkpx', '收藏到文件夹'),
                 defaultValue: m.summary,
-                placeholder: TimelineUtils.i18n('zmxvkp', '标题'),
+                placeholder: TimelineUtils.i18n('zmxvkp', 'Title'),
                 folderManager: this.folderManager,
                 defaultFolderId: null
             });
             
             if (!result) {
-                // 用户取消了
+                // 用户Cancel了
                 return { success: false, action: 'cancelled' };
             }
             
             this.starred.add(id);
             this.starredIndexes.add(storageKey);
-            // ✅ 使用 nodeId 或数组索引保存
+            // ✅ 使用 nodeId 或数组索引Save
             this.saveStarItemWithFolder(storageKey, result.value, result.folderId);
             
             m.starred = true;
@@ -4156,7 +4156,7 @@ class TimelineManager {
                         starredMessages.push({
                             index: -1,
                             nodeId: -1,
-                            question: data.question || '整个对话',
+                            question: data.question || 'Entire conversation',
                             url: fullUrl,
                             urlWithoutProtocol: urlWithoutProtocol,
                             siteName: siteInfo.name,
@@ -4189,13 +4189,13 @@ class TimelineManager {
         return starredMessages.sort((a, b) => b.timestamp - a.timestamp);
     }
     
-    // ✅ 复制文本到剪贴板并显示反馈
+    // ✅ Copy文本到剪贴板并显示反馈
     async copyToClipboard(text, targetElement) {
         try {
             // 使用现代 Clipboard API
             await navigator.clipboard.writeText(text);
             
-            // 显示复制成功提示
+            // 显示Copied successfully提示
             this.showCopyFeedback(targetElement);
         } catch (err) {
             // 降级方案：使用传统方法
@@ -4210,18 +4210,18 @@ class TimelineManager {
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
                 
-                // 显示复制成功提示
+                // 显示Copied successfully提示
                 this.showCopyFeedback(targetElement);
             } catch (e) {
-                console.error('复制失败:', e);
+                console.error('Copy failed:', e);
             }
         }
     }
     
-    // ✅ 显示复制成功的反馈提示（使用全局 Toast 管理器）
+    // ✅ 显示Copied successfully的反馈提示（使用全局 Toast 管理器）
     showCopyFeedback(targetElement) {
         window.globalToastManager.success(
-            TimelineUtils.i18n('xpzmvk', '已复制'),
+            TimelineUtils.i18n('xpzmvk', 'Copied'),
             targetElement
         );
     }
@@ -4249,10 +4249,10 @@ class TimelineManager {
         this.updateConversationExportButtonVisibility();
         if (!this.ui.starredBtn) return;
         
-        // 隐藏收藏按钮（功能已合并到提问列表中）
+        // 隐藏收藏按钮（功能已Merge到提问列表中）
         this.ui.starredBtn.style.display = 'none';
         
-        // 同步显示闪记按钮（受开关控制，默认开启）
+        // 同步显示Quick note按钮（受Toggle控制，Default开启）
         if (this.ui.notepadBtn) {
             try {
                 const enabled = await StorageAdapter.get('aitNotepadEnabled');
@@ -4262,13 +4262,13 @@ class TimelineManager {
             }
         }
         
-        // 根据是否有收藏数据来设置不同的颜色状态
+        // 根据是否有收藏数据来Settings不同的颜色状态
         const hasData = await this.hasStarredData();
         if (hasData) {
             // 有收藏记录：移除灰色类，使用橙色
             this.ui.starredBtn.classList.remove('no-starred-data');
         } else {
-            // 没有收藏记录：添加灰色类
+            // 没有收藏记录：Add灰色类
             this.ui.starredBtn.classList.add('no-starred-data');
         }
     }
@@ -4297,7 +4297,7 @@ class TimelineManager {
         topActions.style.display = hasVisibleAction ? 'flex' : 'none';
     }
     
-    // ✅ 设置导航数据（用于跨页面导航）
+    // ✅ Settings导航数据（用于跨页面导航）
     async setNavigateData(key, value) {
         try {
             await StorageAdapter.set(`chatTimelineNavigate:${key}`, value);
@@ -4306,7 +4306,7 @@ class TimelineManager {
         }
     }
     
-    // ✅ 设置导航数据（用于跨网站导航，使用目标URL作为key）
+    // ✅ Settings导航数据（用于跨网站导航，使用目标URL作为key）
     async setNavigateDataForUrl(targetUrl, index) {
         try {
             // 使用目标URL（去掉协议）作为key
@@ -4321,7 +4321,7 @@ class TimelineManager {
         }
     }
     
-    // ✅ 获取并删除导航数据
+    // ✅ 获取并Delete导航数据
     async getNavigateData(key) {
         try {
             const fullKey = `chatTimelineNavigate:${key}`;
@@ -4347,11 +4347,11 @@ class TimelineManager {
             if (data && data.targetIndex !== undefined) {
                 // 检查是否过期（1分钟）
                 if (data.expires && Date.now() < data.expires) {
-                    // 删除数据（只使用一次）
+                    // Delete数据（只使用一次）
                     await StorageAdapter.remove(key);
                     return data.targetIndex;
                 } else {
-                    // 过期，删除
+                    // 过期，Delete
                     await StorageAdapter.remove(key);
                 }
             }
@@ -4388,7 +4388,7 @@ class TimelineManager {
             const isTempId = tempMatch && parseInt(tempMatch[1], 10) < 1000;
             if (isTempId) {
                 if (window.globalToastManager) {
-                    window.globalToastManager.info(TimelineUtils.i18n('pleaseWait', '请稍等，节点ID正在加载...'));
+                    window.globalToastManager.info(TimelineUtils.i18n('pleaseWait', 'Please wait, the node ID is loading...'));
                 }
                 return false;
             }
@@ -4412,7 +4412,7 @@ class TimelineManager {
             const isPinned = await PinStorageManager.findByKey(key);
             
             if (isPinned) {
-                // 取消标记
+                // Cancel标记
                 await PinStorageManager.remove(key);
                 
                 // ✅ 兼容性修复：清理可能存在的旧数据（数字索引）
@@ -4429,7 +4429,7 @@ class TimelineManager {
                 this.pinned.delete(id);
                 this.pinnedIndexes.delete(nodeKey);
             } else {
-                // 添加标记
+                // Add标记
                 // ✅ 限制标记文字长度为前100个字符
                 const truncatedSummary = this.truncateText(marker.summary || '', 100);
                 const pinData = {
@@ -4489,11 +4489,11 @@ class TimelineManager {
                 const n = marker.dotN || 0;
                 pinMarker.style.setProperty('--n', String(n));
                 
-                // 添加到 timelineBar
+                // Add到 timelineBar
                 this.ui.timelineBar.appendChild(pinMarker);
             }
         });
     }
 
-    // ✅ 移除：cancelLongPress 方法已删除，长按收藏功能已移除
+    // ✅ 移除：cancelLongPress 方法已Delete，长按收藏功能已移除
 }

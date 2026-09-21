@@ -69,7 +69,7 @@ class AIStateMonitor {
     start(adapter) {
         if (!adapter || typeof adapter.isAIGenerating !== 'function') return;
         
-        // 如果已在运行，先停止
+        // 如果已在Run，先停止
         this.stop();
         
         this._adapter = adapter;

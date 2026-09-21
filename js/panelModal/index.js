@@ -5,7 +5,7 @@
  * - 从右侧滑入/滑出
  * - 支持多个 tab 切换
  * - tab 只显示 icon，悬停显示 tooltip
- * - 点击遮罩层或关闭按钮关闭
+ * - 点击遮罩层或Close按钮Close
  * 
  * ✨ 组件自治：
  * - 脚本加载时自动初始化
@@ -14,7 +14,7 @@
  * 
  * 使用方式：
  * window.panelModal.show('starred'); // 打开并显示 starred tab
- * window.panelModal.hide();          // 关闭
+ * window.panelModal.hide();          // Close
  * window.panelModal.registerTab(tab); // 注册新 tab
  */
 
@@ -49,7 +49,7 @@ class PanelModal {
         // 绑定事件
         this.bindEvents();
         
-        // 监听 URL 变化（自动关闭）
+        // 监听 URL 变化（自动Close）
         this._attachUrlListeners();
         
         console.log('[PanelModal] Initialized successfully');
@@ -72,11 +72,11 @@ class PanelModal {
         const sidebar = document.createElement('div');
         sidebar.className = 'ait-panel-modal-sidebar';
         
-        // 顶部区域（关闭按钮 + 标题）
+        // 顶部区域（Close按钮 + 标题）
         const sidebarHeader = document.createElement('div');
         sidebarHeader.className = 'ait-panel-modal-sidebar-header';
         
-        // 关闭按钮（左侧顶部）
+        // Close按钮（左侧顶部）
         this.closeBtn = document.createElement('button');
         this.closeBtn.className = 'ait-panel-modal-close';
         this.closeBtn.innerHTML = `
@@ -86,7 +86,7 @@ class PanelModal {
             </svg>
         `;
         
-        // 标题（关闭按钮右侧）
+        // 标题（Close按钮右侧）
         const sidebarTitle = document.createElement('span');
         sidebarTitle.className = 'ait-panel-modal-sidebar-title';
         sidebarTitle.textContent = 'ChatLine';
@@ -136,7 +136,7 @@ class PanelModal {
         
         this.titleElement = document.createElement('h2');
         this.titleElement.className = 'ait-panel-modal-title';
-        this.titleElement.textContent = 'Panel'; // 默认标题，会在切换 tab 时更新
+        this.titleElement.textContent = 'Panel'; // Default标题，会在切换 tab 时更新
         
         header.appendChild(this.titleElement);
         
@@ -154,17 +154,17 @@ class PanelModal {
         this.container.appendChild(this.overlay);
         this.container.appendChild(wrapper);
         
-        // 添加到 body
+        // Add到 body
         document.body.appendChild(this.container);
     }
     
     bindEvents() {
-        // 点击遮罩层关闭
+        // 点击遮罩层Close
         this.overlay.addEventListener('click', () => {
             this.hide();
         });
         
-        // 点击关闭按钮
+        // 点击Close按钮
         this.closeBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             this.hide();
@@ -172,7 +172,7 @@ class PanelModal {
     }
     
     /**
-     * 监听 URL 变化（自动关闭）
+     * 监听 URL 变化（自动Close）
      */
     _attachUrlListeners() {
         try {
@@ -194,14 +194,14 @@ class PanelModal {
     }
     
     /**
-     * URL 变化处理：自动关闭面板
+     * URL 变化处理：自动Close面板
      */
     _handleUrlChange() {
         const newUrl = location.href;
         if (newUrl !== this._currentUrl) {
             this._currentUrl = newUrl;
             
-            // URL 变化时自动关闭面板
+            // URL 变化时自动Close面板
             if (this.isVisible) {
                 this.hide();
             }
@@ -237,7 +237,7 @@ class PanelModal {
             this._lastTabGroup = tab.group;
         }
 
-        // 保存 tab
+        // Save tab
         this.tabs.set(tab.id, tab);
         
         // 创建 tab 按钮
@@ -276,7 +276,7 @@ class PanelModal {
             this.switchTab(tab.id);
         });
         
-        // 添加到 tab 栏
+        // Add到 tab 栏
         this.tabsContainer.appendChild(tabButton);
     }
     
@@ -290,7 +290,7 @@ class PanelModal {
             registerAllTabs();
         }
         
-        // 确定要显示的 tab（带 fallback）
+        // Confirm要显示的 tab（带 fallback）
         let targetTabId = tabId;
         
         // 如果指定的 tab 不存在，fallback 到当前 tab 或第一个可用的 tab
@@ -372,7 +372,7 @@ class PanelModal {
         // 更新当前 tab
         this.currentTabId = tabId;
         
-        // 添加新 tab 按钮的 active 状态
+        // Add新 tab 按钮的 active 状态
         const newButton = this.tabsContainer.querySelector(`[data-tab-id="${tabId}"]`);
         if (newButton) {
             newButton.classList.add('active');
@@ -423,7 +423,7 @@ class PanelModal {
             }
         }
         
-        // ✨ 彻底销毁：清空内容和状态
+        // ✨ 彻底销毁：Clear内容和状态
         this.content.innerHTML = '';
         this.currentTabId = null;
         

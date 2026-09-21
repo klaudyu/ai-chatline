@@ -1,7 +1,7 @@
 /**
  * Platform-specific Conversation Extractors
  *
- * 这些 extractor 只服务“对话导出”，不改变时间轴节点、收藏或同步逻辑。
+ * 这些 extractor 只服务“对话导出”，不改变Timeline节点、收藏或同步逻辑。
  * ChatGPT/Grok 当前通用配对效果较好，继续走 generic extractor。
  */
 
@@ -252,9 +252,9 @@ class KimiConversationExtractor extends BasePlatformConversationExtractor {
                 '[aria-label*="复制"]',
                 '[aria-label*="分享"]',
                 '[aria-label*="编辑"]',
-                '[aria-label*="Copy"]',
-                '[aria-label*="Share"]',
-                '[aria-label*="Edit"]'
+                '[aria-label*="复制"]',
+                '[aria-label*="分享"]',
+                '[aria-label*="编辑"]'
             ],
             afterNormalize: text => this._stripOperationLines(text)
         });

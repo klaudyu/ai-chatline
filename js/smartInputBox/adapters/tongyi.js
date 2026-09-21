@@ -79,7 +79,7 @@ class TongyiSmartEnterAdapter extends BaseSmartEnterAdapter {
     }
     
     /**
-     * 获取提示词按钮位置偏移量
+     * 获取Prompt按钮位置偏移量
      */
     getPromptButtonOffset() {
         return { top: 10, left: -2 };

@@ -261,7 +261,7 @@ class DoubaoAdapter extends SiteAdapter {
     
     /**
      * ✅ 豆包使用反向滚动布局（scrollTop=0在底部，负数向上）
-     * 其他平台如果也有反向滚动，可以在适配器中添加此方法返回 true
+     * 其他平台如果也有反向滚动，可以在适配器中Add此方法返回 true
      * @returns {boolean}
      */
     isReverseScroll() {
@@ -303,7 +303,7 @@ class DoubaoAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // 豆包使用页面标题作为默认主题，并过滤尾部的 " - 豆包"
+        // 豆包使用页面标题作为Default主题，并过滤尾部的 " - 豆包"
         const title = document.title || '';
         return title.replace(/\s*-\s*豆包\s*$/i, '').trim();
     }

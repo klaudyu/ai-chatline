@@ -34,7 +34,7 @@
     overflow-y: auto;
 }
 
-/* 深色模式 */
+/* Dark模式 */
 html[data-timeline-theme="dark"] .global-dropdown {
     background: #262626;
     border-color: #404040;
@@ -90,7 +90,7 @@ html[data-timeline-theme="dark"] .global-dropdown-item:active {
     pointer-events: none;
 }
 
-/* 危险操作（如删除） */
+/* 危险操作（如Delete） */
 .global-dropdown-item.danger {
     color: #ef4444;
 }
@@ -107,7 +107,7 @@ html[data-timeline-theme="dark"] .global-dropdown-item.danger:hover {
     background-color: #450a0a;
 }
 
-/* "新建/添加 xxx" 类型的操作项 —— 视觉上与列表中的真实条目（如真实文件夹名）做区分 */
+/* "新建/Add xxx" 类型的操作项 —— 视觉上与列表中的真实条目（如真实文件夹名）做区分 */
 .global-dropdown-item.create-action .global-dropdown-item-label {
     font-style: italic;
     color: #6b7280;          /* 比正文更弱：text-secondary */
@@ -136,7 +136,7 @@ html[data-timeline-theme="dark"] .global-dropdown-item.create-action .global-dro
     color: #8B5CF6;
 }
 
-/* hover 时图标保持品牌紫，覆盖默认的 hover 变深灰 */
+/* hover 时图标保持品牌紫，OverwriteDefault的 hover 变深灰 */
 .global-dropdown-item.create-action:hover .global-dropdown-item-icon svg,
 .global-dropdown-submenu .global-dropdown-item.create-action:hover .global-dropdown-item-icon svg {
     color: #6128FF;

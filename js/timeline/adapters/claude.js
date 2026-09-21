@@ -96,17 +96,17 @@ class ClaudeAdapter extends SiteAdapter {
     }
     
     getDefaultChatTheme() {
-        // Claude 使用页面标题作为默认主题，并过滤尾部的 " - Claude"
+        // Claude 使用页面标题作为Default主题，并过滤尾部的 " - Claude"
         const title = document.title || '';
         return title.replace(/\s*[-–]\s*Claude\s*$/i, '').trim();
     }
     
     /**
-     * 检测是否应该隐藏时间轴
+     * 检测是否应该隐藏Timeline
      * @returns {boolean}
      */
     shouldHideTimeline() {
-        return false; // 默认不隐藏
+        return false; // Default不隐藏
     }
     
     /**

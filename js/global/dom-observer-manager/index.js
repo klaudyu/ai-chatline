@@ -15,7 +15,7 @@
  * 1. 防抖 (debounce): DOM 停止变化后才执行
  *    - 每次变化重置计时器
  *    - 适用于：等 AI 输出完成后再处理
- *    - 例如：runner 等代码块完整后添加按钮
+ *    - 例如：runner 等代码块完整后Add按钮
  * 
  * 2. 节流 (throttle): DOM 持续变化时，每隔一段时间执行一次
  *    - 保证每 N 秒至少执行一次
@@ -83,7 +83,7 @@ class DOMObserverManager {
 
         // ===== Theme Observer（属性变化）=====
         this._themeSubscribers = new Map();  // id -> { callback }
-        this._themeObserver = null;  // 合并监听 html + body
+        this._themeObserver = null;  // Merge监听 html + body
 
         // ===== Container Observers（特定容器）=====
         this._containerObservers = new Map();  // containerId -> { observer, subscribers, element }
@@ -105,21 +105,21 @@ class DOMObserverManager {
      * @param {Function} options.callback - 回调函数 (data: { addedNodes, removedNodes, mutations }) => void
      * @param {Object} [options.filter] - 过滤条件
      * @param {boolean} [options.filter.hasAddedNodes] - 只在有新增节点时触发
-     * @param {boolean} [options.filter.hasRemovedNodes] - 只在有删除节点时触发
+     * @param {boolean} [options.filter.hasRemovedNodes] - 只在有Delete节点时触发
      * @param {boolean} [options.filter.hasCharacterData] - 只在有文本变化时触发
      * @param {boolean} [options.filter.hasAttributes] - 只在有属性变化时触发
      * @param {string} [options.target] - CSS 选择器，只关心匹配的元素
      * @param {number} [options.debounce] - 防抖时间（毫秒）- DOM 停止变化后才执行
      * @param {number} [options.throttle] - 节流时间（毫秒）- DOM 持续变化时每隔一段时间执行
-     * @param {boolean} [options.characterData] - 是否监听文本变化（默认 false）
-     * @param {boolean} [options.attributes] - 是否监听属性变化（默认 false）
+     * @param {boolean} [options.characterData] - 是否监听文本变化（Default false）
+     * @param {boolean} [options.attributes] - 是否监听属性变化（Default false）
      * @param {string[]} [options.attributeFilter] - 监听的属性名列表
-     * @returns {Function} 取消订阅函数
+     * @returns {Function} Cancel订阅函数
      * 
      * 执行策略说明：
-     * - 只设置 debounce: 等 DOM 稳定后执行（适合等输出完成后处理）
-     * - 只设置 throttle: 持续变化时定时执行（适合实时处理）
-     * - 同时设置: 持续变化时定时执行 + 变化结束后兜底执行
+     * - 只Settings debounce: 等 DOM 稳定后执行（适合等输出完成后处理）
+     * - 只Settings throttle: 持续变化时定时执行（适合实时处理）
+     * - 同时Settings: 持续变化时定时执行 + 变化结束后兜底执行
      */
     subscribeBody(id, options) {
         const { callback, filter = {}, target, debounce = 0, throttle = 0, characterData = false, attributes = false, attributeFilter = null } = options;
@@ -128,7 +128,7 @@ class DOMObserverManager {
             throw new Error('callback is required and must be a function');
         }
 
-        // 如果已存在相同 id，先取消之前的订阅
+        // 如果已存在相同 id，先Cancel之前的订阅
         if (this._bodySubscribers.has(id)) {
             this._log(`[Body] Replacing existing subscriber: ${id}`);
             this.unsubscribeBody(id);
@@ -159,12 +159,12 @@ class DOMObserverManager {
         // 确保 observer 已启动
         this._ensureBodyObserver();
 
-        // 返回取消订阅函数
+        // 返回Cancel订阅函数
         return () => this.unsubscribeBody(id);
     }
 
     /**
-     * 取消 body 订阅
+     * Cancel body 订阅
      * @param {string} id - 订阅者标识
      */
     unsubscribeBody(id) {
@@ -437,7 +437,7 @@ class DOMObserverManager {
      * 订阅主题变化（html/body 属性变化）
      * @param {string} id - 订阅者唯一标识
      * @param {Function} callback - 回调函数
-     * @returns {Function} 取消订阅函数
+     * @returns {Function} Cancel订阅函数
      */
     subscribeTheme(id, callback) {
         if (!callback || typeof callback !== 'function') {
@@ -453,7 +453,7 @@ class DOMObserverManager {
     }
 
     /**
-     * 取消主题订阅
+     * Cancel主题订阅
      */
     unsubscribeTheme(id) {
         this._themeSubscribers.delete(id);
@@ -528,7 +528,7 @@ class DOMObserverManager {
      * @param {number} [options.debounce] - 防抖时间（毫秒）- DOM 停止变化后才执行
      * @param {number} [options.throttle] - 节流时间（毫秒）- DOM 持续变化时每隔一段时间执行
      * @param {Object} [options.observerOptions] - MutationObserver 配置
-     * @returns {Function} 取消订阅函数
+     * @returns {Function} Cancel订阅函数
      */
     subscribeContainer(id, container, options) {
         const { callback, debounce = 0, throttle = 0, observerOptions = { childList: true, subtree: true } } = options;
@@ -566,7 +566,7 @@ class DOMObserverManager {
             this._log(`[Container] Created observer for: ${containerId}`);
         }
 
-        // 添加订阅者
+        // Add订阅者
         containerData.subscribers.set(id, {
             callback,
             debounce,
@@ -577,13 +577,13 @@ class DOMObserverManager {
 
         this._log(`[Container] Subscribed: ${id} to ${containerId}`);
 
-        // 使用闭包保存 containerId，确保取消订阅时正确
+        // 使用闭包Save containerId，确保Cancel订阅时正确
         const savedContainerId = containerId;
         return () => this.unsubscribeContainer(id, savedContainerId);
     }
 
     /**
-     * 取消容器订阅
+     * Cancel容器订阅
      */
     unsubscribeContainer(id, containerId) {
         const containerData = this._containerObservers.get(containerId);

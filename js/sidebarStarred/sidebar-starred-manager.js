@@ -125,12 +125,12 @@ class SidebarStarredManager {
         helpBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
         helpBtn.addEventListener('mouseenter', () => {
             if (!window.globalTooltipManager) return;
-            const desc = this._i18n('starredHelpDesc', '文件夹，分类整理对话，告别杂乱无章。');
-            const tipsTitle = this._i18n('starredHelpTipsTitle', '使用小技巧：');
-            const tip1 = this._i18n('starredHelpTip1', '拖动对话到文件夹。');
-            const tip2 = this._i18n('starredHelpTip2', '拖动文件夹中的对话调整位置。');
-            const tip3 = this._i18n('starredHelpTip3', '拖动二级文件夹调整位置。');
-            const tip4 = this._i18n('starredHelpTip4', '双击文件夹或对话，快速编辑。');
+            const desc = this._i18n('starredHelpDesc', 'Organize conversations into folders and keep everything tidy.');
+            const tipsTitle = this._i18n('starredHelpTipsTitle', 'Tips:');
+            const tip1 = this._i18n('starredHelpTip1', 'Drag conversations into folders.');
+            const tip2 = this._i18n('starredHelpTip2', 'Drag conversations within a folder to reorder them.');
+            const tip3 = this._i18n('starredHelpTip3', 'Drag subfolders to reorder them.');
+            const tip4 = this._i18n('starredHelpTip4', 'Double-click a folder or conversation to edit it quickly.');
             const html = `<div style="font-size:12px;line-height:1.6">`
                 + `<div style="font-size:13px;font-weight:600;margin-bottom:6px">${desc}</div>`
                 + `<div style="font-weight:600;margin-bottom:4px">${tipsTitle}</div>`

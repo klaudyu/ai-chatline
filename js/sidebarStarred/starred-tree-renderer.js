@@ -32,7 +32,7 @@ class StarredTreeRenderer {
      * @param {Function} opts.setFolderStates   - (states) => void
      * @param {Function} opts.getListContainer  - () => HTMLElement|null
      * @param {Function} opts.onAfterAction     - 数据变更后的刷新回调
-     * @param {Function} [opts.onAfterNavigate] - 导航后回调（tab: 关闭弹窗）
+     * @param {Function} [opts.onAfterNavigate] - 导航后回调（tab: Close弹窗）
      */
     constructor(opts) {
         this.opts = Object.assign({
@@ -112,7 +112,7 @@ class StarredTreeRenderer {
         if (searchQuery && list.children.length === 0) {
             list.innerHTML = `
                 <div class="${this.opts.emptyClass}">
-                    <div style="margin-bottom:8px;">未找到匹配的收藏</div>
+                    <div style="margin-bottom:8px;">No matching starred items found</div>
                     <div style="font-size:13px;color:#9ca3af;">
                         搜索关键词：<strong>"${this._escapeHtml(searchQuery)}"</strong>
                     </div>
@@ -452,7 +452,7 @@ class StarredTreeRenderer {
                     const actualFid = target.folderId === '__default__' ? null : target.folderId;
                     const draggedTurnId = _itemCD.turnId;
 
-                    // [可能移除] 拖拽自动置顶：在 DOM 重渲染前推断 pinned 状态
+                    // [可能移除] 拖拽自动Pin：在 DOM 重渲染前推断 pinned 状态
                     const shouldPin = this._inferPinFromDrop(target.itemEl);
                     const currentItem = this._itemDataMap.get(draggedTurnId);
                     const needsPinChange = currentItem && (!!currentItem.pinned !== shouldPin);
@@ -460,7 +460,7 @@ class StarredTreeRenderer {
                     this.folderManager.reorderStarredInFolder(
                         draggedTurnId, actualFid, target.turnId, target.position
                     ).then(async () => {
-                        // [可能移除] 拖拽自动置顶：同步 pinned 状态到 storage
+                        // [可能移除] 拖拽自动Pin：同步 pinned 状态到 storage
                         if (needsPinChange) {
                             await StarStorageManager.update(`chatTimelineStar:${draggedTurnId}`, { pinned: shouldPin });
                         }
@@ -1274,13 +1274,13 @@ class StarredTreeRenderer {
     }
 
     /**
-     * [可能移除] 拖拽自动置顶推断
+     * [可能移除] 拖拽自动Pin推断
      *
      * 直接使用参考项（用户拖放目标附近的收藏项）的 pinned 状态：
-     *   - 参考项是置顶的 → 返回 true（落在置顶区域）
-     *   - 参考项是非置顶的 → 返回 false（落在非置顶区域）
+     *   - 参考项是Pin的 → 返回 true（落在Pin区域）
+     *   - 参考项是非Pin的 → 返回 false（落在非Pin区域）
      *
-     * 在置顶/非置顶边界处，_detectDropTarget 根据鼠标与元素中点的距离
+     * 在Pin/非Pin边界处，_detectDropTarget 根据鼠标与元素中点的距离
      * 决定 before/after，从而天然地将边界决定权交给用户的鼠标位置。
      *
      * @param {HTMLElement} refItemEl - 落点参考收藏项元素

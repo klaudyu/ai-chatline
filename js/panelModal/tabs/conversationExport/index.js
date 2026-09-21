@@ -1,7 +1,7 @@
 /**
- * Conversation Export Tab - 对话导出设置
+ * Conversation Export Tab - 对话导出Settings
  *
- * 第一版只提供全局开关。导出入口和具体流程由 timeline/export 模块处理。
+ * 第一版只提供全局Toggle。导出入口和具体流程由 timeline/export 模块处理。
  */
 
 function conversationExportTabI18n(key, fallback = '', substitutions) {
@@ -38,7 +38,7 @@ class ConversationExportTab extends BaseTab {
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label">${conversationExportTabI18n('conversationExportToggleTitle', '开启对话导出')}</div>
-                        <div class="setting-hint">${conversationExportTabI18n('conversationExportToggleHint', '开启后，在支持的平台对话页时间轴上方显示导出入口。')}</div>
+                        <div class="setting-hint">${conversationExportTabI18n('conversationExportToggleHint', '开启后，在Supported platforms对话页Timeline上方显示导出入口。')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="conversation-export-toggle">

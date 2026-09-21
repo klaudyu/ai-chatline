@@ -2,7 +2,7 @@
  * Mirror Site Entry Point
  *
  * 检测当前页面是否为用户配置的镜像站，
- * 如果是，初始化浮窗按钮（提示词复制模式）。
+ * 如果是，初始化浮窗按钮（PromptCopy模式）。
  */
 
 (async function initMirrorSite() {

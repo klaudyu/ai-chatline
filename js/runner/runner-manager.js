@@ -1,5 +1,5 @@
 /**
- * RunnerManager - 代码运行器核心管理器
+ * RunnerManager - 代码Run器核心管理器
  * 
  * 协调各个模块，管理代码执行流程
  */
@@ -23,7 +23,7 @@ class RunnerManager {
     }
 
     /**
-     * 运行代码
+     * Run代码
      * @param {string} code - 要执行的代码
      * @param {string} language - 语言类型
      * @param {Object} callbacks - 回调函数
@@ -41,21 +41,21 @@ class RunnerManager {
 
         // 检查代码是否为空
         if (!code || !code.trim()) {
-            onError({ message: '代码不能为空' });
-            return { success: false, error: '代码不能为空' };
+            onError({ message: 'Code cannot be empty' });
+            return { success: false, error: 'Code cannot be empty' };
         }
 
         // 检查语言是否支持
         const runner = this.languageRegistry.getRunner(language);
         if (!runner) {
-            onError({ message: `不支持的语言: ${language}` });
-            return { success: false, error: `不支持的语言: ${language}` };
+            onError({ message: `Unsupported language: ${language}` });
+            return { success: false, error: `Unsupported language: ${language}` };
         }
 
-        // 检查是否正在运行
+        // 检查是否正在Run
         if (this.isRunning) {
-            onError({ message: '代码正在运行中，请稍候...' });
-            return { success: false, error: '代码正在运行中' };
+            onError({ message: 'Code is running, please wait...' });
+            return { success: false, error: 'Code is running' };
         }
 
         // 重置输出计数
@@ -64,7 +64,7 @@ class RunnerManager {
         onStart();
 
         try {
-            // 执行代码（使用各语言默认的超时时间）
+            // 执行代码（使用各语言Default的超时时间）
             const result = await runner.execute(code, {
                 onOutput: (output) => {
                     this.handleOutput(output, onOutput);
@@ -110,12 +110,12 @@ class RunnerManager {
     }
 
     /**
-     * 停止当前运行
+     * 停止当前Run
      */
     stop() {
         if (!this.isRunning) return;
 
-        // 清理当前语言的运行器
+        // 清理当前语言的Run器
         const runner = this.languageRegistry.getRunner(this.currentLanguage);
         if (runner && runner.cleanup) {
             runner.cleanup();
@@ -135,7 +135,7 @@ class RunnerManager {
 
         const runner = this.languageRegistry.getRunner(language);
         if (!runner) {
-            return { valid: false, error: '不支持的语言' };
+            return { valid: false, error: 'Unsupported language' };
         }
 
         if (runner.validateSyntax) {
@@ -171,7 +171,7 @@ class RunnerManager {
     }
 
     /**
-     * 设置当前语言
+     * Settings当前语言
      * @param {string} language - 语言
      */
     setCurrentLanguage(language) {

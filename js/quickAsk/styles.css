@@ -27,7 +27,7 @@
     transform: translateY(0);
 }
 
-/* 追问按钮 */
+/* Follow up按钮 */
 .ait-quick-ask-action {
     display: flex;
     align-items: center;

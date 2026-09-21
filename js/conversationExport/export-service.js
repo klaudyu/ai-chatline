@@ -1,7 +1,7 @@
 /**
  * Export Service
  *
- * 统一导出流程：采集当前会话 -> 格式化 -> 复制或下载。
+ * 统一导出流程：采集当前会话 -> 格式化 -> Copy或下载。
  */
 
 class ConversationExportService {
@@ -20,15 +20,15 @@ class ConversationExportService {
             (options.selectedTurnIndexes?.length || 0);
 
         if (isSelectedExport && selectedCount === 0) {
-            throw new Error('请至少选择一条对话内容');
+            throw new Error('Please select at least one conversation item');
         }
 
         const buildPayload = async () => {
             const payload = await this.extractor.extract(options);
             if (!payload.messages || payload.messages.length === 0) {
                 throw new Error(isSelectedExport
-                    ? '未识别到已选择的会话内容'
-                    : '未识别到可导出的会话内容');
+                    ? 'No selected conversation content was recognized'
+                    : 'No exportable conversation content was recognized');
             }
 
             const content = this.formatters.format(payload, format);

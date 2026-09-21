@@ -1,9 +1,9 @@
 /**
  * Mirror Site Float Button
  *
- * 镜像站浮窗按钮：可拖拽，点击弹出提示词列表（复制模式）。
- * 提示词下拉菜单复用 prompt-dropdown-ui.js 共享渲染。
- * 点击提示词项时复制到剪贴板，不关闭弹窗。
+ * 镜像站浮窗按钮：可拖拽，点击弹出Prompt列表（Copy模式）。
+ * Prompt下拉菜单复用 prompt-dropdown-ui.js 共享渲染。
+ * 点击Prompt项时Copy to clipboard，不Close弹窗。
  */
 
 class MirrorSiteFloatButton {
@@ -159,7 +159,7 @@ class MirrorSiteFloatButton {
         } catch { /* use default CSS position */ }
     }
 
-    // ==================== 提示词弹窗（复用共享 UI） ====================
+    // ==================== Prompt弹窗（复用共享 UI） ====================
 
     _handleClick() {
         if (this._promptDropdown) {
@@ -232,7 +232,7 @@ class MirrorSiteFloatButton {
         }
 
         if (window.globalToastManager) {
-            window.globalToastManager.show('success', chrome.i18n.getMessage('mirrorSiteCopied') || '已复制到剪贴板');
+            window.globalToastManager.show('success', chrome.i18n.getMessage('mirrorSiteCopied') || 'Copied to clipboard');
         }
     }
 

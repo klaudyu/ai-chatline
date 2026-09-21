@@ -1,13 +1,13 @@
 /**
  * Chat Width Manager - 对话宽度调节
  * 
- * 通过注入 CSS 覆盖各 AI 平台对话容器的 max-width，
+ * 通过注入 CSS Overwrite各 AI 平台对话容器的 max-width，
  * 让用户可以自由调宽对话区域。
  * 
  * 特性：
  * - 全平台共享同一个宽度比例（chatWidthScale）
- * - 默认 100%（不做任何修改），只能往大调（最大 150%）
- * - 浮动滑块拖动实时预览，点击确定后持久化
+ * - Default 100%（不做任何修改），只能往大调（最大 150%）
+ * - 浮动滑块拖动实时预览，点击Confirm后持久化
  * - 使用 calc() 基于页面原始 max-width 按比例缩放
  */
 
@@ -31,7 +31,7 @@ class ChatWidthManager {
     }
 
     /**
-     * 初始化：从平台配置读取宽度参数并应用已保存的宽度
+     * 初始化：从平台配置读取宽度参数并应用已Save的宽度
      */
     async init() {
         const platform = getCurrentPlatform();
@@ -57,7 +57,7 @@ class ChatWidthManager {
     }
 
     /**
-     * 设置宽度比例并持久化
+     * Settings宽度比例并持久化
      * @param {number} scale - 100~150
      */
     async setScale(scale) {
@@ -319,7 +319,7 @@ class ChatWidthManager {
 
     _formatVal(v) {
         return v <= 100
-            ? (chrome.i18n.getMessage('chatWidthNormal') || '正常')
+            ? (chrome.i18n.getMessage('chatWidthNormal') || 'Normal')
             : v + '%';
     }
 
@@ -338,7 +338,7 @@ class ChatWidthManager {
                 </svg>
                 <input type="range" class="ait-cw-float-slider" min="100" max="150" step="5" value="${this._scale}">
                 <span class="ait-cw-float-val">${this._formatVal(this._scale)}</span>
-                <button class="ait-cw-float-ok">${chrome.i18n.getMessage('chatWidthConfirm') || '确定'}</button>
+                <button class="ait-cw-float-ok">${chrome.i18n.getMessage('chatWidthConfirm') || 'Confirm'}</button>
                 <button class="ait-cw-float-close" title="Close">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
                 </button>

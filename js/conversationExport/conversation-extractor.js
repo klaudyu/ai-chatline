@@ -2,7 +2,7 @@
  * Conversation Extractor
  *
  * 从当前页面提取标准化会话数据。平台差异只通过 adapter 钩子进入这里，
- * 后续格式化、下载、复制都不直接读取页面 DOM。
+ * 后续格式化、下载、Copy都不直接读取页面 DOM。
  */
 
 class ConversationExtractor {
@@ -12,7 +12,7 @@ class ConversationExtractor {
 
     async extract(options = {}) {
         if (!this.adapter) {
-            throw new Error('当前页面暂不支持对话导出');
+            throw new Error('Conversation export is not supported on this page yet');
         }
 
         const root = options.root || window.timelineManager?.conversationContainer || document;
@@ -198,6 +198,15 @@ class ConversationExtractor {
             .join('');
 
         if (!content.trim()) return '';
+
+        // Preserve ChatLine highlights in Markdown exports. Keep the marker
+        // tight to the highlighted text: `==text==`, never `== text ==`.
+        if (node.classList?.contains('ait-highlight') || node.classList?.contains('ait-highlight-pending')) {
+            const leading = content.match(/^\s*/)?.[0] || '';
+            const trailing = content.match(/\s*$/)?.[0] || '';
+            const highlighted = content.slice(leading.length, content.length - trailing.length);
+            return `${leading}==${highlighted}==${trailing}`;
+        }
 
         if (/^h[1-6]$/.test(tag)) return `\n${content.trim()}\n`;
         if (tag === 'li') return `\n- ${content.trim()}`;
